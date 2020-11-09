@@ -17,6 +17,8 @@
 ## Anya  
 ### Smallcare\apps\pets\models\User.py
 ## Vira 
-###Smallcare\apps\pets\models\Event.py
-
+### Smallcare\apps\pets\models\Event.py
+# Documentation:
+## Julia
+### Smallcare\README.md
 P.S. For all the issues and troubles write to **`oleslav`**
