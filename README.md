@@ -10,4 +10,13 @@
 6. Run Project 
 7. Done
 
+## Short Documentation
+
+
+# Models:
+## Anya  
+### Smallcare\apps\pets\models\User.py
+## Vira 
+###Smallcare\apps\pets\models\Event.py
+
 P.S. For all the issues and troubles write to **`oleslav`**
