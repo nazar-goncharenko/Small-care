@@ -1,5 +1,4 @@
 from django.db import models
-from . import Animal
 # from . import Event
 
 
@@ -9,7 +8,6 @@ class User(models.Model):
 
     description = models.TextField()
     photo = models.CharField(max_length=50)
-    animal = models.ForeignKey(Animal.Animal, on_delete=models.CASCADE)
 
     mail = models.CharField(max_length=20)
     phone_number = models.CharField(max_length=15)
