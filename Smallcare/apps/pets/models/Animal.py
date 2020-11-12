@@ -1,5 +1,5 @@
 from django.db import models
 
 
-class Tag(models):
+class Animal(models):
     pass
