@@ -14,4 +14,4 @@ def test(request):
 
 def my(request):
     list_of_pets = Animal.Animal.objects.all()
-    return render(request, '_layout.html', {'list_of_pets': list_of_pets})
+    return render(request, 'list.html', {'list_of_pets': list_of_pets})
