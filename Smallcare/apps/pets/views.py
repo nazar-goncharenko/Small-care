@@ -1,9 +1,9 @@
-from django.http import response, HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse("Hello, my sweaty Pets!")
+    return render(request, 'pets/index.html')
 
 
 def test(request):
-    return HttpResponse("Test Page")
+    return render(request, 'pets/test.html')
