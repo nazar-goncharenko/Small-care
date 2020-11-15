@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@RequestMapping()
 @Controller
 public class MainController {
 
@@ -41,9 +42,8 @@ public class MainController {
     }
 
 
-    @RequestMapping("/users")
+    @GetMapping("/users")
     public String all(Model model){
-        System.out.println("users");
         List<User> users = userService.getAll();
         if (!users.isEmpty()) {
             model.addAttribute("users", users);
