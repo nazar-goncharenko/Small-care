@@ -12,11 +12,11 @@
 <body>
 <div th:insert="fragments/header.html :: header"></div>
 <div class="contentContainer">
-    <form method="post" action="/user">
+    <form method="post" action="/user/pets/add" enctype="multipart/form-data">
 
         <input type="text" maxlength="20" required placeholder="Name" name="name"/><br>
-        <input type="text" maxlength="500" required placeholder="Description" name="description"/><br>
-        <input type="file" name="file" /><br>
+        <input type="text" maxlength="500" placeholder="Description" name="description"/><br>
+        <input type="file" placeholder="File" name="file" /><br>
         <button type="submit" value="Create animal">Create animal</button>
     </form>
 </div>

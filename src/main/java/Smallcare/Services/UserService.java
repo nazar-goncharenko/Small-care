@@ -34,7 +34,7 @@ public class UserService {
         } else {
             return false;
         }
-        return false;
+        return true;
     }
 
     public List<User> getAll() {

@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface IPetService {
     List<Pet> findAll();
     Optional<Pet> findById(Long id);
-    boolean save(Pet pet);
+    Long save(Pet pet);
 }

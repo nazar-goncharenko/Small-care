@@ -13,8 +13,12 @@
 <div th:insert="fragments/header.html :: header"></div>
 
 <div th:each="pet : ${pets}">
-    <text th:text="${pet.getName()}"></text>
-    <img th:src="${'../../' + pet.getPhotoUrl()}" th:alt="${pet.getPhotoUrl()}" />
+
+<!--    <text th:text="${pet.getName()}">${pet.getName()}</text>-->
+
+    <a th:text="${pet.getName()}" th:href="'http://localhost:8080/user/pets/' + ${pet.getId().toString()}"></a>
+
+    <img th:src="${'../../../images/' + pet.getId().toString()+'.jpg'}" th:alt="${pet.getId().toString()}" />
 </div>
 
 </body>

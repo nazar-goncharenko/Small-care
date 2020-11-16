@@ -2,7 +2,10 @@ package Smallcare.Services;
 
 import Smallcare.IServices.IPetService;
 import Smallcare.Models.Pet;
+import Smallcare.Models.User;
 import Smallcare.Repositories.PetRepository;
+import Smallcare.Repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,5 +28,9 @@ public class PetService implements IPetService {
         return petRepository.findById(id);
     }
 
-    public boolean save(Pet pet){return false;}
+    public Long save(Pet pet) {
+        petRepository.save(pet);
+        return pet.getId();
+    }
+
 }
