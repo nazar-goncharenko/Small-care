@@ -4,6 +4,7 @@ import Smallcare.Models.User;
 import Smallcare.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -18,10 +19,9 @@ public class UserService {
                           String phoneNumber,
                           String city,
                           String district,
-                          String description){
+                          String description) {
         System.out.println(userRepository.findByEmail(email));
-        if( userRepository.findByEmail(email) == null)
-        {
+        if (userRepository.findByEmail(email) == null) {
             userRepository.save(new User(
                     firstName,
                     lastName,
@@ -31,16 +31,13 @@ public class UserService {
                     city,
                     district,
                     description));
-        }
-        else
-            {
+        } else {
             return false;
         }
         return false;
     }
 
-    public List<User> getAll(){
-        List <User> userList = userRepository.findAll();
-        return userList;
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 }

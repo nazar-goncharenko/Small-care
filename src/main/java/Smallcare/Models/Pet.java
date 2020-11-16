@@ -20,4 +20,16 @@ public class Pet {
 
     public Pet() {
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
