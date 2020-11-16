@@ -26,7 +26,7 @@ public class Pet {
     }
 
     public String getPhotoUrl() {
-        return photoUrl;
+        return "../images/"+id.toString()+".jpg";
     }
 
     public String getDescription() {

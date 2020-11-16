@@ -14,7 +14,7 @@
 
 <div th:each="pet : ${pets}">
     <text th:text="${pet.getName()}"></text>
-<!--    <img th:src="${pet.getPhotoUrl()}" alt="N/A" />-->
+    <img th:src="${'../../' + pet.getPhotoUrl()}" th:alt="${pet.getPhotoUrl()}" />
 </div>
 
 </body>

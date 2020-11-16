@@ -12,8 +12,10 @@
 <body>
 <div th:insert="fragments/header.html :: header"></div>
 
-<p th:text="${pet.getName()}"></p>>
-<img th:src="${pet.getPhotoUrl()}" alt="N/A" />
+<p th:text="${pet.getName()}"></p>
+<img th:src="${'../../' + pet.getPhotoUrl()}" th:alt="${pet.getPhotoUrl()}" />
+
+
 
 
 </body>
