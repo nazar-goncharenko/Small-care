@@ -20,13 +20,12 @@ public class PetController {
     IPetService petService;
 
     @GetMapping("")
-    @ResponseBody
     public String pets(Model model) {
         List<Pet> pets = petService.findAll();
         if (!pets.isEmpty()) {
             model.addAttribute("pets", pets);
         }
-        return "Allpets";
+        return "pets";
     }
 
     @GetMapping("/{id}")
@@ -35,7 +34,7 @@ public class PetController {
 //        Pet pet = optionalPet.isPresent() ? optionalPet.get() : new Pet();
         Pet pet = petService.findById(id).orElseThrow(EntityNotFoundException::new);
         if (pet != null) {
-            model.addAttribute("pets", pet);
+            model.addAttribute("pet", pet);
         }
         return "pet";
     }
