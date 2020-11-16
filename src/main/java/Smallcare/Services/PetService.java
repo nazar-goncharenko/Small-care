@@ -25,4 +25,5 @@ public class PetService implements IPetService {
         return petRepository.findById(id);
     }
 
+    public boolean save(Pet pet){return false;}
 }
