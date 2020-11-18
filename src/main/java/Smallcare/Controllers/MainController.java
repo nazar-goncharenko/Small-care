@@ -2,7 +2,6 @@ package Smallcare.Controllers;
 
 
 import Smallcare.Models.User;
-import Smallcare.Repositories.UserRepository;
 import Smallcare.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
