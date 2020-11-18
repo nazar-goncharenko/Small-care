@@ -1,5 +1,6 @@
 package Smallcare.Services;
 
+import Smallcare.IServices.IUserService;
 import Smallcare.Models.User;
 import Smallcare.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
     @Autowired
     UserRepository userRepository;
 

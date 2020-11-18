@@ -60,7 +60,7 @@ public class PetController {
         if(file != null){
             System.out.println(file.getContentType());
             System.out.println(file.getName());
-            file.transferTo(new File("C:\\Users\\Oleslav Boychuk\\source\\repos\\Smallcare\\src\\main\\resources\\images\\" + file.getOriginalFilename()));
+            file.transferTo(new File("C:\\Users\\Nazar\\Documents\\GitHub\\Small-care\\src\\main\\resources\\images\\" + file.getOriginalFilename()));
         } else {
             System.out.println("Fuck");
         }

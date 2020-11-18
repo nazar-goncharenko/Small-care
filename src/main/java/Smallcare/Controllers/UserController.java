@@ -1,5 +1,6 @@
 package Smallcare.Controllers;
 
+import Smallcare.IServices.IUserService;
 import Smallcare.Models.User;
 import Smallcare.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    UserService userService;
+    IUserService userService;
 
 
 
