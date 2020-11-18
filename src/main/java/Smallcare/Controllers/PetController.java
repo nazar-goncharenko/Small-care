@@ -3,21 +3,18 @@ package Smallcare.Controllers;
 
 import Smallcare.IServices.IPetService;
 import Smallcare.Models.Pet;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.JpaSort;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.EntityNotFoundException;
 
+import java.io.File;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
+
 
 @RequestMapping("/user/pets")
 @Controller
@@ -25,6 +22,9 @@ public class PetController {
 
     @Autowired
     IPetService petService;
+
+    @Value("${upload.path}")
+    private String upload_path;
 
     @GetMapping("")
     public String pets(Model model) {
@@ -53,31 +53,12 @@ public class PetController {
     public String postPet(@RequestParam(value = "name") String name,
                           @RequestParam(value = "description", required = false) String description,
                           @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
-
-        Pet pet = new Pet(name, description, "default");
-        System.out.println(pet.getId());
-
+        Long pet_id = petService.save(new Pet(name, description, "default"));
         if(file != null){
-            System.out.println(file.getContentType());
             System.out.println(file.getName());
-            file.transferTo(new File("C:\\Users\\Oleslav Boychuk\\source\\repos\\Smallcare\\src\\main\\resources\\images\\" + file.getOriginalFilename()));
-        } else {
-            System.out.println("Fuck");
+            System.out.println(pet_id);
+            file.transferTo(new File(upload_path + pet_id.toString() + ".png"));
         }
-
-
-
-
-//        MultipartFile multipartFile = new MockMultipartFile("sourceFile.tmp", "Hello World".getBytes());
-//        InputStream initialStream = file.getInputStream();
-//        byte[] buffer = new byte[initialStream.available()];
-//        initialStream.read(buffer);
-//
-//        try (OutputStream outStream = new FileOutputStream(new File("src/main/resources/targetFile."))) {
-//            outStream.write(buffer);
-//        }
-//        petService.save(pet);
-
         return "redirect:";
     }
 }
