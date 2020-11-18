@@ -11,36 +11,73 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public boolean create(String firstName,
-                          String lastName,
-                          String email,
-                          String password,
-                          String phoneNumber,
-                          String city,
-                          String district,
-                          String description){
-        System.out.println(userRepository.findByEmail(email));
-        if( userRepository.findByEmail(email) == null)
+    public User findById(Long id){
+        if(userRepository.findById(id).isPresent())
         {
-            userRepository.save(new User(
-                    firstName,
-                    lastName,
-                    email,
-                    password,
-                    phoneNumber,
-                    city,
-                    district,
-                    description));
+            return userRepository.findById(id).get();
+        }
+        else {
+            return null;
+        }
+    }
+
+    public boolean create(User user){
+        if( userRepository.findByEmail(user.getEmail()) == null)
+        {
+            userRepository.save(user);
+            return true;
         }
         else
             {
             return false;
         }
-        return false;
+    }
+
+    public boolean deleteUser(String firstName,
+                              String lastName,
+                              String email,
+                              String password,
+                              String phoneNumber,
+                              String city,
+                              String district,
+                              String description){
+        User user = userRepository.findByEmail(email);
+        if ( user != null) {
+            userRepository.delete(user);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean updateUser(String firstName,
+                           String lastName,
+                           String email,
+                           String password,
+                           String phoneNumber,
+                           String city,
+                           String district,
+                           String description){
+        try {
+            User user = userRepository.findByEmail(email);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setPhoneNumber(phoneNumber);
+            user.setCity(city);
+            user.setDistrict(district);
+            user.setDescription(description);
+            userRepository.save(user);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
     public List<User> getAll(){
-        List <User> userList = userRepository.findAll();
-        return userList;
+        return userRepository.findAll();
     }
 }

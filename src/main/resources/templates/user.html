@@ -11,22 +11,37 @@
 </head>
 <body>
 <div th:insert="fragments/header.html :: header"></div>
-<div class="contentContainer">
-    <form method="post" action="/user">
-        <input type="text" maxlength="50" required placeholder="Ім'я" name="firstName"/><br>
-        <input type="text" maxlength="50" required placeholder="Призвіще" name="lastName"/><br>
-        <input type="password" maxlength="50" required placeholder="Пароль" name="password"/><br>
-        <input type="email" required placeholder="Емейл" name="email"><br>
-        <input type="tel"  required placeholder="Номер телефону" name="phoneNumber"><br>
-        <input type="text" placeholder="Місто" name="city"><br>
-        <input type="text" placeholder="Район" name="district"><br>
-        <input type="text" placeholder="Кілька слів про себе" name="description"><br>
-        <button type="submit" value="Створити користувача">Створити користувача</button>
+<!--<div class="contentContainer">-->
+<!--    <form method="post" action="/user">-->
+<!--        <input type="text" maxlength="50" required placeholder="Ім'я" name="firstName"/><br>-->
+<!--        <input type="text" maxlength="50" required placeholder="Призвіще" name="lastName"/><br>-->
+<!--        <input type="password" maxlength="50" required placeholder="Пароль" name="password"/><br>-->
+<!--        <input type="email" required placeholder="Емейл" name="email"><br>-->
+<!--        <input type="tel"  required placeholder="Номер телефону" name="phoneNumber"><br>-->
+<!--        <input type="text" placeholder="Місто" name="city"><br>-->
+<!--        <input type="text" placeholder="Район" name="district"><br>-->
+<!--        <input type="text" placeholder="Кілька слів про себе" name="description"><br>-->
+<!--        <button type="submit" value="Створити користувача">Створити користувача</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+<div>
+    <form action="/users" method="post" th:object="${user}">
+        <p><input type="text" th:field="*{firstName}" maxlength="50" required placeholder="Ім'я"></p>
+        <p><input type="text" th:field="*{lastName}" maxlength="50" required placeholder="Призвіще"></p>
+        <p><input type="password" th:field="*{password}" maxlength="50" required placeholder="Пароль"></p>
+        <p><input type="email" th:field="*{email}" required placeholder="Емейл"></p>
+        <p><input type="tel" th:field="*{phoneNumber}" required placeholder="Номер телефону"></p>
+        <p><input type="text" th:field="*{city}" placeholder="Місто"></p>
+        <p><input type="text" th:field="*{district}" placeholder="Район"></p>
+        <p><input type="text" th:field="*{description}" placeholder="Кілька слів про себе"></p>
+        <button type="submit">Створити користувача</button>
     </form>
 </div>
 
 <table>
     <tr>
+        <th>ID</th>
         <th>Name</th>
         <th>SurName</th>
         <th>Mail</th>
@@ -34,17 +49,20 @@
         <th>City</th>
         <th>District</th>
         <th>Description</th>
+        <th>Delete</th>
     </tr>
     <tr th:each="user : ${users}">
-        <td th:text="${user.getFirstName()}"></td>
-        <td th:text="${user.getLastName()}"></td>
-        <td th:text="${user.getEmail()}"></td>
-        <td th:text="${user.getPhoneNumber()}"></td>
-        <td th:text="${user.getCity()}"></td>
-        <td th:text="${user.getDistrict()}"></td>
-        <td th:text="${user.getDescription()}"></td>
+        <td th:text="*{user.id}"></td>
+        <td th:text="*{user.firstName}"></td>
+        <td th:text="*{user.lastName}"></td>
+        <td th:text="*{user.email}"></td>
+        <td th:text="*{user.phoneNumber}"></td>
+        <td th:text="*{user.city}"></td>
+        <td th:text="*{user.district}"></td>
+        <td th:text="*{user.description}"></td>
     </tr>
 </table>
+
 
 </body>
 </html>
