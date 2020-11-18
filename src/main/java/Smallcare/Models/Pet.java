@@ -18,6 +18,23 @@ public class Pet {
     @Column(name = "description")
     private String description;
 
-    public Pet() {
+    public Pet() {}
+
+    public Pet(String name, String description, String photoUrl) {
+        this.name = name;
+        this.description = description;
+        this.photoUrl = photoUrl;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
