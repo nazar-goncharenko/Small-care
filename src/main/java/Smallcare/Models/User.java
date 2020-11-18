@@ -40,7 +40,7 @@ public class User {
     private Set<Pet> pets;
 
 
-    User() {}
+    public User() {}
 
     public User(String firstName, String lastName, String email, String password, String phoneNumber, String city, String district, String description) {
         this.firstName = firstName;
@@ -83,5 +83,53 @@ public class User {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }
