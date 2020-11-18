@@ -12,30 +12,29 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public boolean create(String firstName,
-                          String lastName,
-                          String email,
-                          String password,
-                          String phoneNumber,
-                          String city,
-                          String district,
-                          String description) {
-        System.out.println(userRepository.findByEmail(email));
-        if (userRepository.findByEmail(email) == null) {
-            userRepository.save(new User(
-                    firstName,
-                    lastName,
-                    email,
-                    password,
-                    phoneNumber,
-                    city,
-                    district,
-                    description));
-        } else {
+    public User findById(Long id){
+        if(userRepository.findById(id).isPresent())
+        {
+            return userRepository.findById(id).get();
+        }
+        else {
+            return null;
+        }
+    }
+
+    public boolean create(User user){
+        if( userRepository.findByEmail(user.getEmail()) == null)
+        {
+            userRepository.save(user);
+            return true;
+        }
+        else
+            {
             return false;
         }
-        return true;
     }
+
+
 
     public List<User> getAll() {
         return userRepository.findAll();
