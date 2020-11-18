@@ -13,10 +13,7 @@
 <div th:insert="fragments/header.html :: header"></div>
 
 <p th:text="${pet.getName()}"></p>
-<img th:src="${'../../../images/' + pet.getId().toString() + '.jpg'}" th:alt="${pet.getId().toString()}" />
-
-
-
-
+<img th:src="${'../../../images/' + pet.getId().toString() + '.png'}" th:alt="${pet.getId().toString()}" />
+<p th:text="${pet.getDescription()}">
 </body>
 </html>
