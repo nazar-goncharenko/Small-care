@@ -46,19 +46,32 @@ public class PetController {
 
     @GetMapping("/add")
     public String addPet(Model model) {
-        return "add-pet";
+        model.addAttribute("pet", new Pet());
+        return "addPet";
     }
 
     @PostMapping("/add")
-    public String postPet(@RequestParam(value = "name") String name,
-                          @RequestParam(value = "description", required = false) String description,
+    public String postPet(Model model,
+                          @ModelAttribute Pet pet,
                           @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
-        Long pet_id = petService.save(new Pet(name, description, "default"));
-        if(file != null){
-            System.out.println(file.getName());
-            System.out.println(pet_id);
-            file.transferTo(new File(upload_path + pet_id.toString() + ".png"));
+        model.addAttribute("pet", new Pet());
+        if(pet.getName()!=null){
+            Long pet_id = petService.save(pet);
+            if(file != null){
+                file.transferTo(new File(upload_path + pet_id.toString() + ".png"));
+            }
         }
         return "redirect:";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deletePet(Model model, @PathVariable Long id)
+    {
+        petService.deleteById(id);
+        List<Pet> pets = petService.findAll();
+        if (!pets.isEmpty()) {
+            model.addAttribute("pets", pets);
+        }
+        return "redirect:/user/pets";
     }
 }

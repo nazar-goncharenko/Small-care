@@ -12,8 +12,17 @@
 <body>
 <div th:insert="fragments/header.html :: header"></div>
 
-<p th:text="${pet.getName()}"></p>
-<img th:src="${'../../../images/' + pet.getId().toString() + '.png'}" th:alt="${pet.getId().toString()}" />
-<p th:text="${pet.getDescription()}">
+<div>
+    <p th:text="${pet.getName()}"></p>
+    <img th:src="${'../../../images/' + pet.getId().toString() + '.png'}" th:alt="${pet.getId().toString()}" />
+    <p th:text="${pet.getDescription()}">
+
+    <p>
+        <a class="btn btn-danger" role="button" th:href="'http://localhost:8080/user/pets/delete/' + ${pet.getId().toString()}">
+            Delete
+        </a>
+    </p>
+</div>
+
 </body>
 </html>

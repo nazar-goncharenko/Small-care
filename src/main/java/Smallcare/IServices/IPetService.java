@@ -9,4 +9,5 @@ public interface IPetService {
     List<Pet> findAll();
     Optional<Pet> findById(Long id);
     Long save(Pet pet);
+    void deleteById(Long id);
 }
