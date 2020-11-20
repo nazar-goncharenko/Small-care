@@ -29,4 +29,8 @@ public class PetService implements IPetService {
         petRepository.save(pet);
         return pet.getId();
     }
+
+    public void deleteById(Long id){
+        petRepository.deleteById(id);
+    }
 }

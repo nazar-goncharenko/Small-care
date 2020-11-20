@@ -63,4 +63,15 @@ public class PetController {
         }
         return "redirect:";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deletePet(Model model, @PathVariable Long id)
+    {
+        petService.deleteById(id);
+        List<Pet> pets = petService.findAll();
+        if (!pets.isEmpty()) {
+            model.addAttribute("pets", pets);
+        }
+        return "redirect:/user/pets";
+    }
 }
