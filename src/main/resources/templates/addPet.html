@@ -16,7 +16,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
-<script type="text/javascript" src="../static/addPet.js"></script>
+<script type="text/javascript" th:src="@{/js/addPet.js}"></script>
 <head>
     <meta charset="UTF-8">
     <title>Pet</title>
@@ -28,7 +28,7 @@
         <div th:insert="fragments/header.html :: header"></div>
     </header>
     <main role="main" class="inner cover">
-        <form method="post" th:action="@{/user/pets/add}" th:object="${pet}" enctype="multipart/form-data" onsubmit="isFileImage(Event)"
+        <form method="post" th:action="@{/user/pets/add}" th:object="${pet}" enctype="multipart/form-data" th:onsubmit="return myValidationForm()"
               class="form-signin">
             <h1 class="h3 mb-3 font-weight-normal">Create your animal</h1>
 
@@ -39,12 +39,13 @@
             <input type="text" id="inputDescription" maxlength="500" th:field="*{description}" placeholder="Description" name="description"/><br>
 
             <div class="custom-file col-2">
-                <input type="file" id="customFile" class="custom-file-input" placeholder="File" name="file" onchange="isFileImage(this)"/><br>
+                <input type="file" id="customFile" class="custom-file-input" placeholder="File" name="file" th:onchange="isFileImage()"/><br>
                 <label class="custom-file-label" for="customFile">Choose file</label>
             </div>
 
+
             <div class="lead col-3 mx-auto">
-                <button class="btn btn-lg btn-primary btn-block" type="submit" value="Create animal">
+                <button class="btn btn-lg btn-primary btn-block" type="submit" value="Create animal" th:onclick="return myValidationButton()">
                     Create animal
                 </button>
             </div>
