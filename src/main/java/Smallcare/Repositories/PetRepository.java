@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface PetRepository extends CrudRepository<Pet, Long> {
     List<Pet> findAll();
-    Pet findByName(String name);
 }
