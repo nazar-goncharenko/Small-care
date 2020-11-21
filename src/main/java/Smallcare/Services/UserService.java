@@ -35,8 +35,6 @@ public class UserService implements IUserService {
         }
     }
 
-
-
     public List<User> getAll() {
         return userRepository.findAll();
     }
