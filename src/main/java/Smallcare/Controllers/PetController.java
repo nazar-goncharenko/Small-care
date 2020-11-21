@@ -56,8 +56,10 @@ public class PetController {
         Long pet_id = petService.save(new Pet(name, description, "default"));
         if(file != null){
             System.out.println(file.getName());
+
             System.out.println(pet_id);
             file.transferTo(new File(upload_path + pet_id.toString() + ".png"));
+
         }
         return "redirect:";
     }
