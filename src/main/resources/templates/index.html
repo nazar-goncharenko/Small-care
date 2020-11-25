@@ -10,5 +10,28 @@
 <body>
 <div th:insert="fragments/header.html :: header"></div>
 
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>SurName</th>
+        <th>Mail</th>
+        <th>Number</th>
+        <th>City</th>
+        <th>District</th>
+        <th>Description</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="user : ${curUser}">
+        <td th:text="*{user.id}"></td>
+        <td th:text="*{user.firstName}"></td>
+        <td th:text="*{user.lastName}"></td>
+        <td th:text="*{user.email}"></td>
+        <td th:text="*{user.phoneNumber}"></td>
+        <td th:text="*{user.city}"></td>
+        <td th:text="*{user.district}"></td>
+        <td th:text="*{user.description}"></td>
+    </tr>
+</table>
 </body>
 </html>
