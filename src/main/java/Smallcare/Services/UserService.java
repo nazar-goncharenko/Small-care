@@ -1,6 +1,5 @@
 package Smallcare.Services;
 
-import Smallcare.IServices.IUserService;
 import Smallcare.Models.Role;
 import Smallcare.Models.User;
 import Smallcare.Repositories.RoleRepository;

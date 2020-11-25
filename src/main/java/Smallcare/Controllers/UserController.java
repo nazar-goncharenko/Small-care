@@ -1,12 +1,8 @@
 package Smallcare.Controllers;
 
-import Smallcare.IServices.IUserService;
 import Smallcare.Models.User;
 import Smallcare.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
