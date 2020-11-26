@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -43,6 +44,8 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Pet> petList;
 
     public User() {}
 
@@ -174,4 +177,17 @@ public class User implements UserDetails {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    public Set<Pet> getPetList() {
+        return petList;
+    }
+
+    public void setPetList(Set<Pet> petList) {
+        this.petList = petList;
+    }
+
+    public void addPet(Pet pet) {
+        this.petList.add(pet);
+    }
+
 }

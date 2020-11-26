@@ -1,5 +1,6 @@
 package Smallcare.Services;
 
+import Smallcare.Models.Pet;
 import Smallcare.Models.Role;
 import Smallcare.Models.User;
 import Smallcare.Repositories.RoleRepository;
@@ -63,5 +64,11 @@ public class UserService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    public void addPet(User user, Pet pet) {
+        User new_user = userRepository.findById(user.getId()).get();
+        new_user.addPet(pet);
+        userRepository.save(new_user);
     }
 }

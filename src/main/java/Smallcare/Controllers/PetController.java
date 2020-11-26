@@ -1,14 +1,21 @@
 package Smallcare.Controllers;
 
 
-import Smallcare.IServices.IPetService;
 import Smallcare.Models.Pet;
+import Smallcare.Models.User;
+import Smallcare.Services.PetService;
+import Smallcare.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.EntityNotFoundException;
 
 import java.io.File;
@@ -21,16 +28,29 @@ import java.util.List;
 public class PetController {
 
     @Autowired
-    IPetService petService;
+    PetService petService;
+
+    @Autowired
+    UserService userService;
 
     @Value("${upload.path}")
     private String upload_path;
 
     @GetMapping("")
     public String pets(Model model) {
-        List<Pet> pets = petService.findAll();
-        if (!pets.isEmpty()) {
-            model.addAttribute("pets", pets);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return "index";
+        }
+        Iterable<Pet> petList = userService
+                .findById(
+                        ((User) auth
+                                .getPrincipal())
+                                .getId())
+                .getPetList();
+        System.out.println(petList != null);
+        if (petList != null) {
+            model.addAttribute("pets", petList);
         }
         return "pets";
     }
@@ -54,19 +74,34 @@ public class PetController {
     public String postPet(Model model,
                           @ModelAttribute Pet pet,
                           @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
-        model.addAttribute("pet", new Pet());
-        if(pet.getName()!=null){
-            Long pet_id = petService.save(pet);
-            if(file != null){
-                file.transferTo(new File(upload_path + pet_id.toString() + ".png"));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return "index";
+        }
+        if (pet.getName() != null) {
+            User user = (User) auth.getPrincipal();
+            Pet newpet = petService.save(pet);
+            userService.addPet(user, pet);
+            if (file != null) {
+                file.transferTo(new File(upload_path + newpet.getId().toString() + ".png"));
             }
         }
-        return "redirect:";
+
+        Iterable<Pet> petList = userService
+                .findById(
+                        ((User) auth
+                                .getPrincipal())
+                                .getId())
+                .getPetList();
+        System.out.println(petList != null);
+        if (petList != null) {
+            model.addAttribute("pets", petList);
+        }
+        return "pets";
     }
 
     @GetMapping("/delete/{id}")
-    public String deletePet(Model model, @PathVariable Long id)
-    {
+    public String deletePet(Model model, @PathVariable Long id) {
         petService.deleteById(id);
         List<Pet> pets = petService.findAll();
         if (!pets.isEmpty()) {

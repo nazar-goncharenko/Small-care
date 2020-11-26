@@ -18,6 +18,17 @@ public class Pet {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne
+    User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Pet() {}
 
     public Pet(String name, String description, String photoUrl) {
@@ -44,5 +55,9 @@ public class Pet {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
