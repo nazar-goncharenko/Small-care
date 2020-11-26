@@ -1,7 +1,5 @@
 package Smallcare.Models;
 
-
-
 import javax.persistence.*;
 
 @Entity
