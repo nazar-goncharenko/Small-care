@@ -1,7 +1,9 @@
 package Smallcare.Services;
 
 import Smallcare.IServices.IPetService;
+import Smallcare.Models.Event;
 import Smallcare.Models.Pet;
+import Smallcare.Repositories.EventRepository;
 import Smallcare.Repositories.PetRepository;
 import org.springframework.stereotype.Service;
 
