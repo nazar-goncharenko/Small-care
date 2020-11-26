@@ -19,14 +19,11 @@ public class UserController {
     @Autowired
     IUserService userService;
 
-
-
     @PostMapping
     public String createUser(Model model,@ModelAttribute User user){
         userService.create(user);
         return "redirect:/";
     }
-
 
     @GetMapping
     public String all(Model model){
@@ -51,5 +48,4 @@ public class UserController {
             return "redirect:/";
         }
     }
-
 }

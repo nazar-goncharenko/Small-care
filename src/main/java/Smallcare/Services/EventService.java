@@ -1,12 +1,13 @@
 package Smallcare.Services;
 
-import Smallcare.IServices.IEventService;
 import Smallcare.Models.Event;
+import Smallcare.IServices.IEventService;
 import Smallcare.Repositories.EventRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class EventService implements IEventService {
@@ -28,5 +29,9 @@ public class EventService implements IEventService {
     public Long save(Event event) {
         eventRepository.save(event);
         return event.getId();
+    }
+
+    public void deleteById(Long id) {
+        eventRepository.deleteById(id);
     }
 }
