@@ -18,7 +18,7 @@
     <p th:text="${pet.getDescription()}">
 
     <p>
-        <a class="btn btn-danger" role="button" th:href="'/pets/delete/' + ${pet.getId().toString()}">
+        <a class="btn btn-danger" role="button" th:href="'http://localhost:8080/user/pets/delete/' + ${pet.getId().toString()}">
             Delete
         </a>
     </p>

@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "startTime", nullable = false)
@@ -29,10 +29,5 @@ public class Event {
     private Status status;
 
     public Event() {
-
-    }
-
-    public Long getId() {
-        return id;
     }
 }
