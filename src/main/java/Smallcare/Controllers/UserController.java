@@ -43,10 +43,4 @@ public class UserController {
             return "redirect:/";
         }
     }
-
-    @GetMapping("/signup")
-    public String signup(Model model){
-        model.addAttribute("user", new User());
-        return "signUp";
-    }
 }
