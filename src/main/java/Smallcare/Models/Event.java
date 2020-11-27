@@ -1,14 +1,12 @@
 package Smallcare.Models;
 
-
-
 import javax.persistence.*;
 
 @Entity
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "startTime", nullable = false)
@@ -31,5 +29,10 @@ public class Event {
     private Status status;
 
     public Event() {
+
+    }
+
+    public Long getId() {
+        return id;
     }
 }
