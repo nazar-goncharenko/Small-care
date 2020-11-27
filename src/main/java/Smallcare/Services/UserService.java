@@ -1,5 +1,6 @@
 package Smallcare.Services;
 
+import Smallcare.Models.Pet;
 import Smallcare.Models.Role;
 import Smallcare.Models.User;
 import Smallcare.Repositories.RoleRepository;
@@ -25,28 +26,23 @@ public class UserService implements UserDetailsService {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public User findById(Long id){
-        if(userRepository.findById(id).isPresent())
-        {
+    public User findById(Long id) {
+        if (userRepository.findById(id).isPresent()) {
             return userRepository.findById(id).get();
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    public boolean create(User user){
-        if( userRepository.findByEmail(user.getEmail()) == null)
-        {
+    public boolean create(User user) {
+        if (userRepository.findByEmail(user.getEmail()) == null) {
             Role role = new Role(1L, "ROLE_USER");
             roleRepository.save(role);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user.setRoles(Collections.singleton(role));
             userRepository.save(user);
             return true;
-        }
-        else
-            {
+        } else {
             return false;
         }
     }
@@ -57,11 +53,27 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user  = userRepository.findByEmail(email);
-        if ( user == null){
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
             throw new UsernameNotFoundException("Email not found");
         }
 
         return user;
+    }
+
+    public void addPet(User user, Pet pet) {
+        User new_user = userRepository.findById(user.getId()).orElse(new User());
+        new_user.addPet(pet);
+        userRepository.save(new_user);
+    }
+
+    public void deletePet(User user, Pet pet) {
+        User new_user = userRepository.findById(user.getId()).orElse(new User());
+        new_user.deletePet(pet);
+        userRepository.save(new_user);
+    }
+
+    public void updatePet(User user, Pet pet) throws Exception {
+        throw new Exception("UpdatePet nothing here @Oleslav");
     }
 }

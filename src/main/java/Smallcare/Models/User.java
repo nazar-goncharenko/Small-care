@@ -5,25 +5,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+
 import java.util.Set;
 
 @Entity
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "firstName", nullable = false)
     private String firstName;
-
-    @Column(name = "lastName", nullable = false)
-    private String lastName;
 
     @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "lastName")
+    private String lastName;
 
     @Column(name = "phoneNumber")
     private String phoneNumber;
@@ -43,6 +44,8 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Pet> petList;
 
     public User() {}
 
@@ -173,5 +176,21 @@ public class User implements UserDetails {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public Set<Pet> getPetList() {
+        return petList;
+    }
+
+    public void setPetList(Set<Pet> petList) {
+        this.petList = petList;
+    }
+
+    public void addPet(Pet pet) {
+        this.petList.add(pet);
+    }
+
+    public void deletePet(Pet pet) {
+        this.petList.remove(pet);
     }
 }

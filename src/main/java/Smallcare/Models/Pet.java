@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Pet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -17,6 +17,17 @@ public class Pet {
 
     @Column(name = "description")
     private String description;
+
+    @ManyToOne
+    User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Pet() {}
 
@@ -44,5 +55,9 @@ public class Pet {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

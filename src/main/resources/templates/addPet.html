@@ -28,7 +28,7 @@
         <div th:insert="fragments/header.html :: header"></div>
     </header>
     <main role="main" class="inner cover">
-        <form method="post" th:action="@{/user/pets/add}" th:object="${pet}" enctype="multipart/form-data" th:onsubmit="return myValidationForm()"
+        <form method="post" th:action="@{/pets/add}" th:object="${pet}" enctype="multipart/form-data" th:onsubmit="return myValidationForm()"
               class="form-signin">
             <h1 class="h3 mb-3 font-weight-normal">Create your animal</h1>
 
