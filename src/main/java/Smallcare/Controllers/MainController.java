@@ -27,4 +27,12 @@ public class MainController {
         model.addAttribute("user", new User());
         return "signUp";
     }
+
+    @GetMapping("/registration")
+    public String registration(Model model){
+        model.addAttribute("user", new User());
+        return "registration";
+    }
+
+
 }

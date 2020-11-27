@@ -16,8 +16,15 @@ public class UserController {
 
     @PostMapping("/users")
     public String createUser(Model model,@ModelAttribute User user){
-        userService.create(user);
-        return "redirect:/";
+        if ( userService.create(user)){
+            return "index";
+        }
+        else{
+            model.addAttribute("error", true);
+            model.addAttribute("user",user);
+            return "registration";
+
+        }
     }
 
     @GetMapping("/users")
