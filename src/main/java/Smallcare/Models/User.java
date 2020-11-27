@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
+
 import java.util.Set;
 
 @Entity
@@ -17,14 +17,14 @@ public class User implements UserDetails {
     @Column(name = "firstName", nullable = false)
     private String firstName;
 
-    @Column(name = "lastName", nullable = false)
-    private String lastName;
-
     @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "lastName")
+    private String lastName;
 
     @Column(name = "phoneNumber")
     private String phoneNumber;
@@ -190,4 +190,7 @@ public class User implements UserDetails {
         this.petList.add(pet);
     }
 
+    public void deletePet(Pet pet) {
+        this.petList.remove(pet);
+    }
 }

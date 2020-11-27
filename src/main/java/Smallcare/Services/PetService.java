@@ -17,11 +17,11 @@ public class PetService {
         this.petRepository = petRepository;
     }
 
-    public List<Pet> findAll(){
+    public List<Pet> findAll() {
         return petRepository.findAll();
     }
 
-    public Optional<Pet> findById(Long id){
+    public Optional<Pet> findById(Long id) {
         return petRepository.findById(id);
     }
 
@@ -29,7 +29,7 @@ public class PetService {
         return petRepository.save(pet);
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         petRepository.deleteById(id);
     }
 }
