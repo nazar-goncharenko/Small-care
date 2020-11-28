@@ -5,6 +5,7 @@ import Smallcare.Models.Pet;
 import Smallcare.Models.User;
 import Smallcare.Services.PetService;
 import Smallcare.Services.UserService;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.*;
 import java.util.Collection;
@@ -82,11 +84,11 @@ public class PetController {
             return "/index";
         }
         if (pet.getName() != null) {
-            Pet newpet = petService.save(pet);
+            Pet newPet = petService.save(pet);
             userService.addPet(user, pet);
             if (file != null) {
                 try {
-                    file.transferTo(new File(upload_path + newpet.getId().toString() + ".png"));
+                    file.transferTo(new File(upload_path + newPet.getId().toString() + ".png"));
                 } catch (IOException ioException){
                     System.out.println("Bad file saving :(");
                 }
@@ -111,5 +113,9 @@ public class PetController {
         userService.deletePet(user, petService.findById(id).orElseThrow(Exception::new));
         petService.deleteById(id);
         return pets(model);
+    }
+
+    private BufferedImage simpleResizeImage(BufferedImage originalImage, int targetWidth) throws Exception {
+        return Scalr.resize(originalImage, targetWidth);
     }
 }

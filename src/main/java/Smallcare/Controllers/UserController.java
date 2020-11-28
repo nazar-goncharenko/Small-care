@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/users")
 @Controller
 public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/users")
+    @PostMapping
     public String createUser(Model model,@ModelAttribute User user){
         if ( userService.create(user)){
             return "index";
@@ -27,7 +28,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public String all(Model model){
         model.addAttribute("user", new User());
         List<User> users = userService.getAll();
@@ -37,7 +38,7 @@ public class UserController {
         return "user";
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public String userById(Model model, @PathVariable Long id){
         model.addAttribute("user", new User());
         User user = userService.findById(id);

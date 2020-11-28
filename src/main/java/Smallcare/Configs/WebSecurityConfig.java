@@ -18,13 +18,13 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserService userService;
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -32,22 +32,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
-                    .disable()
+                .disable()
                 .authorizeRequests()
-                    .antMatchers("/users/**").not().fullyAuthenticated()
-                    .antMatchers("/user/**").hasRole("USER")
-                    .antMatchers("/").permitAll()
+                .antMatchers("/users/**").not().fullyAuthenticated()
+                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/pets/**").fullyAuthenticated()
+                .antMatchers("/events").permitAll()
+                .antMatchers("/events/**").fullyAuthenticated()
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .and()
-                    .logout()
-                    .permitAll();
+                .logout()
+                .permitAll();
     }
 
     @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
     }
 }
