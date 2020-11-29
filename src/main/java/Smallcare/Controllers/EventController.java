@@ -1,11 +1,10 @@
 package Smallcare.Controllers;
 
 import Smallcare.Models.Event;
+import Smallcare.Models.Status;
 import Smallcare.Services.EventService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.parser.Entity;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,8 +41,11 @@ public class EventController {
     public String createEvent(@ModelAttribute Event event,
                               @RequestParam(name = "startTime1") String startTime,
                               @RequestParam(name = "endTime1") String endTime, Model model){
-//        event.setEndTime(endTime);
-//        event.setStartTime(startTime);
+        LocalDateTime startTimeDataTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        LocalDateTime endTimeDataTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        event.setStartTime(startTimeDataTime);
+        event.setEndTime(endTimeDataTime);
+        event.setStatus(Status.REQUEST);
         System.out.println(endTime + "\t" + startTime);
         Long id = eventService.save(event);
         System.out.println(id);

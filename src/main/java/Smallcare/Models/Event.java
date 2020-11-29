@@ -16,11 +16,13 @@ public class Event {
 
     //    @Column(name = "startTime", nullable = false)
     @Column(name = "startTime")
-    private java.sql.Timestamp startTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
+    private LocalDateTime startTime;
 
     //    @Column(name = "endTime", nullable = false)
     @Column(name = "endTime")
-    private java.sql.Timestamp endTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
+    private LocalDateTime endTime;
 
     @ManyToOne
     private Pet pet;
@@ -39,7 +41,7 @@ public class Event {
 
     }
 
-    public Event(java.sql.Timestamp startTime, java.sql.Timestamp endTime, Pet pet, Long price, String description) {
+    public Event(LocalDateTime startTime, LocalDateTime endTime, Pet pet, Long price, String description) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.pet = pet;
@@ -52,19 +54,19 @@ public class Event {
         return id;
     }
 
-    public java.sql.Timestamp getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(java.sql.Timestamp startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public java.sql.Timestamp getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(java.sql.Timestamp endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 

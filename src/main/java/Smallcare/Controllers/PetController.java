@@ -5,7 +5,6 @@ import Smallcare.Models.Pet;
 import Smallcare.Models.User;
 import Smallcare.Services.PetService;
 import Smallcare.Services.UserService;
-import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -115,7 +114,4 @@ public class PetController {
         return pets(model);
     }
 
-    private BufferedImage simpleResizeImage(BufferedImage originalImage, int targetWidth) throws Exception {
-        return Scalr.resize(originalImage, targetWidth);
-    }
 }
