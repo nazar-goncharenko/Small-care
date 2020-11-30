@@ -106,7 +106,8 @@
 		</dependency>
 		<!-- End -->
 
-	</dependencies>
+
+    </dependencies>
 
 	<build>
 		<plugins>

@@ -21,4 +21,18 @@ public class MainController {
         model.addAttribute("curUser", user);
         return "index";
     }
+
+    @GetMapping("/signup")
+    public String signup(Model model){
+        model.addAttribute("user", new User());
+        return "signUp";
+    }
+
+    @GetMapping("/registration")
+    public String registration(Model model){
+        model.addAttribute("user", new User());
+        return "registration";
+    }
+
+
 }

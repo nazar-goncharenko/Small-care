@@ -26,19 +26,6 @@
 <!--    </form>-->
 <!--</div>-->
 
-<div>
-    <form action="/users" method="post" th:object="${user}">
-        <p><input type="text" th:field="*{firstName}" maxlength="50" required placeholder="Ім'я"></p>
-        <p><input type="text" th:field="*{lastName}" maxlength="50" required placeholder="Призвіще"></p>
-        <p><input type="password" th:field="*{password}" maxlength="50" required placeholder="Пароль"></p>
-        <p><input type="email" th:field="*{email}" required placeholder="Емейл"></p>
-        <p><input type="tel" th:field="*{phoneNumber}" required placeholder="Номер телефону"></p>
-        <p><input type="text" th:field="*{city}" placeholder="Місто"></p>
-        <p><input type="text" th:field="*{district}" placeholder="Район"></p>
-        <p><input type="text" th:field="*{description}" placeholder="Кілька слів про себе"></p>
-        <button type="submit">Створити користувача</button>
-    </form>
-</div>
 
 <table>
     <tr>

@@ -17,8 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.*;
+import java.util.Collection;
+import java.util.Collections;
 
 
 @Controller
@@ -80,11 +83,11 @@ public class PetController {
             return "/index";
         }
         if (pet.getName() != null) {
-            Pet newpet = petService.save(pet);
+            Pet newPet = petService.save(pet);
             userService.addPet(user, pet);
             if (file != null) {
                 try {
-                    file.transferTo(new File(upload_path + newpet.getId().toString() + ".png"));
+                    file.transferTo(new File(upload_path + newPet.getId().toString() + ".png"));
                 } catch (IOException ioException){
                     System.out.println("Bad file saving :(");
                 }
@@ -110,4 +113,5 @@ public class PetController {
         petService.deleteById(id);
         return pets(model);
     }
+
 }
