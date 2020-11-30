@@ -26,12 +26,52 @@ public class UserService implements UserDetailsService {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     public User findById(Long id) {
         if (userRepository.findById(id).isPresent()) {
             return userRepository.findById(id).get();
         } else {
             return null;
         }
+    }
+
+    public boolean update(User user){
+        User curUser = userRepository.findById(user.getId()).get();
+        if (userRepository.findByEmail(user.getEmail()) != null){
+            return false;
+        }
+        if (user.getPassword() != null) {
+            curUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
+        if (user.getDescription() != null) {
+            curUser.setDescription(user.getDescription());
+        }
+        if (user.getDistrict() != null) {
+            curUser.setDistrict(user.getDistrict());
+        }
+        if (user.getEmail() != null) {
+            curUser.setEmail(user.getEmail());
+        }
+        if (user.getCity() != null) {
+            curUser.setCity(user.getCity());
+        }
+        if (user.getFirstName() != null) {
+            curUser.setFirstName(user.getFirstName());
+        }
+        if (user.getLastName() != null) {
+            curUser.setLastName(user.getLastName());
+        }
+        if (user.getPhoneNumber() != null) {
+            curUser.setPhoneNumber(user.getPhoneNumber());
+        }
+        System.out.println(curUser.getPassword() + "\t" + user.getPassword());
+        userRepository.save(curUser);
+        return true;
+//        }
+//        catch (Exception e){
+//            System.out.println("Can't save");
+//            return false;
+//        }
     }
 
     public boolean create(User user) {

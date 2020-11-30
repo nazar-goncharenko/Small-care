@@ -3,6 +3,12 @@ package Smallcare.Controllers;
 import Smallcare.Models.User;
 import Smallcare.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +21,14 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    private User getCurrentUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return null;
+        }
+        return ((User) auth.getPrincipal());
+    }
+
     @PostMapping
     public String createUser(Model model,@ModelAttribute User user){
         if ( userService.create(user)){
@@ -26,6 +40,20 @@ public class UserController {
             return "registration";
 
         }
+    }
+
+    @PostMapping("/{id}")
+    public String updateUser(Model model,@ModelAttribute User user,@PathVariable Long id){
+        User curUser = getCurrentUser();
+        System.out.println(user.getFirstName() + "\t" + id);
+        if (curUser.getId() != id){
+            return "user";
+        }
+        if (userService.update(user)){
+            return "user";
+        }
+        return "index";
+
     }
 
     @GetMapping
