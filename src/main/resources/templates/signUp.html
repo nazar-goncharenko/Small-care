@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link rel="icon" href="../images/icon.png">
     <title>Sign Up</title>
 
     <!-- Bootstrap core CSS -->
@@ -17,19 +17,19 @@
 
 <body class="text-center">
 
-<form class="form-sign" action="/users" th:object="${user}" method="post">
+<form class="form-signup" action="/users" th:object="${user}" method="post">
+    <img class="mb-4" src="../images/Smallcare300.png" alt="">
 
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
-    <label type="text"  for="inputName" class="sr-only">Nickname</label>
-    <input type="text" name="username" th:field="*{firstName}" id="inputName" maxlength="50" class="form-control" placeholder="Nickname" required autofocus>
+    <label type="text"  for="inputName" class="sr-only">Username</label>
+    <input type="text" name="username" th:field="*{firstName}" id="inputName" maxlength="50" class="form-control" placeholder="Username" required autofocus>
 
     <label type="text"  for="inputEmail" class="sr-only">Email address</label>
     <input type="email" name="username" th:field="*{email}" id="inputEmail" maxlength="50" class="form-control" placeholder="Email address" required autofocus>
 
     <label type="password"  for="inputPassword" class="sr-only">Password</label>
     <input type="password" name="password" th:field="*{password}" id="inputPassword" maxlength="50" class="form-control" placeholder="Password" required>
-
 
     <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">Sign in</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
