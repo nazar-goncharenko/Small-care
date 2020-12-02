@@ -28,10 +28,10 @@ import java.util.Collections;
 public class PetController {
 
     @Autowired
-    PetService petService;
+    UserService userService;
 
     @Autowired
-    UserService userService;
+    PetService petService;
 
     @Value("${upload.path}")
     private String upload_path;
