@@ -1,6 +1,10 @@
 package Smallcare.Models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 public class Event {
@@ -9,11 +13,11 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "startTime", nullable = false)
-    private java.sql.Timestamp startTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
+    private LocalDateTime startTime;
 
-    @Column(name = "endTime", nullable = false)
-    private java.sql.Timestamp endTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
+    private LocalDateTime endTime;
 
     @ManyToOne
     private Pet pet;
@@ -29,5 +33,61 @@ public class Event {
     private Status status;
 
     public Event() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }
