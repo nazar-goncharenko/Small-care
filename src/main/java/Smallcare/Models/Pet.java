@@ -1,6 +1,7 @@
 package Smallcare.Models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Pet {
@@ -17,6 +18,9 @@ public class Pet {
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<PetComment> petComments;
 
     @ManyToOne
     User user;
@@ -59,5 +63,25 @@ public class Pet {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public Set<PetComment> getPetComments() {
+        return petComments;
+    }
+
+    public void setPetComments(Set<PetComment> petComments) {
+        this.petComments = petComments;
+    }
+
+    public void addPetComment(PetComment petComment){
+        this.petComments.add(petComment);
     }
 }
