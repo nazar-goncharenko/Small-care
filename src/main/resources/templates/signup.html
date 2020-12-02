@@ -1,23 +1,19 @@
-<!doctype html>
+<!Doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../images/icon.png">
-    <title>Sign Up</title>
-
-    <!-- Bootstrap core CSS -->
-    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
-
-    <!-- Custom styles for this template -->
-    <link th:href="@{/css/login/sign.css}" rel="stylesheet">
+<head th:insert="fragments/head.html :: head">
+    <title id="pageTitle">Sign Up</title>
 </head>
-
 <body class="text-center">
 
 <form class="form-signup" action="/users" th:object="${user}" method="post">
+
+    <div th:if="${error}" class="container"><br/>
+        <div class="alert alert-danger">
+            <strong>Помилка!</strong><br/>
+            This mail is already taken.
+        </div>
+    </div>
+
     <img class="mb-4" src="../images/Smallcare300.png" alt="">
 
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
@@ -34,6 +30,6 @@
     <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">Sign in</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
 </form>
-
+<link th:href="@{/css/login/sign.css}" rel="stylesheet">
 </body>
 </html>
