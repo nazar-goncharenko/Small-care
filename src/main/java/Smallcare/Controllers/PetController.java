@@ -1,65 +1,41 @@
 package Smallcare.Controllers;
 
 
+import Smallcare.IServices.IPetService;
 import Smallcare.Models.Pet;
-import Smallcare.Models.User;
-import Smallcare.Services.PetService;
-import Smallcare.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.EntityNotFoundException;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.*;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 
+@RequestMapping("/user/pets")
 @Controller
 public class PetController {
 
     @Autowired
-    PetService petService;
-
-    @Autowired
-    UserService userService;
+    IPetService petService;
 
     @Value("${upload.path}")
     private String upload_path;
 
-    private User getCurrentUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth instanceof AnonymousAuthenticationToken) {
-            return null;
-        }
-        return ((User) auth.getPrincipal());
-    }
-    @GetMapping("/pets")
+    @GetMapping("")
     public String pets(Model model) {
-        User user = getCurrentUser();
-        if(user == null){
-            return "/index";
-        }
-        Iterable<Pet> petList = userService
-                .findById(
-                        (user).getId())
-                .getPetList();
-        if (petList != null) {
-            model.addAttribute("pets", petList);
+        List<Pet> pets = petService.findAll();
+        if (!pets.isEmpty()) {
+            model.addAttribute("pets", pets);
         }
         return "pets";
     }
 
-    @GetMapping("/pets/{id}")
+    @GetMapping("/{id}")
     public String pet(Model model, @PathVariable Long id) {
         Pet pet = petService.findById(id).orElseThrow(EntityNotFoundException::new);
         if (pet != null) {
@@ -68,50 +44,34 @@ public class PetController {
         return "pet";
     }
 
-    @GetMapping("/pets/add")
+    @GetMapping("/add")
     public String addPet(Model model) {
         model.addAttribute("pet", new Pet());
         return "addPet";
     }
 
-    @PostMapping("/pets/add")
+    @PostMapping("/add")
     public String postPet(Model model,
                           @ModelAttribute Pet pet,
-                          @RequestParam(value = "file", required = false) MultipartFile file) {
-        User user = getCurrentUser();
-        if(user == null){
-            return "/index";
-        }
-        if (pet.getName() != null) {
-            Pet newPet = petService.save(pet);
-            userService.addPet(user, pet);
-            if (file != null) {
-                try {
-                    file.transferTo(new File(upload_path + newPet.getId().toString() + ".png"));
-                } catch (IOException ioException){
-                    System.out.println("Bad file saving :(");
-                }
+                          @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+        model.addAttribute("pet", new Pet());
+        if(pet.getName()!=null){
+            Long pet_id = petService.save(pet);
+            if(file != null){
+                file.transferTo(new File(upload_path + pet_id.toString() + ".png"));
             }
         }
-        Iterable<Pet> petList = userService
-                .findById(
-                        (user).getId())
-                .getPetList();
-        if (petList != null) {
-            model.addAttribute("pets", petList);
-        }
-        return "pets";
+        return "redirect:";
     }
 
-    @GetMapping("/pets/delete/{id}")
-    public String deletePet(Model model, @PathVariable Long id) throws Exception {
-        User user = getCurrentUser();
-        if(user == null){
-            return "/index";
-        }
-        userService.deletePet(user, petService.findById(id).orElseThrow(Exception::new));
+    @GetMapping("/delete/{id}")
+    public String deletePet(Model model, @PathVariable Long id)
+    {
         petService.deleteById(id);
-        return pets(model);
+        List<Pet> pets = petService.findAll();
+        if (!pets.isEmpty()) {
+            model.addAttribute("pets", pets);
+        }
+        return "redirect:/user/pets";
     }
-
 }

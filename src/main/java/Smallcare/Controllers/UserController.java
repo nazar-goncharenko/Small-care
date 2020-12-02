@@ -9,24 +9,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/users")
 @Controller
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     UserService userService;
 
+
+
     @PostMapping
     public String createUser(Model model,@ModelAttribute User user){
-        if ( userService.create(user)){
-            return "index";
-        }
-        else{
-            model.addAttribute("error", true);
-            model.addAttribute("user",user);
-            return "signup";
-
-        }
+        userService.create(user);
+        return "redirect:/";
     }
+
 
     @GetMapping
     public String all(Model model){
@@ -51,4 +47,5 @@ public class UserController {
             return "redirect:/";
         }
     }
+
 }
