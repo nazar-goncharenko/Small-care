@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 public class Event {
@@ -24,8 +25,8 @@ public class Event {
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
     private LocalDateTime endTime;
 
-    @ManyToOne
-    private Pet pet;
+    @ManyToMany
+    private Set<Pet> pets;
 
     @Column(name = "price", nullable = false)
     private Long price;
@@ -37,14 +38,19 @@ public class Event {
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    User cretorUser;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<User> signedUsers;
+
     public Event() {
 
     }
 
-    public Event(LocalDateTime startTime, LocalDateTime endTime, Pet pet, Long price, String description) {
+    public Event(LocalDateTime startTime, LocalDateTime endTime, Long price, String description) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.pet = pet;
         this.price = price;
         this.description = description;
         this.status = Status.REQUEST;
@@ -68,14 +74,6 @@ public class Event {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
-    }
-
-    public Pet getPet() {
-        return pet;
-    }
-
-    public void setPet(Pet pet) {
-        this.pet = pet;
     }
 
     public Long getPrice() {
