@@ -23,7 +23,7 @@ public class UserController {
         else{
             model.addAttribute("error", true);
             model.addAttribute("user",user);
-            return "registration";
+            return "signup";
 
         }
     }

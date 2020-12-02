@@ -25,14 +25,14 @@ public class MainController {
     @GetMapping("/signup")
     public String signup(Model model){
         model.addAttribute("user", new User());
-        return "signUp";
+        return "signup";
     }
 
-    @GetMapping("/registration")
-    public String registration(Model model){
-        model.addAttribute("user", new User());
-        return "registration";
-    }
+//    @GetMapping("/registration")
+//    public String registration(Model model){
+//        model.addAttribute("user", new User());
+//        return "registration";
+//    }
 
 
 }
