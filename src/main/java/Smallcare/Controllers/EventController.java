@@ -37,7 +37,7 @@ public class EventController {
         return "events";
     }
 
-    
+
     @PostMapping
     public String createEvent(@ModelAttribute Event event,
                               @RequestParam(name = "startTime1") String startTime,
