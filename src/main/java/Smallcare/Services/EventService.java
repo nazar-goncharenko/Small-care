@@ -1,7 +1,6 @@
 package Smallcare.Services;
 
 import Smallcare.Models.Event;
-import Smallcare.IServices.IEventService;
 import Smallcare.Repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

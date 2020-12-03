@@ -1,9 +1,6 @@
 package Smallcare.Services;
 
-import Smallcare.IServices.IPetService;
-import Smallcare.Models.Event;
 import Smallcare.Models.Pet;
-import Smallcare.Repositories.EventRepository;
 import Smallcare.Repositories.PetRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PetService implements IPetService {
+public class PetService {
     final
     PetRepository petRepository;
 
@@ -27,9 +24,9 @@ public class PetService implements IPetService {
         return petRepository.findById(id);
     }
 
-    public Long save(Pet pet) {
+    public Pet save(Pet pet) {
         petRepository.save(pet);
-        return pet.getId();
+        return pet;
     }
 
     public void deleteById(Long id){
