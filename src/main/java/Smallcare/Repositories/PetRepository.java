@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface PetRepository extends CrudRepository<Pet, Long> {
     List<Pet> findAll();
+
     Optional<Pet> findById(Long id);
 }

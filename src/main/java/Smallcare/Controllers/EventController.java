@@ -29,6 +29,7 @@ public class EventController {
     @Autowired
     EventService eventService;
 
+
     @GetMapping
     public String events(Model model){
 

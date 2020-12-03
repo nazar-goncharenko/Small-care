@@ -27,6 +27,7 @@ public class UserService implements UserDetailsService {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
+
     public User findById(Long id) {
         if (userRepository.findById(id).isPresent()) {
             return userRepository.findById(id).get();

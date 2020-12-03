@@ -6,6 +6,7 @@ import java.util.Set;
 @Entity
 public class Pet {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
