@@ -1,0 +1,24 @@
+<html  lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
+<head th:insert="fragments/head.html :: head">
+    <title id="pageTitle">Додати подію</title>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"></div>
+
+<main role="main" class="inner cover">
+    <form method="post" th:action="@{/events}" th:object="${event}"
+          class="form-signin">
+        <h1 class="h3 mb-3 font-weight-normal">Create event</h1>
+
+        <input type="datetime-local" name="startTime1" placeholder="startTime">
+        <input type="datetime-local" name="endTime1" placeholder="endTime">
+        <input type="text" th:field="*{price}" placeholder="price">
+        <input type="text" th:field="*{description}" placeholder="description">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            Create
+        </button>
+        <p class="mt-5 mb-3 text-muted">© 2020</p>
+    </form>
+</main>
+</body>
+</html>

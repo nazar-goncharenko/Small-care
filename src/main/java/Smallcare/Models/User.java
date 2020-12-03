@@ -5,25 +5,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+
 import java.util.Set;
 
 @Entity
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "firstName", nullable = false)
     private String firstName;
-
-    @Column(name = "lastName", nullable = false)
-    private String lastName;
 
     @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "lastName")
+    private String lastName;
 
     @Column(name = "phoneNumber")
     private String phoneNumber;
@@ -43,8 +44,20 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Pet> petList;
 
-    public User() {}
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<UserComment> userComments;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Event> createdEvents;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Event> signedEvents;
+
+    public User() {
+    }
 
     public User(String firstName, String lastName, String email, String password, String phoneNumber, String city, String district, String description) {
         this.firstName = firstName;
@@ -173,5 +186,65 @@ public class User implements UserDetails {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public Set<Pet> getPetList() {
+        return petList;
+    }
+
+    public void setPetList(Set<Pet> petList) {
+        this.petList = petList;
+    }
+
+    public void addPet(Pet pet) {
+        this.petList.add(pet);
+    }
+
+    public void deletePet(Pet pet) {
+        this.petList.remove(pet);
+    }
+
+    public Set<UserComment> getUserComments() {
+        return userComments;
+    }
+
+    public void setUserComments(Set<UserComment> userComments) {
+        this.userComments = userComments;
+    }
+
+    public void addComment(UserComment userComment) {
+        this.userComments.add(userComment);
+    }
+
+    public Set<Event> getCreatedEvents() {
+        return this.createdEvents;
+    }
+
+    public void setCreatedEvents(Set<Event> createdEvents) {
+        this.createdEvents = createdEvents;
+    }
+
+    public void addCreatedEvent(Event event) {
+        this.createdEvents.add(event);
+    }
+
+    public void deleteCreatedEvent(Event event) {
+        this.createdEvents.remove(event);
+    }
+
+    public Set<Event> getSignedEvents() {
+        return this.signedEvents;
+    }
+
+    public void setSignedEvents(Set<Event> signedEvents) {
+        this.signedEvents = signedEvents;
+    }
+
+    public void addSignedEvent(Event event) {
+        this.signedEvents.add(event);
+    }
+
+    public void deleteSignedEvent(Event event) {
+        this.signedEvents.remove(event);
     }
 }

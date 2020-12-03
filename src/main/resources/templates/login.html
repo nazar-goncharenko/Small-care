@@ -1,20 +1,39 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Spring Security Example </title>
+<!Doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="fragments/head.html :: head">
+    <title id="pageTitle">Sign In</title>
 </head>
-<body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+<body class="text-center">
+<form class="form-signin" th:action="@{/login}" method="post">
+    <div th:if="${param.error}" class="container"><br/>
+        <div class="alert alert-danger">
+            <a href="/login" class="close" data-dismiss="alert"
+               aria-label="close">×</a>
+            <strong>Error!</strong><br/>
+            Invalid username or password.
+        </div>
+    </div>
+    <div th:if="${param.logout}" class="container"><br/>
+        <div class="alert alert-success">
+            <a href="/login" class="close" data-dismiss="alert"
+               aria-label="close">×</a>
+            <strong>Success!</strong><br/>
+            You have been logged out.
+        </div>
+    </div>
+    <img class="mb-4" th:src="@{/images/Smallcare300.png}" alt="">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label type="text"  for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" name="username" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <label type="password"  for="inputPassword" class="sr-only">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <p><small class="no-account">
+            Don't Have an Account?
+            <a href="/signup">Sign Up</a>
+    </small></p>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
 </form>
+<link th:href="@{/css/login/sign.css}" rel="stylesheet">
 </body>
 </html>

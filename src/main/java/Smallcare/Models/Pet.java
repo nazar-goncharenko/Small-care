@@ -1,12 +1,13 @@
 package Smallcare.Models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Pet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -18,6 +19,20 @@ public class Pet {
     @Column(name = "description")
     private String description;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<PetComment> petComments;
+
+    @ManyToOne
+    User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Pet() {}
 
     public Pet(String name, String description, String photoUrl) {
@@ -26,12 +41,12 @@ public class Pet {
         this.photoUrl = photoUrl;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getDescription() {
@@ -44,5 +59,29 @@ public class Pet {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public Set<PetComment> getPetComments() {
+        return petComments;
+    }
+
+    public void setPetComments(Set<PetComment> petComments) {
+        this.petComments = petComments;
+    }
+
+    public void addPetComment(PetComment petComment){
+        this.petComments.add(petComment);
     }
 }

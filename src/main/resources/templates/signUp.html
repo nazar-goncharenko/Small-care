@@ -1,0 +1,35 @@
+<!Doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="fragments/head.html :: head">
+    <title id="pageTitle">Sign Up</title>
+</head>
+<body class="text-center">
+
+<form class="form-signup" action="/users" th:object="${user}" method="post">
+
+    <div th:if="${error}" class="container"><br/>
+        <div class="alert alert-danger">
+            <strong>Помилка!</strong><br/>
+            This mail is already taken.
+        </div>
+    </div>
+
+    <img class="mb-4" src="../images/Smallcare300.png" alt="">
+
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+    <label type="text"  for="inputName" class="sr-only">Username</label>
+    <input type="text" name="username" th:field="*{firstName}" id="inputName" maxlength="50" class="form-control" placeholder="Username" required autofocus>
+
+    <label type="text"  for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" th:field="*{email}" id="inputEmail" maxlength="50" class="form-control" placeholder="Email address" required autofocus>
+
+    <label type="password"  for="inputPassword" class="sr-only">Password</label>
+    <input type="password" th:field="*{password}" id="inputPassword" maxlength="50" class="form-control" placeholder="Password" required>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
+</form>
+<link th:href="@{/css/login/sign.css}" rel="stylesheet">
+</body>
+</html>

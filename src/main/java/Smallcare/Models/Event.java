@@ -1,67 +1,99 @@
 package Smallcare.Models;
 
-import  java.sql.Timestamp;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "startTime", nullable = false)
-    private Timestamp startTime;
+    //    @Column(name = "startTime", nullable = false)
+    @Column(name = "startTime")
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
+    private LocalDateTime startTime;
 
-    @Column(name = "endTime", nullable = false)
-    private Timestamp endTime;
+    //    @Column(name = "endTime", nullable = false)
+    @Column(name = "endTime")
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
+    private LocalDateTime endTime;
 
-    //@Column(name = "pets", nullable = false)
-    @ManyToOne
-    private Pet pet;
+    @ManyToMany
+    private Set<Pet> pets;
 
-    @Column(name = "price",nullable = false)
+    @Column(name = "price", nullable = false)
     private Long price;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     private String description;
 
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    public Event() {}
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    User cretorUser;
 
-    public Event(Timestamp startTime,Timestamp endTime, Long price, String description, Status status) {
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<User> signedUsers;
+
+    public Event() {
+
+    }
+
+    public Event(LocalDateTime startTime, LocalDateTime endTime, Long price, String description) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.price = price;
         this.description = description;
-        this.status = status;
+        this.status = Status.REQUEST;
     }
 
     public Long getId() {
         return id;
     }
 
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
     public Long getPrice() {
         return price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Status getStatus() {
-        return status;
     }
 
     public void setPrice(Long price) {
         this.price = price;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     public void setStatus(Status status) {
