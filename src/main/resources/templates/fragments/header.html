@@ -1,5 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/" lang="" th:fragment="header">
 
+
 <header th:fragment="header">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="/">Smallcare</a>
@@ -28,8 +29,18 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
             </ul>
-            <div class="form-inline mt-2 mt-md-0">
-                <a class="btn btn-outline-primary" href="/signup">Sign up</a>
+            <div th:unless="${#httpServletRequest.remoteUser}" class="form-inline mt-2 mt-md-0">
+                <a class="btn btn-outline-primary" href="/login">Sign in</a>
+            </div>
+            <div th:if="${#httpServletRequest.remoteUser}">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle bg-dark text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span th:text="${#httpServletRequest.remoteUser}"></span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item p-2 text-white bg-dark" th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
