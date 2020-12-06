@@ -8,6 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class PetComment {
 
+
     @Id
     private Long id;
 

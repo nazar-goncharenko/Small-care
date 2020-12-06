@@ -1,5 +1,6 @@
 package Smallcare.Services;
 
+import Smallcare.Models.Event;
 import Smallcare.Models.Pet;
 import Smallcare.Models.Role;
 import Smallcare.Models.User;
@@ -25,6 +26,7 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
 
     public User findById(Long id) {
@@ -111,6 +113,12 @@ public class UserService implements UserDetailsService {
         User new_user = userRepository.findById(user.getId()).orElse(new User());
         new_user.deletePet(pet);
         userRepository.save(new_user);
+    }
+
+    public void addCreatedEvent(User user, Event event){
+        User cur_user = userRepository.findById(user.getId()).get();
+        cur_user.addCreatedEvent(event);
+        userRepository.save(cur_user);
     }
 
     public void updatePet(User user, Pet pet) throws Exception {

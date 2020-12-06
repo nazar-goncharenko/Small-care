@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity
 public class Event {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,8 +39,8 @@ public class Event {
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    User cretorUser;
+    @Column(name = "user_id")
+    Long cretorUserId;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<User> signedUsers;
@@ -98,5 +99,21 @@ public class Event {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Set<Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(Set<Pet> pets) {
+        this.pets = pets;
+    }
+
+    public Long getCretorUser() {
+        return cretorUserId;
+    }
+
+    public void setCretorUser(Long cretorUser) {
+        this.cretorUserId = cretorUser;
     }
 }
