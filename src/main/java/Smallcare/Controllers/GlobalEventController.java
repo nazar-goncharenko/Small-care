@@ -1,7 +1,9 @@
 package Smallcare.Controllers;
 
 import Smallcare.Models.Event;
+import Smallcare.Models.EventComment;
 import Smallcare.Models.Status;
+import Smallcare.Models.User;
 import Smallcare.Services.EventService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.JSONPObject;
@@ -9,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -28,6 +33,7 @@ public class GlobalEventController {
 
     @Autowired
     EventService eventService;
+
 
 
     @GetMapping

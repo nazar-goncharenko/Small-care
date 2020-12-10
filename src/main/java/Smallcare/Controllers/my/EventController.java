@@ -2,6 +2,7 @@ package Smallcare.Controllers.my;
 
 
 import Smallcare.Models.Event;
+import Smallcare.Models.EventComment;
 import Smallcare.Models.Status;
 import Smallcare.Models.User;
 import Smallcare.Services.EventService;
@@ -51,8 +52,8 @@ public class EventController {
 
         User user = getCurrentUser();
         Set < Event > crEvents = user.getCreatedEvents();
-        if ( crEvents.contains(eventService.findById(id).get())){
-            model.addAttribute("event", eventService.findById(id).get());
+        if ( crEvents.contains(eventService.findById(id))){
+            model.addAttribute("event", eventService.findById(id));
             return "event";
         }
         return "event";
@@ -68,7 +69,7 @@ public class EventController {
         event.setEndTime(endTimeDataTime);
         event.setStatus(Status.REQUEST);
         User user = getCurrentUser();
-        event.setCretorUser(user.getId());
+        event.setCreatorUser(user);
         userService.addCreatedEvent(user, event);
         return "index";
     }
@@ -77,5 +78,13 @@ public class EventController {
     public String addPage(Model model){
         model.addAttribute("event", new Event());
         return "addEvent";
+    }
+
+    @PostMapping("/{id}/comment")
+    public String addCommentToEvent(@PathVariable Long id, @RequestParam(name = "comment") String comment){
+        Event event = eventService.findById(id);
+        event.addComment(new EventComment(getCurrentUser(), comment));
+        eventService.save(event);
+        return "redirect:/events/" + id;
     }
 }
