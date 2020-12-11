@@ -64,6 +64,12 @@ public class GlobalPetController {
     public String pet(Model model, @PathVariable Long id) {
         Pet pet = petService.findById(id).orElseThrow(EntityNotFoundException::new);
         if (pet != null) {
+            if ( getCurrentUser().getId() == pet.getUser().getId()){
+                model.addAttribute("owner", true);
+            }
+            else{
+                model.addAttribute("owner", false);
+            }
             model.addAttribute("pet", pet);
         }
         return "pet";
