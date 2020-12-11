@@ -19,7 +19,7 @@
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/login'} ? active : ''">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
-                <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/pets/add'} ? active : ''">
+                <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/pets/add'} ? active : ''">
                     <a class="nav-link" href="/pets/add">Add Pet</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/events/add'} ? active : ''">
