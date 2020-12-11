@@ -14,7 +14,8 @@ import java.util.List;
 
 @RequestMapping("/users")
 @Controller
-public class UserController {
+public class GlobalUserController {
+
     @Autowired
     UserService userService;
 
@@ -75,5 +76,11 @@ public class UserController {
         {
             return "redirect:/";
         }
+    }
+
+    @GetMapping("/my/profile")
+    public String myProfile(Model model){
+        model.addAttribute("user" , getCurrentUser());
+        return "profile";
     }
 }

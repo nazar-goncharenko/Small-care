@@ -24,10 +24,11 @@ import java.util.List;
 
 @RequestMapping("/events")
 @Controller
-public class EventController {
+public class GlobalEventController {
 
     @Autowired
     EventService eventService;
+
 
     @GetMapping
     public String events(Model model){
@@ -37,26 +38,10 @@ public class EventController {
         return "events";
     }
 
-
-    @PostMapping
-    public String createEvent(@ModelAttribute Event event,
-                              @RequestParam(name = "startTime1") String startTime,
-                              @RequestParam(name = "endTime1") String endTime, Model model){
-        LocalDateTime startTimeDataTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        LocalDateTime endTimeDataTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        event.setStartTime(startTimeDataTime);
-        event.setEndTime(endTimeDataTime);
-        event.setStatus(Status.REQUEST);
-        System.out.println(endTime + "\t" + startTime);
-        Long id = eventService.save(event);
-        System.out.println(id);
-        return "index";
-    }
-
-    @GetMapping("/add")
-    public String addPage(Model model){
-        model.addAttribute("event", new Event());
-        return "addEvent";
+    @GetMapping("/{id}")
+    public String getEventById(Model model,@PathVariable Long id){
+        model.addAttribute("event" , eventService.findById(id));
+        return "event";
     }
 
 

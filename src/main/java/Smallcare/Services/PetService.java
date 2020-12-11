@@ -2,6 +2,7 @@ package Smallcare.Services;
 
 import Smallcare.Models.Pet;
 import Smallcare.Repositories.PetRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class PetService {
-    final
+    @Autowired
     PetRepository petRepository;
 
     public PetService(PetRepository petRepository) {
