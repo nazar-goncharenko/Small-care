@@ -77,10 +77,4 @@ public class GlobalUserController {
             return "redirect:/";
         }
     }
-
-    @GetMapping("/my/profile")
-    public String myProfile(Model model){
-        model.addAttribute("user" , getCurrentUser());
-        return "profile";
-    }
 }
