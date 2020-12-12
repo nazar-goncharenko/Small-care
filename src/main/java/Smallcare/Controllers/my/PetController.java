@@ -67,6 +67,7 @@ public class PetController {
             return "/index";
         }
         if (pet.getName() != null) {
+            pet.setUser(user);
             Pet newPet = petService.save(pet);
             userService.addPet(user, pet);
             if (file != null) {
