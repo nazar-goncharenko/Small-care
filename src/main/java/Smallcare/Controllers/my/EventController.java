@@ -69,9 +69,8 @@ public class EventController {
         event.setEndTime(endTimeDataTime);
         event.setStatus(Status.REQUEST);
         User user = getCurrentUser();
-        event.setCreatorUser(user);
         userService.addCreatedEvent(user, event);
-        return "index";
+        return "events";
     }
 
     @GetMapping("/add")
