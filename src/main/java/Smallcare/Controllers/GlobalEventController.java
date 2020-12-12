@@ -38,7 +38,6 @@ public class GlobalEventController {
 
     @GetMapping
     public String events(Model model){
-
         List <Event> events = eventService.findAll();
         model.addAttribute("events", events);
         return "events";
