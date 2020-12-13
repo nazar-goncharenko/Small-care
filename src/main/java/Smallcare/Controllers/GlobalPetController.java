@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 
 @Controller
@@ -62,17 +63,24 @@ public class GlobalPetController {
 
     @GetMapping("/pets/{id}")
     public String pet(Model model, @PathVariable Long id) {
-        Pet pet = petService.findById(id).orElseThrow(EntityNotFoundException::new);
+        Pet pet = petService.findById(id).orElse(null);
         if (pet != null) {
-            if ( getCurrentUser().getId() == pet.getUser().getId()){
+            model.addAttribute("pet", pet);
+            User user = getCurrentUser();
+            if(user == null){
+                return "/pet";
+            }
+            if (user.getId().equals(pet.getUser().getId())){
+                System.out.println("true");
                 model.addAttribute("owner", true);
             }
             else{
+                System.out.println("false");
                 model.addAttribute("owner", false);
             }
-            model.addAttribute("pet", pet);
+
         }
-        return "pet";
+        return "/pet";
     }
 
 }

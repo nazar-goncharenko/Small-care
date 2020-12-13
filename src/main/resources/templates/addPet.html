@@ -19,13 +19,13 @@
             <input type="text" id="inputDescription" maxlength="500" th:field="*{description}" placeholder="Description" name="description"/>
             <br>
             <br>
-            <div class="custom-file col-2">
-                <input type="file" id="customFile" class="custom-file-input" placeholder="File" name="file" th:onchange="isFileImage()"/>
+            <div class="custom-file col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2 ">
+                <input type="file" id="customFile" class="custom-file-input" placeholder="File" name="file" accept="image/*"/>
                 <label class="custom-file-label" for="customFile">Choose file</label>
             </div>
             <br>
             <br>
-            <div class="lead col-2 mx-auto">
+            <div class="lead col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2 mx-auto">
                 <button class="btn btn-lg btn-primary btn-block" type="submit" value="Create animal" th:onclick="return myValidationButton()">
                     Create
                 </button>
