@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/my/pets")
@@ -66,36 +67,41 @@ public class PetController {
         if(user == null){
             return "/index";
         }
+        if(file != null){
+            if(!file.isEmpty()){
+                pet.setPhotoUrl(UUID.randomUUID().toString());
+            } else {
+                pet.setPhotoUrl("defaultPet");
+            }
+        } else {
+            pet.setPhotoUrl("defaultPet");
+        }
         if (pet.getName() != null) {
+            pet.setUser(user);
             Pet newPet = petService.save(pet);
             userService.addPet(user, pet);
             if (file != null) {
                 try {
-                    file.transferTo(new File(upload_path + newPet.getId().toString() + ".png"));
+                    if(!file.isEmpty()){
+                        file.transferTo(new File(upload_path + newPet.getPhotoUrl() + ".png"));
+                    }
                 } catch (IOException ioException){
-                    System.out.println("Bad file saving :(");
+                    System.out.println("Error: " + ioException.getLocalizedMessage());
                 }
             }
         }
-        Iterable<Pet> petList = userService
-                .findById(
-                        (user).getId())
-                .getPetList();
-        if (petList != null) {
-            model.addAttribute("pets", petList);
-        }
-        return "pets";
+        return pets(model);
     }
 
     @GetMapping("/delete/{id}")
     public String deletePet(Model model, @PathVariable Long id) throws Exception {
         User user = getCurrentUser();
         if(user == null){
-            return "/index";
+            return "/pets";
         }
         userService.deletePet(user, petService.findById(id).orElseThrow(Exception::new));
         petService.deleteById(id);
         model.addAttribute("pets" , getCurrentUser().getPetList());
-        return "pets";
+        return "/pets";
     }
 }

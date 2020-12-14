@@ -3,17 +3,29 @@
     <title id="pageTitle">Pets</title>
 <body>
 <header th:insert="fragments/header.html :: header"></header>
-
-<div class="text-center">
-    <p th:text="${pet.getName()}"></p>
-    <img th:src="${'../../../images/' + pet.getId().toString() + '.png'}" th:alt="${pet.getId().toString()}" />
-    <p th:text="${pet.getDescription()}">
-    <p>
-        <a class="btn btn-danger" role="button" th:href="'/pets/delete/' + ${pet.getId().toString()}">
-            Delete
-        </a>
-    </p>
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card mb-4 box-shadow">
+            <img class="card-img-top" th:src="${'/images/' + pet.getPhotoUrl().toString()+'.png'}" th:alt="${'/images/' + pet.getPhotoUrl().toString()+'.png'}">
+        </div>
+    </div>
+    <div class="col-sm-9">
+        <div>
+            <blockquote>
+                <h5 th:text="${pet.getName()}"></h5>
+            </blockquote>
+        </div>
+        <div>
+            <p th:text="${pet.getDescription()}"></p>
+        </div>
+        <div>
+        <p>
+            <a class="btn btn-danger" role="button" th:href="'/my/pets/delete/' + ${pet.getId().toString()}">
+                Delete
+            </a>
+        </p>
+        </div>
+    </div>
 </div>
-
 </body>
 </html>
