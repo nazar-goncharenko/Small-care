@@ -35,12 +35,15 @@ public class Event {
     @Column(name = "description")
     private String description;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set <EventComment> eventComments;
+
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    @Column(name = "user_id")
-    Long cretorUserId;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    User creatorUser;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<User> signedUsers;
@@ -109,11 +112,15 @@ public class Event {
         this.pets = pets;
     }
 
-    public Long getCretorUser() {
-        return cretorUserId;
+    public User getCreatorUser() {
+        return creatorUser;
     }
 
-    public void setCretorUser(Long cretorUser) {
-        this.cretorUserId = cretorUser;
+    public void setCreatorUser(User creatorUser) {
+        this.creatorUser = creatorUser;
+    }
+    
+    public void addComment(EventComment eventComment){
+        this.eventComments.add(eventComment);
     }
 }

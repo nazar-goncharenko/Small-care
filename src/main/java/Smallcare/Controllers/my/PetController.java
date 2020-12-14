@@ -77,6 +77,7 @@ public class PetController {
             pet.setPhotoUrl("defaultPet");
         }
         if (pet.getName() != null) {
+            pet.setUser(user);
             Pet newPet = petService.save(pet);
             userService.addPet(user, pet);
             if (file != null) {
@@ -96,11 +97,11 @@ public class PetController {
     public String deletePet(Model model, @PathVariable Long id) throws Exception {
         User user = getCurrentUser();
         if(user == null){
-            return "/index";
+            return "/pets";
         }
         userService.deletePet(user, petService.findById(id).orElseThrow(Exception::new));
         petService.deleteById(id);
         model.addAttribute("pets" , getCurrentUser().getPetList());
-        return "pets";
+        return "/pets";
     }
 }

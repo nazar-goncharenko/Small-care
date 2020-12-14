@@ -117,6 +117,7 @@ public class UserService implements UserDetailsService {
 
     public void addCreatedEvent(User user, Event event){
         User cur_user = userRepository.findById(user.getId()).get();
+        event.setCreatorUser(cur_user);
         cur_user.addCreatedEvent(event);
         userRepository.save(cur_user);
     }
