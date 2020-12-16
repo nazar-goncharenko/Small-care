@@ -1,10 +1,7 @@
 package Smallcare.Controllers.my;
 
 
-import Smallcare.Models.Event;
-import Smallcare.Models.EventComment;
-import Smallcare.Models.Status;
-import Smallcare.Models.User;
+import Smallcare.Models.*;
 import Smallcare.Services.EventService;
 import Smallcare.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +59,8 @@ public class EventController {
     @PostMapping
     public String createEvent(@ModelAttribute Event event,
                               @RequestParam(name = "startTime1") String startTime,
-                              @RequestParam(name = "endTime1") String endTime, Model model){
+                              @RequestParam(name = "endTime1") String endTime, 
+                              @RequestParam(value = "fieldIdList[]") Integer[] fieldIdList){
         LocalDateTime startTimeDataTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         LocalDateTime endTimeDataTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         event.setStartTime(startTimeDataTime);
@@ -70,12 +68,26 @@ public class EventController {
         event.setStatus(Status.REQUEST);
         User user = getCurrentUser();
         userService.addCreatedEvent(user, event);
+//      ======= Massive of Pets id =======
+        for (Integer i:fieldIdList) {
+            System.out.println(i);
+        }
+//      =======                    =======
         return "events";
     }
 
     @GetMapping("/add")
     public String addPage(Model model){
         model.addAttribute("event", new Event());
+        User user = getCurrentUser();
+        assert user != null;
+        Set<Pet> petList = userService
+                .findById(
+                        (user).getId())
+                .getPetList();
+        if (petList != null) {
+            model.addAttribute("pets", petList);
+        }
         return "addEvent";
     }
 

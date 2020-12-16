@@ -1,7 +1,11 @@
 package Smallcare.Controllers;
 
-
+import Smallcare.Models.Event;
+import Smallcare.Models.Pet;
 import Smallcare.Models.User;
+import Smallcare.Services.EventService;
+import Smallcare.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,17 +13,40 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class MainController {
 
+    @Autowired
+    EventService eventService;
+
+    @Autowired
+    UserService userService;
+
+    private User getCurrentUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return null;
+        }
+        return ((User) auth.getPrincipal());
+    }
+
     @GetMapping("/")
     public String index(Model model){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth instanceof AnonymousAuthenticationToken){
+        User user = getCurrentUser();
+        if (user == null) {
+            model.addAttribute("user", null);
             return "index";
         }
-        User user = (User) auth.getPrincipal();
-        model.addAttribute("curUser", user);
+        model.addAttribute("user", user);
+        List<Event> events = eventService.findAll();
+        model.addAttribute("events", events);
+        Iterable<Pet> pets = userService
+                .findById(
+                        (user).getId())
+                .getPetList();
+        model.addAttribute("pets", pets);
         return "index";
     }
 
