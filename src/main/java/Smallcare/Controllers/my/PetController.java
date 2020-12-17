@@ -94,14 +94,17 @@ public class PetController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deletePet(Model model, @PathVariable Long id) throws Exception {
+    public String deletePet(Model model, @PathVariable Long id) {
         User user = getCurrentUser();
         if(user == null){
             return "/pets";
         }
-        userService.deletePet(user, petService.findById(id).orElseThrow(Exception::new));
-        petService.deleteById(id);
         model.addAttribute("pets" , getCurrentUser().getPetList());
+        if (petService.findById(id).isEmpty()) {
+            return "/pets";
+        }
+        userService.deletePet(user, petService.findById(id).get());
+        petService.deleteById(id);
         return "/pets";
     }
 }
