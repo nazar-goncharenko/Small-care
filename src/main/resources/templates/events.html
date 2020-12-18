@@ -7,6 +7,10 @@
 <body>
 <div th:insert="fragments/header.html :: header"></div>
 
+<div th:if="${error} == true">
+    <H1>Some error</H1>
+</div>
+
 <main role="main">
     <div class="album py-5 bg-light">
         <div class="container">
@@ -21,6 +25,11 @@
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                 </div>
                                 <p class="text-dark" th:text="${event.getDescription()}"></p>
+                                <div th:if="${creator_id} != ${event.getCreatorUser().getId()}">
+                                    <form th:action="'/my/events/' + ${event.id} + '/sign'" method="post">
+                                        <button type="submit" value="Sing">Sing</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

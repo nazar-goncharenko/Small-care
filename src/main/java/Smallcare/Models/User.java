@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -49,13 +50,13 @@ public class User implements UserDetails {
     private Set<Pet> petList;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<UserComment> userComments;
+    private Set<UserComment> userComments = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Event> createdEvents;
+    private Set<Event> createdEvents = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Event> signedEvents;
+    private Set<Event> signedEvents = new HashSet<>();
 
     public User() {
     }

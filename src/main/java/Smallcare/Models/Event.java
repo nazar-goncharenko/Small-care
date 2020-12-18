@@ -129,4 +129,8 @@ public class Event {
     public void addPet(Pet pet){
         this.pets.add(pet);
     }
+
+    public void addSingedUser(User user){
+        this.signedUsers.add(user);
+    }
 }

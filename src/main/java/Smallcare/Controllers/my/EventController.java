@@ -77,7 +77,8 @@ public class EventController {
             }
         }
 //      =======                    =======
-        userService.addCreatedEvent(getCurrentUser(), event);
+        User curUser = getCurrentUser();
+        userService.addCreatedEvent(curUser, event);
         return "events";
     }
 
@@ -100,6 +101,29 @@ public class EventController {
         Event event = eventService.findById(id);
         event.addComment(new EventComment(getCurrentUser(), comment));
         eventService.save(event);
+        return "redirect:/events/" + id;
+    }
+
+    @GetMapping("/signed")
+    public String getSignedEvents(Model model){
+        if ( !getCurrentUser().getSignedEvents().isEmpty() ) {
+            model.addAttribute("events", getCurrentUser().getSignedEvents());
+        }
+        return "events";
+    }
+
+    @PostMapping("{id}/sign")
+    public String addSignedEvent(@PathVariable Long id, Model model){
+        Event event = eventService.findById(id);
+        if (event != null && eventService.findById(id).getCreatorUser().getId() != getCurrentUser().getId()) {
+            event.addSingedUser(getCurrentUser());
+            //eventService.save(event);
+            getCurrentUser().addSignedEvent(event);
+        }
+        else {
+            model.addAttribute("error", true);
+            return "redirect:/events";
+        }
         return "redirect:/events/" + id;
     }
 }

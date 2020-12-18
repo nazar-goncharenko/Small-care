@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users").permitAll()
                 .antMatchers("/users/**").fullyAuthenticated()
                 .antMatchers("/user/**").hasRole("USER")
-                .antMatchers("/pets/**").fullyAuthenticated()
+                .antMatchers("/pets/**").permitAll()
                 .antMatchers("/events").permitAll()
                 .antMatchers("/events/**").fullyAuthenticated()
                 .antMatchers("/my/**").fullyAuthenticated()

@@ -76,6 +76,10 @@ public class UserService implements UserDetailsService {
 //        }
     }
 
+    public void save(User user){
+        userRepository.save(user);
+    }
+
     public boolean create(User user) {
         if (userRepository.findByEmail(user.getEmail()) == null) {
             Role role = new Role(1L, "ROLE_USER");

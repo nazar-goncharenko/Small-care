@@ -35,11 +35,24 @@ public class GlobalEventController {
     EventService eventService;
 
 
+    private User getCurrentUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return null;
+        }
+        return ((User) auth.getPrincipal());
+    }
+
 
     @GetMapping
     public String events(Model model){
-        List <Event> events = eventService.findAll();
-        model.addAttribute("events", events);
+        model.addAttribute("events", eventService.findAll());
+        if (getCurrentUser() != null){
+            model.addAttribute("creator_id", getCurrentUser().getId());
+        }
+        else {
+            model.addAttribute("creator_id", null);
+        }
         return "events";
     }
 
