@@ -1,11 +1,13 @@
 package Smallcare.Models;
 
+import com.sun.istack.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -27,7 +29,7 @@ public class Event {
     private LocalDateTime endTime;
 
     @ManyToMany
-    private Set<Pet> pets;
+    private Set<Pet> pets = new HashSet<Pet>();
 
     @Column(name = "price", nullable = false)
     private Long price;
@@ -36,7 +38,7 @@ public class Event {
     private String description;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    Set <EventComment> eventComments;
+    Set <EventComment> eventComments = new HashSet<EventComment>();
 
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
@@ -46,7 +48,7 @@ public class Event {
     User creatorUser;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<User> signedUsers;
+    private Set<User> signedUsers = new HashSet<User>();
 
     public Event() {
 
@@ -122,5 +124,9 @@ public class Event {
     
     public void addComment(EventComment eventComment){
         this.eventComments.add(eventComment);
+    }
+
+    public void addPet(Pet pet){
+        this.pets.add(pet);
     }
 }

@@ -3,6 +3,7 @@ package Smallcare.Controllers.my;
 
 import Smallcare.Models.*;
 import Smallcare.Services.EventService;
+import Smallcare.Services.PetService;
 import Smallcare.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -26,6 +27,9 @@ public class EventController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PetService petService;
 
     private User getCurrentUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -60,19 +64,20 @@ public class EventController {
     public String createEvent(@ModelAttribute Event event,
                               @RequestParam(name = "startTime1") String startTime,
                               @RequestParam(name = "endTime1") String endTime, 
-                              @RequestParam(value = "fieldIdList[]") Integer[] fieldIdList){
+                              @RequestParam(value = "fieldIdList[]") Long[] fieldIdList){
         LocalDateTime startTimeDataTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         LocalDateTime endTimeDataTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         event.setStartTime(startTimeDataTime);
         event.setEndTime(endTimeDataTime);
         event.setStatus(Status.REQUEST);
-        User user = getCurrentUser();
-        userService.addCreatedEvent(user, event);
 //      ======= Massive of Pets id =======
-        for (Integer i:fieldIdList) {
-            System.out.println(i);
+        for (Long i:fieldIdList) {
+            if ( petService.findById(i).isPresent()) {
+                event.addPet(petService.findById(i).get());
+            }
         }
 //      =======                    =======
+        userService.addCreatedEvent(getCurrentUser(), event);
         return "events";
     }
 
@@ -80,7 +85,6 @@ public class EventController {
     public String addPage(Model model){
         model.addAttribute("event", new Event());
         User user = getCurrentUser();
-        assert user != null;
         Set<Pet> petList = userService
                 .findById(
                         (user).getId())
