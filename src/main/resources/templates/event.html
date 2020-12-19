@@ -3,32 +3,44 @@
     <title id="pageTitle">Pets</title>
 <body>
 <header th:insert="fragments/header.html :: header"></header>
-<div class="row">
-    <div class="col-sm-3">
-        <div class="card mb-4 box-shadow">
-
-<!--            <img class="card-img-top" th:src="${'/images/' + pet.getPhotoUrl().toString()+'.png'}"-->
-<!--                 th:alt="${'/images/' + pet.getPhotoUrl().toString()+'.png'}">-->
-
-        </div>
-    </div>
-    <div class="col-sm-9">
-        <div>
-            <blockquote>
-                <h5 th:text="${event.getStartTime().toString()+' '+event.getEndTime().toString()}"></h5>
-            </blockquote>
-        </div>
-        <div>
-            <p th:text="${event.getDescription()}"></p>
-        </div>
-        <div>
-            <p>
-<!--                <a class="btn btn-danger" role="button" th:href="'/my/pets/delete/' + ${pet.getId().toString()}">-->
-<!--                    Delete-->
-<!--                </a>-->
-            </p>
+<div th:if="${owner}">
+    <div class="row" th:if="${event != null}">
+        <div class="col-sm-9">
+            <div>
+                <blockquote>
+                    <h5 th:text="${event.getStartTime().toString()+' '+event.getEndTime().toString()}"></h5>
+                </blockquote>
+            </div>
+            <div>
+                <p th:text="${event.getDescription()}"></p>
+            </div>
+            <div>
+                    <a class="btn btn-danger" role="button" href="#">
+                        Delete
+                    </a>
+            </div>
         </div>
     </div>
 </div>
+<div th:unless="${owner}">
+    <div class="row" th:if="${event != null}">
+        <div class="col-sm-9">
+            <div>
+                <blockquote>
+                    <h5 th:text="${event.getStartTime().toString()+' '+event.getEndTime().toString()}"></h5>
+                </blockquote>
+            </div>
+            <div>
+                <p th:text="${event.getDescription()}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:if="${event == null}">
+    <h1>404</h1>
+    <h2>This event does not exist</h2>
+</div>
+
 </body>
 </html>

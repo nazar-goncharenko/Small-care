@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -18,12 +19,17 @@ public class EventService {
     }
 
 
-    public Event findById(Long id){
-        return eventRepository.findById(id).get();
+    public Optional<Event> findById(Long id){
+        return eventRepository.findById(id);
     }
 
     public Long save(Event event) {
         eventRepository.save(event);
         return event.getId();
     }
+
+    public void deleteById(Long id) {
+        eventRepository.deleteById(id);
+    }
+
 }
