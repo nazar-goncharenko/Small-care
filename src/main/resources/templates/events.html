@@ -8,16 +8,22 @@
 <div th:insert="fragments/header.html :: header"></div>
 
 <main role="main">
-    <div class="album py-5 bg-light">
+    <div class="album py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-4" th:each="event : ${events}">
                     <div class="card mb-4 box-shadow">
-<!--                        <img class="card-img-top" th:src="${'/images/' + pet.getPhotoUrl().toString()+'.png'}" th:alt="${pet.getPhotoUrl()}">-->
+                        <div class="container">
+                            <p th:text="${event.getStartTime().getHour()+':'+event.getStartTime().getMinute()
+                        +'->'+event.getEndTime().getHour()+':'+event.getEndTime().getMinute()}"></p>
+                        </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-<!--                                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="document.location.href=this.getAttribute('href');" th:href="'/pets/' + ${pet.getId().toString()}">View</button>-->
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            onclick="document.location.href=this.getAttribute('href');"
+                                            th:href="'/my/events/' + ${event.getId().toString()}">View
+                                    </button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                 </div>
                                 <p class="text-dark" th:text="${event.getDescription()}"></p>

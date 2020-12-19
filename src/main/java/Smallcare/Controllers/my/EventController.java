@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -46,11 +47,17 @@ public class EventController {
 
     @GetMapping("/{id}")
     public String getEventById(Model model,@PathVariable Long id){
-
         User user = getCurrentUser();
-        Set < Event > crEvents = user.getCreatedEvents();
-        if ( crEvents.contains(eventService.findById(id))){
-            model.addAttribute("event", eventService.findById(id));
+        if (eventService.findById(id).isPresent()){
+            Event event = eventService.findById(id).get();
+            model.addAttribute("event", event);
+            if(user != null){
+                if(user.getId().equals(event.getCreatorUser().getId())){
+                    model.addAttribute("owner", true);
+                } else {
+                    model.addAttribute("owner", false);
+                }
+            }
             return "event";
         }
         return "event";
@@ -93,9 +100,12 @@ public class EventController {
 
     @PostMapping("/{id}/comment")
     public String addCommentToEvent(@PathVariable Long id, @RequestParam(name = "comment") String comment){
-        Event event = eventService.findById(id);
-        event.addComment(new EventComment(getCurrentUser(), comment));
-        eventService.save(event);
+        Optional<Event> event = eventService.findById(id);
+        if(event.isPresent()){
+            event.get().addComment(new EventComment(getCurrentUser(), comment));
+            eventService.save(event.get());
+            return "redirect:/events/" + id;
+        }
         return "redirect:/events/" + id;
     }
 }
