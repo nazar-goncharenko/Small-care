@@ -96,7 +96,8 @@ public class PetController {
         return pets(model);
     }
 
-    @GetMapping("/delete/{id}")
+
+    @PostMapping("/{id}/delete")
     public String deletePet(Model model, @PathVariable Long id) {
         User user = getCurrentUser();
         if(user == null){
