@@ -52,20 +52,6 @@ public class EventController {
         return "events";
     }
 
-//    @GetMapping
-//    public String events(Model model){
-//        model.addAttribute("events", eventService.findAll());
-//        if (getCurrentUser() != null){
-//            model.addAttribute("creator_id", getCurrentUser().getId());
-//        }
-//        else {
-//            model.addAttribute("creator_id", null);
-//        }
-//        return "events";
-//    }
-
-
-
     @PostMapping
     public String createEvent(@ModelAttribute Event event,
                               @RequestParam(name = "startTime1") String startTime,
@@ -136,7 +122,7 @@ public class EventController {
             userService.save(getCurrentUser());
         } else {
             model.addAttribute("error", true);
-            return getSignedEvents(model);
+                return getSignedEvents(model);
         }
         return "redirect:/events/" + id;
     }

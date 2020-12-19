@@ -30,11 +30,13 @@
                                             th:href="'/events/' + ${event.getId().toString()}">View
                                     </button>
                                     <div th:if="${!owner && user.getId() != event.getCreatorUser().getId()}">
-                                        <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
-                                            <button class="btn btn-sm btn-outline-warning" type="submit" value="Sing">
-                                                Sign
-                                            </button>
-                                        </form>
+                                        <div th:unless="${event.getSignedUsers().contains(user)}">
+                                            <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
+                                                <button class="btn btn-sm btn-outline-warning" type="submit" value="Sign">
+                                                    Sign
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                     <div th:if="${owner}">
                                         <form th:action="'/my/events/' + ${event.getId()} + '/delete'" method="post">
