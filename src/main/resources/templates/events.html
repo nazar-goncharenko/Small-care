@@ -24,24 +24,22 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                    <button type="button" class="btn btn-sm btn-outline-primary"
                                             onclick="document.location.href=this.getAttribute('href');"
                                             th:href="'/events/' + ${event.getId().toString()}">View
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    <div th:unless="${owner}">
+                                        <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
+                                            <button class="btn btn-sm btn-outline-warning" type="submit" value="Sing">Sign</button>
+                                        </form>
+                                    </div>
+                                    <div th:if="${owner}">
+                                        <form th:action="'/my/events/' + ${event.getId()} + '/delete'" method="post">
+                                            <button class="btn btn-sm btn-outline-danger" type="submit" value="Delete">Delete</button>
+                                        </form>
+                                    </div>
                                 </div>
                                 <p class="text-dark" th:text="${event.getDescription()}"></p>
-
-                                <div th:if="${creator_id} != ${event.getCreatorUser().getId()}">
-                                    <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
-                                        <button type="submit" value="Sing">Sing</button>
-                                    </form>
-                                </div>
-                                <div th:if="${owner} == true">
-                                    <form th:action="'/my/events/' + ${event.getId()} + '/delete'" method="post">
-                                        <button type="submit" value="Delete">Delete</button>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                     </div>

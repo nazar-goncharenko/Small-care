@@ -3,7 +3,6 @@
     <title id="pageTitle">Pets</title>
 <body>
 <header th:insert="fragments/header.html :: header"></header>
-<div th:if="${owner}">
     <div class="row" th:if="${event != null}">
         <div class="col-sm-9">
             <div>
@@ -15,27 +14,19 @@
                 <p th:text="${event.getDescription()}"></p>
             </div>
             <div>
-                    <a class="btn btn-danger" role="button" href="#">
-                        Delete
-                    </a>
+                <div th:if="${owner}">
+                    <form th:action="'/my/events/' + ${event.getId()} + '/delete'" method="post">
+                        <button class="btn btn-sm btn-outline-danger" type="submit" value="Delete">Delete</button>
+                    </form>
+                </div>
+                <div th:unless="${owner}">
+                    <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
+                        <button class="btn btn-sm btn-outline-primary" type="submit" value="Sing">Sign</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div th:unless="${owner}">
-    <div class="row" th:if="${event != null}">
-        <div class="col-sm-9">
-            <div>
-                <blockquote>
-                    <h5 th:text="${event.getStartTime().toString()+' '+event.getEndTime().toString()}"></h5>
-                </blockquote>
-            </div>
-            <div>
-                <p th:text="${event.getDescription()}"></p>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div th:if="${event == null}">
     <h1>404</h1>
