@@ -1,6 +1,7 @@
 package Smallcare.Services;
 
 import Smallcare.Models.Event;
+import Smallcare.Models.Pet;
 import Smallcare.Repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class EventService {
 
     @Autowired
     EventRepository eventRepository;
+
+    @Autowired
+    UserService userService;
 
     public List<Event> findAll(){
         return eventRepository.findAll();
@@ -28,8 +32,17 @@ public class EventService {
         return event.getId();
     }
 
-    public void deleteById(Long id) {
-        eventRepository.deleteById(id);
-    }
 
+
+//    public void deleteByPetId(Long id){
+////        Event event = eventRepository.findById();
+//        eventRepository.deleteById();
+//    }
+
+//    public void deletePet(Pet pet) {
+//        Event event = .findAll(event.getId())
+//
+//        event.deletePet(pet);
+//        eventRepository.deleteAll();
+//    }
 }

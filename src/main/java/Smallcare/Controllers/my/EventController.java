@@ -37,24 +37,39 @@ public class EventController {
         if (auth instanceof AnonymousAuthenticationToken) {
             return null;
         }
-        return ((User) auth.getPrincipal());
+        return userService.findById(((User) auth.getPrincipal()).getId());
     }
 
     @GetMapping
     public String events(Model model) {
-        if (getCurrentUser().getCreatedEvents() != null) {
+        System.out.println(getCurrentUser().getCreatedEvents().size());
+        if(getCurrentUser().getCreatedEvents() != null) {
+            model.addAttribute("owner", true);
             model.addAttribute("events", getCurrentUser().getCreatedEvents());
             return "events";
         }
         return "events";
     }
 
+//    @GetMapping
+//    public String events(Model model){
+//        model.addAttribute("events", eventService.findAll());
+//        if (getCurrentUser() != null){
+//            model.addAttribute("creator_id", getCurrentUser().getId());
+//        }
+//        else {
+//            model.addAttribute("creator_id", null);
+//        }
+//        return "events";
+//    }
+
+
 
     @PostMapping
     public String createEvent(@ModelAttribute Event event,
                               @RequestParam(name = "startTime1") String startTime,
                               @RequestParam(name = "endTime1") String endTime,
-                              @RequestParam(value = "fieldIdList[]") Long[] fieldIdList) {
+                              @RequestParam(value = "fieldIdList[]") Long[] fieldIdList, Model model) {
         LocalDateTime startTimeDataTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         LocalDateTime endTimeDataTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         event.setStartTime(startTimeDataTime);
@@ -66,7 +81,7 @@ public class EventController {
             }
         }
         userService.addCreatedEvent(getCurrentUser(), event);
-        return "events";
+        return events(model);
     }
 
     @GetMapping("/add")
@@ -113,12 +128,21 @@ public class EventController {
         Event event = optionalEvent.get();
         if (!event.getCreatorUser().getId().equals(Objects.requireNonNull(getCurrentUser()).getId())) {
             event.addSingedUser(getCurrentUser());
-            //eventService.save(event);
+            eventService.save(event);
             getCurrentUser().addSignedEvent(event);
+            userService.save(getCurrentUser());
         } else {
             model.addAttribute("error", true);
             return "redirect:/events";
         }
         return "redirect:/events/" + id;
+    }
+
+    @PostMapping("{id}/delete")
+    public String deleteById(@PathVariable Long id, Model model){
+        if (eventService.findById(id).get() != null) {
+            userService.deleteEvent(getCurrentUser(), eventService.findById(id).get());
+        }
+        return events(model);
     }
 }

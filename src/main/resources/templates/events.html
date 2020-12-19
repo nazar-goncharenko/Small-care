@@ -26,14 +26,20 @@
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
                                             onclick="document.location.href=this.getAttribute('href');"
-                                            th:href="'/my/events/' + ${event.getId().toString()}">View
+                                            th:href="'/events/' + ${event.getId().toString()}">View
                                     </button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                 </div>
                                 <p class="text-dark" th:text="${event.getDescription()}"></p>
+
                                 <div th:if="${creator_id} != ${event.getCreatorUser().getId()}">
-                                    <form th:action="'/my/events/' + ${event.id} + '/sign'" method="post">
+                                    <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
                                         <button type="submit" value="Sing">Sing</button>
+                                    </form>
+                                </div>
+                                <div th:if="${owner} == true">
+                                    <form th:action="'/my/events/' + ${event.getId()} + '/delete'" method="post">
+                                        <button type="submit" value="Delete">Delete</button>
                                     </form>
                                 </div>
                             </div>

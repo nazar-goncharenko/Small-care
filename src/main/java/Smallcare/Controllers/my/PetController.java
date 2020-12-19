@@ -2,6 +2,7 @@ package Smallcare.Controllers.my;
 
 import Smallcare.Models.Pet;
 import Smallcare.Models.User;
+import Smallcare.Services.EventService;
 import Smallcare.Services.PetService;
 import Smallcare.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class PetController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    EventService eventService;
 
     @Autowired
     PetService petService;
@@ -32,12 +35,12 @@ public class PetController {
     @Value("${upload.path}")
     private String upload_path;
 
-    private User getCurrentUser(){
+    private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth instanceof AnonymousAuthenticationToken) {
             return null;
         }
-        return ((User) auth.getPrincipal());
+        return userService.findById(((User) auth.getPrincipal()).getId());
     }
 
     @GetMapping
@@ -97,14 +100,15 @@ public class PetController {
     public String deletePet(Model model, @PathVariable Long id) {
         User user = getCurrentUser();
         if(user == null){
-            return "redirect:/pets";
+            return pets(model);
         }
         model.addAttribute("pets" , getCurrentUser().getPetList());
         if (petService.findById(id).isEmpty()) {
-            return "redirect:/pets";
+            return pets(model);
         }
         userService.deletePet(user, petService.findById(id).get());
         petService.deleteById(id);
-        return "redirect:/pets";
+//        eventService.deletePet();
+        return pets(model);
     }
 }
