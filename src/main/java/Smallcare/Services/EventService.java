@@ -31,18 +31,4 @@ public class EventService {
         eventRepository.save(event);
         return event.getId();
     }
-
-
-
-//    public void deleteByPetId(Long id){
-////        Event event = eventRepository.findById();
-//        eventRepository.deleteById();
-//    }
-
-//    public void deletePet(Pet pet) {
-//        Event event = .findAll(event.getId())
-//
-//        event.deletePet(pet);
-//        eventRepository.deleteAll();
-//    }
 }

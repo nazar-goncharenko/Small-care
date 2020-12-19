@@ -147,4 +147,12 @@ public class Event {
         this.signedUsers.clear();
     }
 
+    public Set<User> getSignedUsers() {
+        return signedUsers;
+    }
+
+    public void setSignedUsers(Set<User> signedUsers) {
+        this.signedUsers = signedUsers;
+    }
+
 }

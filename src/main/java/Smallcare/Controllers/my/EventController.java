@@ -44,6 +44,7 @@ public class EventController {
     public String events(Model model) {
         System.out.println(getCurrentUser().getCreatedEvents().size());
         if(getCurrentUser().getCreatedEvents() != null) {
+            model.addAttribute("user", getCurrentUser());
             model.addAttribute("owner", true);
             model.addAttribute("events", getCurrentUser().getCreatedEvents());
             return "events";
@@ -112,6 +113,8 @@ public class EventController {
     @GetMapping("/signed")
     public String getSignedEvents(Model model) {
         Set<Event> events = Objects.requireNonNull(getCurrentUser()).getSignedEvents();
+        model.addAttribute("user", getCurrentUser());
+        model.addAttribute("owner", false);
         if (!events.isEmpty()) {
             model.addAttribute("events", events);
         }
@@ -123,7 +126,7 @@ public class EventController {
         Optional<Event> optionalEvent = eventService.findById(id);
         if (optionalEvent.isEmpty()) {
             model.addAttribute("error", true);
-            return "redirect:/events";
+            return getSignedEvents(model);
         }
         Event event = optionalEvent.get();
         if (!event.getCreatorUser().getId().equals(Objects.requireNonNull(getCurrentUser()).getId())) {
@@ -133,7 +136,7 @@ public class EventController {
             userService.save(getCurrentUser());
         } else {
             model.addAttribute("error", true);
-            return "redirect:/events";
+            return getSignedEvents(model);
         }
         return "redirect:/events/" + id;
     }
