@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -33,7 +32,7 @@ public class EventController {
     @Autowired
     PetService petService;
 
-    private User getCurrentUser(){
+    private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth instanceof AnonymousAuthenticationToken) {
             return null;
@@ -42,56 +41,36 @@ public class EventController {
     }
 
     @GetMapping
-    public String events(Model model){
-        if (getCurrentUser().getCreatedEvents() != null){
+    public String events(Model model) {
+        if (getCurrentUser().getCreatedEvents() != null) {
             model.addAttribute("events", getCurrentUser().getCreatedEvents());
             return "events";
         }
         return "events";
     }
 
-    @GetMapping("/{id}")
-    public String getEventById(Model model,@PathVariable Long id){
-        User user = getCurrentUser();
-        if (eventService.findById(id).isPresent()){
-            Event event = eventService.findById(id).get();
-            model.addAttribute("event", event);
-            if(user != null){
-                if(user.getId().equals(event.getCreatorUser().getId())){
-                    model.addAttribute("owner", true);
-                } else {
-                    model.addAttribute("owner", false);
-                }
-            }
-            return "event";
-        }
-        return "event";
-    }
 
     @PostMapping
     public String createEvent(@ModelAttribute Event event,
                               @RequestParam(name = "startTime1") String startTime,
-                              @RequestParam(name = "endTime1") String endTime, 
-                              @RequestParam(value = "fieldIdList[]") Long[] fieldIdList){
+                              @RequestParam(name = "endTime1") String endTime,
+                              @RequestParam(value = "fieldIdList[]") Long[] fieldIdList) {
         LocalDateTime startTimeDataTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         LocalDateTime endTimeDataTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         event.setStartTime(startTimeDataTime);
         event.setEndTime(endTimeDataTime);
         event.setStatus(Status.REQUEST);
-//      ======= Massive of Pets id =======
-        for (Long i:fieldIdList) {
-            if ( petService.findById(i).isPresent()) {
+        for (Long i : fieldIdList) {
+            if (petService.findById(i).isPresent()) {
                 event.addPet(petService.findById(i).get());
             }
         }
-//      =======                    =======
-        User curUser = getCurrentUser();
-        userService.addCreatedEvent(curUser, event);
+        userService.addCreatedEvent(getCurrentUser(), event);
         return "events";
     }
 
     @GetMapping("/add")
-    public String addPage(Model model){
+    public String addPage(Model model) {
         model.addAttribute("event", new Event());
         User user = getCurrentUser();
         Set<Pet> petList = userService
@@ -105,9 +84,9 @@ public class EventController {
     }
 
     @PostMapping("/{id}/comment")
-    public String addCommentToEvent(@PathVariable Long id, @RequestParam(name = "comment") String comment){
+    public String addCommentToEvent(@PathVariable Long id, @RequestParam(name = "comment") String comment) {
         Optional<Event> event = eventService.findById(id);
-        if(event.isPresent()){
+        if (event.isPresent()) {
             event.get().addComment(new EventComment(getCurrentUser(), comment));
             eventService.save(event.get());
             return "redirect:/events/" + id;
@@ -116,17 +95,18 @@ public class EventController {
     }
 
     @GetMapping("/signed")
-    public String getSignedEvents(Model model){
-        if ( !getCurrentUser().getSignedEvents().isEmpty() ) {
-            model.addAttribute("events", getCurrentUser().getSignedEvents());
+    public String getSignedEvents(Model model) {
+        Set<Event> events = Objects.requireNonNull(getCurrentUser()).getSignedEvents();
+        if (!events.isEmpty()) {
+            model.addAttribute("events", events);
         }
         return "events";
     }
 
     @PostMapping("{id}/sign")
-    public String addSignedEvent(@PathVariable Long id, Model model){
+    public String addSignedEvent(@PathVariable Long id, Model model) {
         Optional<Event> optionalEvent = eventService.findById(id);
-        if(optionalEvent.isEmpty()){
+        if (optionalEvent.isEmpty()) {
             model.addAttribute("error", true);
             return "redirect:/events";
         }
@@ -135,8 +115,7 @@ public class EventController {
             event.addSingedUser(getCurrentUser());
             //eventService.save(event);
             getCurrentUser().addSignedEvent(event);
-        }
-        else {
+        } else {
             model.addAttribute("error", true);
             return "redirect:/events";
         }

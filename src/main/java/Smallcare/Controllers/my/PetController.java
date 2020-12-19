@@ -97,14 +97,14 @@ public class PetController {
     public String deletePet(Model model, @PathVariable Long id) {
         User user = getCurrentUser();
         if(user == null){
-            return "/pets";
+            return "redirect:/pets";
         }
         model.addAttribute("pets" , getCurrentUser().getPetList());
         if (petService.findById(id).isEmpty()) {
-            return "/pets";
+            return "redirect:/pets";
         }
         userService.deletePet(user, petService.findById(id).get());
         petService.deleteById(id);
-        return "/pets";
+        return "redirect:/pets";
     }
 }
