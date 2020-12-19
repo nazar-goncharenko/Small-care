@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -124,8 +125,13 @@ public class EventController {
 
     @PostMapping("{id}/sign")
     public String addSignedEvent(@PathVariable Long id, Model model){
-        Event event = eventService.findById(id);
-        if (event != null && eventService.findById(id).getCreatorUser().getId() != getCurrentUser().getId()) {
+        Optional<Event> optionalEvent = eventService.findById(id);
+        if(optionalEvent.isEmpty()){
+            model.addAttribute("error", true);
+            return "redirect:/events";
+        }
+        Event event = optionalEvent.get();
+        if (!event.getCreatorUser().getId().equals(Objects.requireNonNull(getCurrentUser()).getId())) {
             event.addSingedUser(getCurrentUser());
             //eventService.save(event);
             getCurrentUser().addSignedEvent(event);
