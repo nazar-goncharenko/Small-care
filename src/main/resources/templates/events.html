@@ -19,7 +19,7 @@
                     <div class="card mb-4 box-shadow">
                         <div class="container">
                             <p th:text="${event.getStartTime().getHour()+':'+(event.getStartTime().getMinute() > 10 ? event.getStartTime().getMinute() : '0'+event.getStartTime().getMinute())+' '+event.getEndTime().getHour()+':'+(event.getEndTime().getMinute() > 10 ? event.getEndTime().getMinute() : '0'+event.getEndTime().getMinute())}"></p>
-
+                            <p class="text-dark" th:text="${event.getDescription()}"></p>
                             <p th:if="${owner}" class="text-dark" th:text="${'Кількість підписаних людей: ' + event.getSignedUsers().size()}"></p>
                         </div>
                         <div class="card-body">

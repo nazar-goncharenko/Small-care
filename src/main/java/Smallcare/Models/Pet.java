@@ -42,12 +42,12 @@ public class Pet {
         this.photoUrl = photoUrl;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getDescription() {

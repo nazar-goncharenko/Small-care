@@ -10,19 +10,19 @@
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/users'} ? active : ''">
-                    <a class="nav-link" href="/users" th:text="#{Users}"> <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/users">Users <span class="sr-only">(current)</span></a>
                 </li>
 
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/pets'} ? active : ''">
-                    <a class="nav-link" href="/my/pets" th:text="#{Pets}"></a>
+                    <a class="nav-link" href="/my/pets">My pets</a>
                 </li>
 
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/login'} ? active : ''">
-                    <a class="nav-link" href="/login" th:text="#{Login}"></a>
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
 
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/pets/add'} ? active : ''">
-                    <a class="nav-link" href="/my/pets/add" th:text="#{Add_Pet}"></a>
+                    <a class="nav-link" href="/my/pets/add">Add pet</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/events'} ? active : ''">
                     <a class="nav-link" href="/events">Events</a>
@@ -35,7 +35,7 @@
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events/add'} ? active : ''">
 
-                    <a class="nav-link" href="/my/events/add" th:text="#{Events}"></a>
+                    <a class="nav-link" href="/my/events/add">Create event</a>
 
                 </li>
             </ul>

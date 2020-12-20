@@ -1,5 +1,6 @@
 package Smallcare.Services;
 
+
 import Smallcare.Models.Pet;
 import Smallcare.Repositories.EventRepository;
 import Smallcare.Repositories.PetRepository;
@@ -21,19 +22,17 @@ public class PetService {
         this.petRepository = petRepository;
     }
 
-    public List<Pet> findAll(){
+    public List<Pet> findAll() {
         return petRepository.findAll();
     }
 
-    public Optional<Pet> findById(Long id){
+    public Optional<Pet> findById(Long id) {
         return petRepository.findById(id);
     }
 
     public Pet save(Pet pet) {
-        petRepository.save(pet);
-        return pet;
+        return petRepository.save(pet);
     }
-
 
     public void deleteById(Long id) {
 //        eventRepository.f
