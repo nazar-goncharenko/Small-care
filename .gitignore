@@ -33,3 +33,4 @@ build/
 .vscode/
 src/main/resources/images/
 src/main/resources/application.properties
+/src/main/java/Smallcare/Controllers/my/MainController.java
