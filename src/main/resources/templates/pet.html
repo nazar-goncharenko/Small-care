@@ -20,7 +20,7 @@
         </div>
         <div>
             <form th:action="'/my/pets/' + ${pet.getId()} + '/delete/'" method="post">
-                <button type="submit" value="Sing">Sing</button>
+                <button type="submit" value="Sing"  th:text="#{Delete}"></button>
             </form>
         </div>
     </div>

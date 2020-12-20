@@ -1,11 +1,12 @@
 <!Doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head th:insert="fragments/head.html :: head">
+<head  th:insert="fragments/head.html :: head">
     <title id="pageTitle">Sign Up</title>
 </head>
 
 
 <!--    Internationalization    start  -->
+
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="/">Smallcare</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -27,6 +28,7 @@
             </select>
     </div>
 </nav>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
 </script>
 <script type="text/javascript">
@@ -47,14 +49,14 @@
 
     <div th:if="${error}" class="container"><br/>
         <div class="alert alert-danger">
-            <strong>Помилка!</strong><br/>
+            <strong >Помилка!</strong><br/>
             This mail is already taken.
         </div>
     </div>
 
     <img class="mb-4" src="../images/Smallcare300.png" alt="">
 
-    <h1 class="h3 mb-3 font-weight-normal" th:text="#{Login}"> </h1>
+    <h1 class="h3 mb-3 font-weight-normal" th:text="#{p_sign_up}"> </h1>
 
     <label type="text"  for="inputName" class="sr-only">Username</label>
     <input type="text" name="username" th:field="*{firstName}" id="inputName" maxlength="50" class="form-control" th:placeholder="#{username}" required autofocus>
@@ -64,6 +66,11 @@
 
     <label type="password"  for="inputPassword" class="sr-only">Password</label>
     <input type="password" th:field="*{password}" id="inputPassword" maxlength="50" class="form-control" th:placeholder="#{password}" required>
+
+    <p><small class="yes-account"  >
+        <h6 th:text="#{have_acc_yes}"> </h6>
+        <a  href="/login" th:text="#{sign_in}"> </a>
+    </small></p>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign Up"  th:text="#{sign_up}"></button>
 
