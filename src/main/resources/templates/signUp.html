@@ -3,46 +3,8 @@
 <head th:insert="fragments/head.html :: head">
     <title id="pageTitle">Sign Up</title>
 </head>
-
-
-<!--    Internationalization    start  -->
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="/">Smallcare</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="navbar-nav mr-auto">
-    </ul>
-    <div class>
-            <style>
-                .langConf { color: white; }
-            </style>
-            <span class="langConf" th:text="#{lang.change} "></span>:
-            <label for="locales"></label>
-            <select id="locales">
-                <option value="-"></option>
-                <option value="uk" th:text="#{lang.uk}"></option>
-                <option value="en" th:text="#{lang.eng}"></option>
-            </select>
-    </div>
-</nav>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#locales").change(function () {
-            var selectedOption = $('#locales').val();
-            if (selectedOption !== '-'){
-                window.location.replace('signup?lang=' + selectedOption);
-            }
-        });
-    });
-</script>
-
-<!--    Internationalization    end  -->
-
 <body class="text-center">
+
 <form class="form-signup" action="/users" th:object="${user}" method="post">
 
     <div th:if="${error}" class="container"><br/>
@@ -54,19 +16,18 @@
 
     <img class="mb-4" src="../images/Smallcare300.png" alt="">
 
-    <h1 class="h3 mb-3 font-weight-normal" th:text="#{Login}"> </h1>
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
     <label type="text"  for="inputName" class="sr-only">Username</label>
-    <input type="text" name="username" th:field="*{firstName}" id="inputName" maxlength="50" class="form-control" th:placeholder="#{username}" required autofocus>
+    <input type="text" name="username" th:field="*{firstName}" id="inputName" maxlength="50" class="form-control" placeholder="Username" required autofocus>
 
     <label type="text"  for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" th:field="*{email}" id="inputEmail" maxlength="50" class="form-control" th:placeholder="#{email}" required autofocus>
+    <input type="email" th:field="*{email}" id="inputEmail" maxlength="50" class="form-control" placeholder="Email address" required autofocus>
 
     <label type="password"  for="inputPassword" class="sr-only">Password</label>
-    <input type="password" th:field="*{password}" id="inputPassword" maxlength="50" class="form-control" th:placeholder="#{password}" required>
+    <input type="password" th:field="*{password}" id="inputPassword" maxlength="50" class="form-control" placeholder="Password" required>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign Up"  th:text="#{sign_up}"></button>
-
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign Up">Sign Up</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
 </form>
 <link th:href="@{/css/login/sign.css}" rel="stylesheet">
