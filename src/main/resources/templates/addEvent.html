@@ -1,35 +1,56 @@
-<html  lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
 <head th:insert="fragments/head.html :: head">
     <title id="pageTitle">Додати подію</title>
 </head>
 <body>
 <div th:insert="fragments/header.html :: header"></div>
 <div class="text-center cover-container d-flex h-100 p-3 mx-auto flex-column">
-<main role="main" class="inner cover">
-    <form method="post" th:action="@{/my/events}" th:object="${event}"
-          class="form-signin">
-        <h1 class="h3 mb-3 font-weight-normal">Create event</h1>
+    <main role="main" class="inner cover">
+        <div th:if="${!pets.isEmpty()}">
+            <form method="post" th:action="@{/my/events}" th:object="${event}"
+                  class="form-signin" th:onsubmit="return myValidationForm()">
+                <h1 class="h3 mb-3 font-weight-normal">Create event</h1>
 
-        <input type="datetime-local" name="startTime1" placeholder="startTime">
-        <br>
-        <br>
-        <input type="datetime-local" name="endTime1" placeholder="endTime">
-        <br>
-        <br>
-        <input type="text" th:field="*{price}" placeholder="price">
-        <br>
-        <br>
-        <input type="text" th:field="*{description}" placeholder="description">
-        <br>
-        <br>
-        <div class="lead col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2 mx-auto">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">
-            Create
-        </button>
+                <input type="datetime-local" name="startTime1" placeholder="startTime" required>
+                <br>
+                <br>
+                <input type="datetime-local" name="endTime1" placeholder="endTime" required>
+                <br>
+                <br>
+                <input type="number" th:field="*{price}" placeholder="price" min="0" max="9223372036854775806" required>
+                <br>
+                <br>
+                <input type="text" th:field="*{description}" placeholder="description" required>
+                <br>
+                <br>
+                <div class="custom-checkbox required" th:each="pet : ${pets}">
+                    <input type="checkbox" name="fieldIdList[]" class="custom-control-input" th:value="${pet.getId()}"
+                           th:id="${'customCheck'+pet.getId()}">
+                    <label class="custom-control-label" th:for="${'customCheck'+pet.getId()}"
+                           th:text="${pet.getName()}"></label>
+                </div>
+                <div class="lead col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2 mx-auto">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="validButton()">
+                        Create
+                    </button>
+                </div>
+                <p class="mt-5 mb-3 text-muted">© 2020</p>
+            </form>
         </div>
-        <p class="mt-5 mb-3 text-muted">© 2020</p>
-    </form>
-</main>
+        <div th:if="${pets.isEmpty()}">
+            <section class="jumbotron text-center">
+                <div class="container">
+                    <h1>Ви не можете створити подію</h1>
+                    <p class="lead text-muted">Ви не можете створити подію оскільки у вас немає тваринки</p>
+                    <p>
+                        <a href="/events" class="btn btn-secondary my-2">Подивитися інші події</a>
+                        <a href="/my/pets/add" class="btn btn-primary my-2">Створити Тваринку</a>
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
 </div>
 </body>
+<script type="text/javascript" th:src="@{/js/createEvent.js}"></script>
 </html>

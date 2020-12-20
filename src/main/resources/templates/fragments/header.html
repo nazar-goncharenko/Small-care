@@ -1,6 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/" lang="" th:fragment="header">
-
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/" lang="">
 <header th:fragment="header">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="/">Smallcare</a>
@@ -10,20 +8,35 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
+
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/users'} ? active : ''">
                     <a class="nav-link" href="/users" th:text="#{Users}"> <span class="sr-only">(current)</span></a>
                 </li>
+
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/pets'} ? active : ''">
                     <a class="nav-link" href="/my/pets" th:text="#{Pets}"></a>
                 </li>
+
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/login'} ? active : ''">
                     <a class="nav-link" href="/login" th:text="#{Login}"></a>
                 </li>
+
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/pets/add'} ? active : ''">
                     <a class="nav-link" href="/my/pets/add" th:text="#{Add_Pet}"></a>
                 </li>
+                <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/events'} ? active : ''">
+                    <a class="nav-link" href="/events">Events</a>
+                </li>
+                <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events'} ? active : ''">
+                    <a class="nav-link" href="/my/events">My Events</a>
+                </li>
+                <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events/signed'} ? active : ''">
+                    <a class="nav-link" href="/my/events/signed">My Signed Events</a>
+                </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events/add'} ? active : ''">
+
                     <a class="nav-link" href="/my/events/add" th:text="#{Events}"></a>
+
                 </li>
             </ul>
 

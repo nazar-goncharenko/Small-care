@@ -20,10 +20,10 @@ public class Pet {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     Set<PetComment> petComments;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     User user;
 
     public User getUser() {

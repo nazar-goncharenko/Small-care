@@ -12,4 +12,6 @@ import java.util.List;
 public interface EventRepository extends CrudRepository<Event, Long> {
 
     List<Event> findAll();
+    void deleteEventById(Long id);
+    List<Event> getAllByPetsContains(Pet pet);
 }

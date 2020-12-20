@@ -1,11 +1,14 @@
 package Smallcare.Models;
 
+import com.sun.istack.NotNull;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -27,7 +30,7 @@ public class Event {
     private LocalDateTime endTime;
 
     @ManyToMany
-    private Set<Pet> pets;
+    private Set<Pet> pets = new HashSet<Pet>();
 
     @Column(name = "price", nullable = false)
     private Long price;
@@ -35,18 +38,18 @@ public class Event {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    Set <EventComment> eventComments;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    Set <EventComment> eventComments = new HashSet<EventComment>();
 
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     User creatorUser;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<User> signedUsers;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    private Set<User> signedUsers = new HashSet<User>();
 
     public Event() {
 
@@ -123,4 +126,33 @@ public class Event {
     public void addComment(EventComment eventComment){
         this.eventComments.add(eventComment);
     }
+
+    public void addPet(Pet pet){
+        this.pets.add(pet);
+    }
+
+    public void addSingedUser(User user){
+        this.signedUsers.add(user);
+    }
+
+    public void clearPets(){
+        this.pets.clear();
+    }
+
+    public void clearSinged(){
+        for (User user: this.signedUsers
+             ) {
+            user.deleteSignedEvent(this);
+        }
+        this.signedUsers.clear();
+    }
+
+    public Set<User> getSignedUsers() {
+        return signedUsers;
+    }
+
+    public void setSignedUsers(Set<User> signedUsers) {
+        this.signedUsers = signedUsers;
+    }
+
 }

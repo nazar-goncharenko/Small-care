@@ -1,5 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/" lang="en">
 <script type="text/javascript" th:src="@{/js/addPet.js}"></script>
+<link th:href="@{/css/textarea.css}" rel="stylesheet" media="screen"/>
 <head th:insert="fragments/head.html :: head">
     <title id="pageTitle">Pet</title>
 </head>
@@ -11,12 +12,14 @@
         <form method="post" th:action="@{/my/pets/add}" th:object="${pet}" enctype="multipart/form-data" th:onsubmit="return myValidationForm()"
               class="form-signin">
             <h1 class="h3 mb-3 font-weight-normal">Create your animal</h1>
-
             <label for="inputName" class="sr-only">Name</label>
             <input type="text" id="inputName" th:field="*{name}" maxlength="20" required placeholder="Name" name="name"/>
             <br>
-            <label for="inputDescription" class="sr-only">Description</label>
-            <input type="text" id="inputDescription" maxlength="500" th:field="*{description}" placeholder="Description" name="description"/>
+            <div class="custom-file col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-5">
+                    <label for="inputDescription" class="sr-only">Description</label>
+                    <textarea class="form-control" type="text" id="inputDescription" maxlength="500" th:field="*{description}" placeholder="Description" name="description" rows="3">
+                    </textarea>
+            </div>
             <br>
             <br>
             <div class="custom-file col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2 ">

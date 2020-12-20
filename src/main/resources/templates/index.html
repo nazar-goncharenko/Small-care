@@ -4,7 +4,113 @@
 </head>
 <body>
 <div th:insert="fragments/header.html :: header"></div>
-<div class="container">
-</div>
+
+<main class="text-center align-content-center">
+    <div th:unless="${user != null}" class="jumbotron">
+        <div class="container bg-dark round">
+            <h1>Новенькі?</h1>
+            <p class="lead text-white">Логуйтеся і заходьте. Вас вже зачекалися котики і песики</p>
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col col-12 col-lg-2">
+                        <a href="/signup" class="btn btn-outline-light my-2">Реєструватися</a>
+                    </div>
+                    <div class="col col-12 col-lg-2">
+                        <a href="/login" class="btn btn-outline-primary my-2">Логіньтеся</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${user != null}" class="padding">
+        <div class="row">
+            <div class="col-xl-3 col-lg-12	">
+                <div class="container">
+                    <div class="col round bg-dark">
+                        <h4 class="text-white">Мої улюбленці</h4>
+                        <div class="row">
+                            <div th:each="pet : ${pets}">
+                                <a th:href="'/pets/' + ${pet.getId().toString()}" class="text-white">
+                                    <img th:src="${'/images/' + pet.getPhotoUrl().toString()+'.png'}"
+                                         th:alt="${pet.getPhotoUrl()}" alt="" src="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-12 ">
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Description</th>
+                        <th scope="col">Start</th>
+                        <th scope="col">End</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                    <tr class='clickable-row bg-secondary' th:data-href="${'/events/'+event.getId().toString()}"
+                        th:each="event : ${events}"
+                        th:if="${event.getStartTime().getDayOfWeek() < event.getStartTime().now().getDayOfWeek()}">
+                        <td th:text="${event.getDescription()}"></td>
+                        <td th:text="${event.getStartTime().getHour().toString() +':'+ event.getStartTime().getMinute().toString()}"></td>
+                        <td th:text="${event.getEndTime().getHour().toString() +':'+ event.getEndTime().getMinute().toString()}"></td>
+                        <td th:text="${event.getPrice()}"></td>
+                    </tr>
+
+                    <tr class='clickable-row bg-success' th:data-href="${'/events/'+event.getId().toString()}"
+                        th:each="event : ${events}"
+                        th:if="${event.getStartTime().getDayOfWeek() == event.getStartTime().now().getDayOfWeek()}">
+                        <td th:text="${event.getDescription()}"></td>
+                        <td th:text="${event.getStartTime().getHour().toString() +':'+ event.getStartTime().getMinute().toString()}"></td>
+                        <td th:text="${event.getEndTime().getHour().toString() +':'+ event.getEndTime().getMinute().toString()}"></td>
+                        <td th:text="${event.getPrice()}"></td>
+                    </tr>
+
+                    <tr class='clickable-row bg-warning' th:data-href="${'/events/'+event.getId().toString()}"
+                        th:each="event : ${events}"
+                        th:if="${event.getStartTime().getDayOfWeek() > event.getStartTime().now().getDayOfWeek()}">
+                        <td th:text="${event.getDescription()}"></td>
+                        <td th:text="${event.getStartTime().getHour().toString() +':'+ event.getStartTime().getMinute().toString()}"></td>
+                        <td th:text="${event.getEndTime().getHour().toString() +':'+ event.getEndTime().getMinute().toString()}"></td>
+                        <td th:text="${event.getPrice()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <div class="col-xl-3 col-lg-12	">
+                <div class="container">
+                    <div class="col round bg-secondary">
+                        Вже почалися
+                    </div>
+                    <br>
+                    <div class="col round bg-success">
+                        Сьогодні Старт
+                    </div>
+                    <br>
+                    <div class="col round bg-warning">
+                        Почнуться згодом
+                    </div>
+                    <br>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+
 </body>
+<link th:href="@{/css/index/index.css}" rel="stylesheet"/>
+<script>
+    jQuery(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.location = $(this).data("href");
+        });
+    });
+</script>
 </html>
