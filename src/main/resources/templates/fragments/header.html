@@ -8,11 +8,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/pets'} ? active : ''">
-                    <a class="nav-link" href="/my/pets">Pets</a>
+
+                <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/users'} ? active : ''">
+                    <a class="nav-link" href="/users" th:text="#{Users}"> <span class="sr-only">(current)</span></a>
                 </li>
+
+                <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/pets'} ? active : ''">
+                    <a class="nav-link" href="/my/pets" th:text="#{Pets}"></a>
+                </li>
+
+                <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/login'} ? active : ''">
+                    <a class="nav-link" href="/login" th:text="#{Login}"></a>
+                </li>
+
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/pets/add'} ? active : ''">
-                    <a class="nav-link" href="/my/pets/add">Add Pet</a>
+                    <a class="nav-link" href="/my/pets/add" th:text="#{Add_Pet}"></a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/events'} ? active : ''">
                     <a class="nav-link" href="/events">Events</a>
@@ -24,11 +34,47 @@
                     <a class="nav-link" href="/my/events/signed">My Signed Events</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events/add'} ? active : ''">
-                    <a class="nav-link" href="/my/events/add">Add Event</a>
+
+                    <a class="nav-link" href="/my/events/add" th:text="#{Events}"></a>
+
                 </li>
             </ul>
+
+
+
+                        <!--           Internationalization    start        -->
+
+            <div class>
+                <style>
+                    .langConf { color: white; }
+                </style>
+                <span class="langConf" th:text="#{lang.change} "></span>:
+                <label for="locales"></label>
+                <select id="locales">
+                    <option value="-"></option>
+                    <option value="uk" th:text="#{lang.uk}"></option>
+                    <option value="en" th:text="#{lang.eng}"></option>
+                </select>
+            </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+            </script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $("#locales").change(function () {
+                        var selectedOption = $('#locales').val();
+                        if (selectedOption !== '-'){
+                            window.location.replace('/?lang=' + selectedOption);
+                        }
+                    });
+                });
+            </script>
+
+                    <!--           Internationalization    end        -->
+
+
+
             <div th:unless="${#httpServletRequest.remoteUser}" class="form-inline mt-2 mt-md-0">
-                <a class="btn btn-outline-primary" href="/login">Sign in</a>
+                <a class="btn btn-outline-primary" href="/login" th:text="#{Login}" ></a>
             </div>
             <div th:if="${#httpServletRequest.remoteUser}">
                 <div class="dropdown">
@@ -36,8 +82,8 @@
                         <span th:text="${#httpServletRequest.remoteUser}"></span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item p-2 text-white bg-dark" th:href="@{/my/profile}">Profile</a>
-                        <a class="dropdown-item p-2 text-white bg-dark" th:href="@{/logout}">Logout</a>
+                        <a class="dropdown-item p-2 text-white bg-dark" th:href="@{/my/profile}" th:text="#{Profile}"></a>
+                        <a class="dropdown-item p-2 text-white bg-dark" th:href="@{/logout}" th:text="#{Logout}"></a>
                     </div>
                 </div>
             </div>
