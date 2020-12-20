@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-12-06T16:44:54.303Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36 Edg/87.0.664.55" etag="GJifUyYWSa7-cjo2yJn6" version="13.10.4" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-20T12:49:56.454Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.66" etag="Yk8fEUHn0zhq1argicEy" version="13.10.9" type="github">
   <diagram id="uWwTzzYd7ZezCmbp9LaX" name="Page-1">
-    <mxGraphModel dx="920" dy="512" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1038" dy="580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -125,13 +125,13 @@
         <mxCell id="eGAy3p8PKJOAUchDzkxy-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="eGAy3p8PKJOAUchDzkxy-10" target="eGAy3p8PKJOAUchDzkxy-25" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="eGAy3p8PKJOAUchDzkxy-10" value="/my/signs" style="html=1;" parent="1" vertex="1">
+        <mxCell id="eGAy3p8PKJOAUchDzkxy-10" value="/my/signs" style="html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="670" y="460" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="eGAy3p8PKJOAUchDzkxy-12" value="/my/events/{id}" style="html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="540" y="560" width="80" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="eGAy3p8PKJOAUchDzkxy-23" value="/my/profile" style="html=1;" parent="1" vertex="1">
+        <mxCell id="eGAy3p8PKJOAUchDzkxy-23" value="/my/profile" style="html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="320" y="320" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="eGAy3p8PKJOAUchDzkxy-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" parent="1" source="eGAy3p8PKJOAUchDzkxy-25" target="eGAy3p8PKJOAUchDzkxy-3" edge="1">
