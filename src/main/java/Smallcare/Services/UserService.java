@@ -62,6 +62,9 @@ public class UserService implements UserDetailsService {
         if (user.getCity() != null) {
             curUser.setCity(user.getCity());
         }
+        if (user.getPhotoUrl() != null) {
+            curUser.setPhotoUrl(user.getPhotoUrl());
+        }
         if (user.getFirstName() != null) {
             curUser.setFirstName(user.getFirstName());
         }
@@ -74,11 +77,6 @@ public class UserService implements UserDetailsService {
         System.out.println(curUser.getPassword() + "\t" + user.getPassword());
         userRepository.save(curUser);
         return true;
-//        }
-//        catch (Exception e){
-//            System.out.println("Can't save");
-//            return false;
-//        }
     }
 
     public void save(User user){
@@ -89,6 +87,7 @@ public class UserService implements UserDetailsService {
         if (userRepository.findByEmail(user.getEmail()) == null) {
             Role role = new Role(1L, "ROLE_USER");
             roleRepository.save(role);
+            user.setPhotoUrl("defaultUser");
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user.setRoles(Collections.singleton(role));
             userRepository.save(user);

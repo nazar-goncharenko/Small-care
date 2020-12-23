@@ -9,14 +9,24 @@
             <div>
                 <h1>Event</h1>
                 <p th:text="${event.getDescription()}"></p>
-                <p th:text="${event.getStartTime().toString()+' '+event.getEndTime().toString()}"></p>
+                <p th:text="${event.getStartTime().getHour()+':'+(event.getStartTime().getMinute() > 10 ? event.getStartTime().getMinute() : '0'+event.getStartTime().getMinute())+' '+event.getEndTime().getHour()+':'+(event.getEndTime().getMinute() > 10 ? event.getEndTime().getMinute() : '0'+event.getEndTime().getMinute())}"></p>
             </div>
             <div>
+                <div class="row">
+                    <div class="col-3" th:each="pet : ${event.getPets()}">
+                        <a th:href="'/pets/' + ${pet.getId().toString()}">
+                            <img class="card-img-top" th:src="${'/images/' + pet.getPhotoUrl().toString()+'.png'}"
+                                 th:alt="${'/images/' + pet.getPhotoUrl().toString()+'.png'}">
+                        </a>
+                    </div>
+                </div>
                 <div th:if="${owner}">
                     <div th:if="${!event.getSignedUsers().isEmpty()}">
                         <p>Signed users: </p>
                         <div th:each="user : ${event.getSignedUsers()}">
-                            <p th:text="${user.getFirstName()}"></p>
+                            <a th:href="'/users/'+ ${user.getId().toString()}">
+                                <p th:text="${user.getFirstName()}"></p>
+                            </a>
                         </div>
                     </div>
                     <div th:if="${event.getSignedUsers().isEmpty()}">

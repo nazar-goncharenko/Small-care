@@ -109,7 +109,6 @@ public class PetController {
         }
         userService.deletePet(user, petService.findById(id).get());
         petService.deleteById(id);
-//        eventService.deletePet();
         return pets(model);
     }
 }
