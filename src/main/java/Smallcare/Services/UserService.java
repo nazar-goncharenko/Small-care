@@ -4,6 +4,7 @@ import Smallcare.Models.Event;
 import Smallcare.Models.Pet;
 import Smallcare.Models.Role;
 import Smallcare.Models.User;
+import Smallcare.Repositories.EventRepository;
 import Smallcare.Repositories.RoleRepository;
 import Smallcare.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -23,6 +25,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    EventRepository eventRepository;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -57,6 +62,9 @@ public class UserService implements UserDetailsService {
         if (user.getCity() != null) {
             curUser.setCity(user.getCity());
         }
+        if (user.getPhotoUrl() != null) {
+            curUser.setPhotoUrl(user.getPhotoUrl());
+        }
         if (user.getFirstName() != null) {
             curUser.setFirstName(user.getFirstName());
         }
@@ -69,11 +77,6 @@ public class UserService implements UserDetailsService {
         System.out.println(curUser.getPassword() + "\t" + user.getPassword());
         userRepository.save(curUser);
         return true;
-//        }
-//        catch (Exception e){
-//            System.out.println("Can't save");
-//            return false;
-//        }
     }
 
     public void save(User user){
@@ -84,6 +87,7 @@ public class UserService implements UserDetailsService {
         if (userRepository.findByEmail(user.getEmail()) == null) {
             Role role = new Role(1L, "ROLE_USER");
             roleRepository.save(role);
+            user.setPhotoUrl("defaultUser");
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user.setRoles(Collections.singleton(role));
             userRepository.save(user);
@@ -113,12 +117,6 @@ public class UserService implements UserDetailsService {
         userRepository.save(new_user);
     }
 
-    public void deletePet(User user, Pet pet) {
-        User new_user = userRepository.findById(user.getId()).orElse(new User());
-        new_user.deletePet(pet);
-        userRepository.save(new_user);
-    }
-
     public void addCreatedEvent(User user, Event event){
         User cur_user = userRepository.findById(user.getId()).get();
         event.setCreatorUser(cur_user);
@@ -128,5 +126,22 @@ public class UserService implements UserDetailsService {
 
     public void updatePet(User user, Pet pet) throws Exception {
         throw new Exception("UpdatePet nothing here @Oleslav");
+    }
+
+    public void deleteEvent(User user, Event event){
+        User curUser = userRepository.findById(user.getId()).get();
+        curUser.deleteCreatedEvent(event);
+        userRepository.save(user);
+        event.clearPets();
+        event.clearSinged();
+        eventRepository.delete(event);
+    }
+
+    public void deletePet(User user, Pet pet) {
+        for (Event event: eventRepository.getAllByPetsContains(pet)) {
+            deleteEvent(user, event);
+        }
+        user.deletePet(pet);
+        userRepository.save(user);
     }
 }

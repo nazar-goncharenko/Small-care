@@ -3,32 +3,58 @@
     <title id="pageTitle">Pets</title>
 <body>
 <header th:insert="fragments/header.html :: header"></header>
-<div class="row">
-    <div class="col-sm-3">
-        <div class="card mb-4 box-shadow">
-
-<!--            <img class="card-img-top" th:src="${'/images/' + pet.getPhotoUrl().toString()+'.png'}"-->
-<!--                 th:alt="${'/images/' + pet.getPhotoUrl().toString()+'.png'}">-->
-
-        </div>
-    </div>
-    <div class="col-sm-9">
-        <div>
-            <blockquote>
-                <h5 th:text="${event.getStartTime().toString()+' '+event.getEndTime().toString()}"></h5>
-            </blockquote>
-        </div>
-        <div>
-            <p th:text="${event.getDescription()}"></p>
-        </div>
-        <div>
-            <p>
-<!--                <a class="btn btn-danger" role="button" th:href="'/my/pets/delete/' + ${pet.getId().toString()}">-->
-<!--                    Delete-->
-<!--                </a>-->
-            </p>
+<div class="container">
+    <div class="row" th:if="${event != null}">
+        <div class="col-sm-9">
+            <div>
+                <h1>Event</h1>
+                <p th:text="${event.getDescription()}"></p>
+                <p th:text="${event.getStartTime().getHour()+':'+(event.getStartTime().getMinute() > 10 ? event.getStartTime().getMinute() : '0'+event.getStartTime().getMinute())+' '+event.getEndTime().getHour()+':'+(event.getEndTime().getMinute() > 10 ? event.getEndTime().getMinute() : '0'+event.getEndTime().getMinute())}"></p>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col-3" th:each="pet : ${event.getPets()}">
+                        <a th:href="'/pets/' + ${pet.getId().toString()}">
+                            <img class="card-img-top" th:src="${'/images/' + pet.getPhotoUrl().toString()+'.png'}"
+                                 th:alt="${'/images/' + pet.getPhotoUrl().toString()+'.png'}">
+                        </a>
+                    </div>
+                </div>
+                <div th:if="${owner}">
+                    <div th:if="${!event.getSignedUsers().isEmpty()}">
+                        <p>Signed users: </p>
+                        <div th:each="user : ${event.getSignedUsers()}">
+                            <a th:href="'/users/'+ ${user.getId().toString()}">
+                                <p th:text="${user.getFirstName()}"></p>
+                            </a>
+                        </div>
+                    </div>
+                    <div th:if="${event.getSignedUsers().isEmpty()}">
+                        No signed users :(
+                    </div>
+                    <form th:action="'/my/events/' + ${event.getId()} + '/delete'" method="post">
+                        <button class="btn btn-sm btn-outline-danger" type="submit" value="Delete">Delete</button>
+                    </form>
+                </div>
+                <div th:unless="${owner}">
+                    <div th:if="${event.getSignedUsers().contains(user)}">
+                        You have already signed
+                    </div>
+                    <div th:unless="${event.getSignedUsers().contains(user)}">
+                        <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
+                            <button class="btn btn-sm btn-outline-primary" type="submit" value="Sing">Sign</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<div th:if="${event == null}">
+    <h1>404</h1>
+    <h2>This event does not exist</h2>
+</div>
+
 </body>
 </html>

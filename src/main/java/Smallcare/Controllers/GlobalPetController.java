@@ -71,14 +71,11 @@ public class GlobalPetController {
                 return "/pet";
             }
             if (user.getId().equals(pet.getUser().getId())){
-                System.out.println("true");
                 model.addAttribute("owner", true);
             }
             else{
-                System.out.println("false");
                 model.addAttribute("owner", false);
             }
-
         }
         return "/pet";
     }

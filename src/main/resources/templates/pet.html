@@ -18,12 +18,10 @@
         <div>
             <p th:text="${pet.getDescription()}"></p>
         </div>
-        <div>
-        <p>
-            <a class="btn btn-danger" role="button" th:href="'/my/pets/delete/' + ${pet.getId().toString()}">
-                Delete
-            </a>
-        </p>
+        <div th:if="${owner}">
+            <form th:action="'/my/pets/' + ${pet.getId()} + '/delete/'" method="post">
+                <button class="btn btn-outline-danger" type="submit" value="Delete">Delete</button>
+            </form>
         </div>
     </div>
 </div>

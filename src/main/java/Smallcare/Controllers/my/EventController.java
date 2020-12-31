@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -31,59 +32,47 @@ public class EventController {
     @Autowired
     PetService petService;
 
-    private User getCurrentUser(){
+    private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth instanceof AnonymousAuthenticationToken) {
             return null;
         }
-        return ((User) auth.getPrincipal());
+        return userService.findById(((User) auth.getPrincipal()).getId());
     }
 
     @GetMapping
-    public String events(Model model){
-        if (getCurrentUser().getCreatedEvents() != null){
+    public String events(Model model) {
+        System.out.println(getCurrentUser().getCreatedEvents().size());
+        if(getCurrentUser().getCreatedEvents() != null) {
+            model.addAttribute("user", getCurrentUser());
+            model.addAttribute("owner", true);
             model.addAttribute("events", getCurrentUser().getCreatedEvents());
             return "events";
         }
         return "events";
     }
 
-    @GetMapping("/{id}")
-    public String getEventById(Model model,@PathVariable Long id){
-
-        User user = getCurrentUser();
-        Set < Event > crEvents = user.getCreatedEvents();
-        if ( crEvents.contains(eventService.findById(id))){
-            model.addAttribute("event", eventService.findById(id));
-            return "event";
-        }
-        return "event";
-    }
-
     @PostMapping
     public String createEvent(@ModelAttribute Event event,
                               @RequestParam(name = "startTime1") String startTime,
-                              @RequestParam(name = "endTime1") String endTime, 
-                              @RequestParam(value = "fieldIdList[]") Long[] fieldIdList){
+                              @RequestParam(name = "endTime1") String endTime,
+                              @RequestParam(value = "fieldIdList[]") Long[] fieldIdList, Model model) {
         LocalDateTime startTimeDataTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         LocalDateTime endTimeDataTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         event.setStartTime(startTimeDataTime);
         event.setEndTime(endTimeDataTime);
         event.setStatus(Status.REQUEST);
-//      ======= Massive of Pets id =======
-        for (Long i:fieldIdList) {
-            if ( petService.findById(i).isPresent()) {
+        for (Long i : fieldIdList) {
+            if (petService.findById(i).isPresent()) {
                 event.addPet(petService.findById(i).get());
             }
         }
-//      =======                    =======
-        User curUser = getCurrentUser();
-        userService.addCreatedEvent(curUser, event);
-        return "events";
+        userService.addCreatedEvent(getCurrentUser(), event);
+        return events(model);
     }
 
     @GetMapping("/add")
-    public String addPage(Model model){
+    public String addPage(Model model) {
         model.addAttribute("event", new Event());
         User user = getCurrentUser();
         Set<Pet> petList = userService
@@ -97,33 +86,52 @@ public class EventController {
     }
 
     @PostMapping("/{id}/comment")
-    public String addCommentToEvent(@PathVariable Long id, @RequestParam(name = "comment") String comment){
-        Event event = eventService.findById(id);
-        event.addComment(new EventComment(getCurrentUser(), comment));
-        eventService.save(event);
+    public String addCommentToEvent(@PathVariable Long id, @RequestParam(name = "comment") String comment) {
+        Optional<Event> event = eventService.findById(id);
+        if (event.isPresent()) {
+            event.get().addComment(new EventComment(getCurrentUser(), comment));
+            eventService.save(event.get());
+            return "redirect:/events/" + id;
+        }
         return "redirect:/events/" + id;
     }
 
     @GetMapping("/signed")
-    public String getSignedEvents(Model model){
-        if ( !getCurrentUser().getSignedEvents().isEmpty() ) {
-            model.addAttribute("events", getCurrentUser().getSignedEvents());
+    public String getSignedEvents(Model model) {
+        Set<Event> events = Objects.requireNonNull(getCurrentUser()).getSignedEvents();
+        model.addAttribute("user", getCurrentUser());
+        model.addAttribute("owner", false);
+        if (!events.isEmpty()) {
+            model.addAttribute("events", events);
         }
         return "events";
     }
 
     @PostMapping("{id}/sign")
-    public String addSignedEvent(@PathVariable Long id, Model model){
-        Event event = eventService.findById(id);
-        if (event != null && eventService.findById(id).getCreatorUser().getId() != getCurrentUser().getId()) {
-            event.addSingedUser(getCurrentUser());
-            //eventService.save(event);
-            getCurrentUser().addSignedEvent(event);
-        }
-        else {
+    public String addSignedEvent(@PathVariable Long id, Model model) {
+        Optional<Event> optionalEvent = eventService.findById(id);
+        if (optionalEvent.isEmpty()) {
             model.addAttribute("error", true);
-            return "redirect:/events";
+            return getSignedEvents(model);
+        }
+        Event event = optionalEvent.get();
+        if (!event.getCreatorUser().getId().equals(Objects.requireNonNull(getCurrentUser()).getId())) {
+            event.addSingedUser(getCurrentUser());
+            eventService.save(event);
+            getCurrentUser().addSignedEvent(event);
+            userService.save(getCurrentUser());
+        } else {
+            model.addAttribute("error", true);
+                return getSignedEvents(model);
         }
         return "redirect:/events/" + id;
+    }
+
+    @PostMapping("{id}/delete")
+    public String deleteById(@PathVariable Long id, Model model){
+        if (eventService.findById(id).get() != null) {
+            userService.deleteEvent(getCurrentUser(), eventService.findById(id).get());
+        }
+        return events(model);
     }
 }

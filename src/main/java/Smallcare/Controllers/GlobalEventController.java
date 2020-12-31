@@ -47,20 +47,30 @@ public class GlobalEventController {
     @GetMapping
     public String events(Model model){
         model.addAttribute("events", eventService.findAll());
+        model.addAttribute("owner", false);
         if (getCurrentUser() != null){
-            model.addAttribute("creator_id", getCurrentUser().getId());
-        }
-        else {
-            model.addAttribute("creator_id", null);
+            model.addAttribute("user", getCurrentUser());
         }
         return "events";
     }
 
     @GetMapping("/{id}")
-    public String getEventById(Model model,@PathVariable Long id){
-        model.addAttribute("event" , eventService.findById(id));
+    public String getEventById(Model model, @PathVariable Long id) {
+        User user = getCurrentUser();
+        if (eventService.findById(id).isPresent()) {
+            Event event = eventService.findById(id).get();
+            model.addAttribute("event", event);
+            if (user != null) {
+                model.addAttribute("user", getCurrentUser());
+                if (user.getId().equals(event.getCreatorUser().getId())) {
+                    model.addAttribute("owner", true);
+                } else {
+                    model.addAttribute("owner", false);
+                }
+            }
+            return "event";
+        }
         return "event";
     }
-
 
 }
