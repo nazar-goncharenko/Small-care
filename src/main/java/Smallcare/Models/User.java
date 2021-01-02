@@ -25,6 +25,9 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "photoUrl")
+    private String photoUrl;
+
     @Column(name = "lastName")
     private String lastName;
 
@@ -61,11 +64,12 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String password, String phoneNumber, String city, String district, String description) {
+    public User(String firstName, String lastName, String email, String password, String photoUrl, String phoneNumber, String city, String district, String description) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.photoUrl = photoUrl;
         this.phoneNumber = phoneNumber;
         this.city = city;
         this.district = district;
@@ -248,5 +252,17 @@ public class User implements UserDetails {
 
     public void deleteSignedEvent(Event event) {
         this.signedEvents.remove(event);
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public void rate(Integer rating){
+        this.rating += rating;
     }
 }

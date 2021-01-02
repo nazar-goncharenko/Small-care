@@ -19,12 +19,10 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //    @Column(name = "startTime", nullable = false)
     @Column(name = "startTime")
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
     private LocalDateTime startTime;
 
-    //    @Column(name = "endTime", nullable = false)
     @Column(name = "endTime")
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
     private LocalDateTime endTime;
@@ -155,4 +153,11 @@ public class Event {
         this.signedUsers = signedUsers;
     }
 
+    public Set<EventComment> getEventComments() {
+        return eventComments;
+    }
+
+    public void setEventComments(Set<EventComment> eventComments) {
+        this.eventComments = eventComments;
+    }
 }

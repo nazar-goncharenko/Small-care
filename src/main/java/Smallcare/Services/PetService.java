@@ -1,8 +1,12 @@
 package Smallcare.Services;
 
+
+import Smallcare.Models.Event;
 import Smallcare.Models.Pet;
+import Smallcare.Models.User;
 import Smallcare.Repositories.EventRepository;
 import Smallcare.Repositories.PetRepository;
+import org.hibernate.annotations.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,29 +19,37 @@ public class PetService {
     PetRepository petRepository;
 
     @Autowired
+    EventService eventService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
     EventRepository eventRepository;
 
     public PetService(PetRepository petRepository) {
         this.petRepository = petRepository;
     }
 
-    public List<Pet> findAll(){
+    public List<Pet> findAll() {
         return petRepository.findAll();
     }
 
-    public Optional<Pet> findById(Long id){
+    public Optional<Pet> findById(Long id) {
         return petRepository.findById(id);
     }
 
     public Pet save(Pet pet) {
-        petRepository.save(pet);
-        return pet;
+        return petRepository.save(pet);
     }
 
 
-    public void deleteById(Long id) {
-//        eventRepository.f
-        petRepository.findById(id);
-        petRepository.deleteById(id);
+    public void deletePet(User user, Pet pet) {
+        for (Event event: eventRepository.getAllByPetsContains(pet)) {
+            eventService.deleteEvent(user, event);
+        }
+        user.deletePet(pet);
+        userService.save(user);
+        petRepository.delete(pet);
     }
 }

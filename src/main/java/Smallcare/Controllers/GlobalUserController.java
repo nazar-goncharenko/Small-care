@@ -19,7 +19,7 @@ public class GlobalUserController {
     @Autowired
     UserService userService;
 
-    private User getCurrentUser(){
+    private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth instanceof AnonymousAuthenticationToken) {
             return null;
@@ -28,26 +28,24 @@ public class GlobalUserController {
     }
 
     @PostMapping
-    public String createUser(Model model,@ModelAttribute User user){
-        if ( userService.create(user)){
+    public String createUser(Model model, @ModelAttribute User user) {
+        if (userService.create(user)) {
             return "index";
-        }
-        else{
+        } else {
             model.addAttribute("error", true);
-            model.addAttribute("user",user);
+            model.addAttribute("user", user);
             return "signUp";
 
         }
     }
 
     @PostMapping("/{id}")
-    public String updateUser(Model model,@ModelAttribute User user,@PathVariable Long id){
+    public String updateUser(@ModelAttribute User user, @PathVariable Long id) {
         User curUser = getCurrentUser();
-        System.out.println(user.getFirstName() + "\t" + id);
-        if (curUser.getId() != id){
+        if (curUser.getId() != id) {
             return "user";
         }
-        if (userService.update(user)){
+        if (userService.update(user)) {
             return "user";
         }
         return "index";
@@ -55,7 +53,7 @@ public class GlobalUserController {
     }
 
     @GetMapping
-    public String all(Model model){
+    public String all(Model model) {
         model.addAttribute("user", new User());
         List<User> users = userService.getAll();
         if (!users.isEmpty()) {
@@ -65,15 +63,12 @@ public class GlobalUserController {
     }
 
     @GetMapping("/{id}")
-    public String userById(Model model, @PathVariable Long id){
-        model.addAttribute("user", new User());
+    public String userById(Model model, @PathVariable Long id) {
         User user = userService.findById(id);
-        if(user != null){
-            model.addAttribute("users" , user);
-            return "user";
-        }
-        else
-        {
+        if (user != null) {
+            model.addAttribute("user", user);
+            return "/user";
+        } else {
             return "redirect:/";
         }
     }
