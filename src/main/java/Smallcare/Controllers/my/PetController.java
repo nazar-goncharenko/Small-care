@@ -107,8 +107,7 @@ public class PetController {
         if (petService.findById(id).isEmpty()) {
             return pets(model);
         }
-        userService.deletePet(user, petService.findById(id).get());
-        petService.deleteById(id);
+        petService.deletePet(user, petService.findById(id).get());
         return pets(model);
     }
 }

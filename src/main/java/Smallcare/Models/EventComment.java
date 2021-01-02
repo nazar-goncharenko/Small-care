@@ -1,6 +1,8 @@
 package Smallcare.Models;
 
 
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -9,12 +11,13 @@ import java.time.LocalDateTime;
 public class EventComment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(name = "time")
     private LocalDateTime time;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User user;
 
     @Column(name = "text")
@@ -27,6 +30,14 @@ public class EventComment {
         this.time = LocalDateTime.now();
         this.user = user;
         this.text = text;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDateTime getTime() {

@@ -1,13 +1,15 @@
 package Smallcare.Services;
 
-import Smallcare.Models.Event;
-import Smallcare.Models.Pet;
+import Smallcare.Models.*;
+import Smallcare.Repositories.ConfirmedEventRepository;
+import Smallcare.Repositories.EventCommentRepository;
 import Smallcare.Repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
+import static java.time.LocalDateTime.*;
 
 @Service
 public class EventService {
@@ -17,6 +19,13 @@ public class EventService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ConfirmedEventRepository confirmedEventRepository;
+
+    @Autowired
+    EventCommentRepository commentRepository;
+
 
     public List<Event> findAll(){
         return eventRepository.findAll();
@@ -30,5 +39,39 @@ public class EventService {
     public Long save(Event event) {
         eventRepository.save(event);
         return event.getId();
+    }
+
+    public void deleteEvent(User user, Event event){
+        User curUser = userService.findById(user.getId());
+        curUser.deleteCreatedEvent(event);
+        userService.save(user);
+        event.clearPets();
+        event.clearSinged();
+        eventRepository.delete(event);
+    }
+
+    public void confirmEvent(Event event, User user){
+        confirmedEventRepository.save(new ConfirmedEvent(event, user));
+        deleteEvent(event.getCreatorUser(), event);
+    }
+
+    public Set<ConfirmedEvent> getConfirmedEventForRate(User user){
+        Set <ConfirmedEvent> confirmedEvents = confirmedEventRepository.getConfirmedEventByCreator(user);
+        Set <ConfirmedEvent> output = new HashSet<>();
+        for (ConfirmedEvent event : confirmedEvents) {
+            if (event.getEndTime().isAfter(now())){
+                event.setStatus(Status.DONE);
+                confirmedEventRepository.save(event);
+                output.add(event);
+            }
+        }
+        return output;
+    }
+
+    public void addComment(Event event, EventComment eventComment){
+        eventComment.setUser(userService.findById(eventComment.getUser().getId()));
+        commentRepository.save(eventComment);
+        event.addComment(eventComment);
+        eventRepository.save(event);
     }
 }

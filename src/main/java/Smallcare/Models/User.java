@@ -261,4 +261,8 @@ public class User implements UserDetails {
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
+
+    public void rate(Integer rating){
+        this.rating += rating;
+    }
 }

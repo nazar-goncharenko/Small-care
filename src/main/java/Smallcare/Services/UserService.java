@@ -124,24 +124,14 @@ public class UserService implements UserDetailsService {
         userRepository.save(cur_user);
     }
 
-    public void updatePet(User user, Pet pet) throws Exception {
-        throw new Exception("UpdatePet nothing here @Oleslav");
-    }
-
-    public void deleteEvent(User user, Event event){
+    public void rate(User user, Integer rating){
+        System.out.println(user.getFirstName());
         User curUser = userRepository.findById(user.getId()).get();
-        curUser.deleteCreatedEvent(event);
-        userRepository.save(user);
-        event.clearPets();
-        event.clearSinged();
-        eventRepository.delete(event);
+        curUser.rate(rating);
+        userRepository.save(curUser);
     }
 
-    public void deletePet(User user, Pet pet) {
-        for (Event event: eventRepository.getAllByPetsContains(pet)) {
-            deleteEvent(user, event);
-        }
-        user.deletePet(pet);
-        userRepository.save(user);
-    }
+
+
+
 }
