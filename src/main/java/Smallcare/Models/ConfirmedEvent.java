@@ -133,4 +133,8 @@ public class ConfirmedEvent {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
+
+    public void clearPets(){
+        this.pets.clear();
+    }
 }

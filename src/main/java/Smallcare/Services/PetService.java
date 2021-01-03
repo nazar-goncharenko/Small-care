@@ -1,9 +1,11 @@
 package Smallcare.Services;
 
 
+import Smallcare.Models.ConfirmedEvent;
 import Smallcare.Models.Event;
 import Smallcare.Models.Pet;
 import Smallcare.Models.User;
+import Smallcare.Repositories.ConfirmedEventRepository;
 import Smallcare.Repositories.EventRepository;
 import Smallcare.Repositories.PetRepository;
 import org.hibernate.annotations.Table;
@@ -27,6 +29,9 @@ public class PetService {
     @Autowired
     EventRepository eventRepository;
 
+    @Autowired
+    ConfirmedEventRepository confirmedEventRepository;
+
     public PetService(PetRepository petRepository) {
         this.petRepository = petRepository;
     }
@@ -47,6 +52,9 @@ public class PetService {
     public void deletePet(User user, Pet pet) {
         for (Event event: eventRepository.getAllByPetsContains(pet)) {
             eventService.deleteEvent(user, event);
+        }
+        for (ConfirmedEvent confirmedEvent : confirmedEventRepository.getAllByPetsContains(pet)){
+            eventService.deleteConfirmedEvent(user, confirmedEvent);
         }
         user.deletePet(pet);
         userService.save(user);

@@ -26,6 +26,9 @@ public class EventService {
     @Autowired
     EventCommentRepository commentRepository;
 
+    @Autowired
+    EventCommentRepository eventCommentRepository;
+
 
     public List<Event> findAll(){
         return eventRepository.findAll();
@@ -47,7 +50,19 @@ public class EventService {
         userService.save(user);
         event.clearPets();
         event.clearSinged();
+        Set<EventComment> comments = new HashSet<>(event.getEventComments());
+        event.clearComments();
+        for (EventComment eventComment: comments) {
+            eventComment.setUser(null);
+            eventCommentRepository.delete(eventComment);
+        }
         eventRepository.delete(event);
+    }
+
+    public void deleteConfirmedEvent(User user, ConfirmedEvent confirmedEvent){
+        User curUser = userService.findById(user.getId());
+        confirmedEvent.clearPets();
+        confirmedEventRepository.delete(confirmedEvent);
     }
 
     public void confirmEvent(Event event, User user){

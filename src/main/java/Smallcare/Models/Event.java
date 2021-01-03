@@ -36,7 +36,7 @@ public class Event {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Set <EventComment> eventComments = new HashSet<EventComment>();
 
     @Column(name = "status")
@@ -159,5 +159,9 @@ public class Event {
 
     public void setEventComments(Set<EventComment> eventComments) {
         this.eventComments = eventComments;
+    }
+
+    public void clearComments(){
+        this.eventComments.clear();
     }
 }
