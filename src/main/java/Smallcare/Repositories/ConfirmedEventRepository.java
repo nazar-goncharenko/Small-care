@@ -15,5 +15,6 @@ public interface ConfirmedEventRepository extends CrudRepository<ConfirmedEvent,
 
     Set<ConfirmedEvent> getConfirmedEventByCreator(User user);
     Set<ConfirmedEvent> getAllByPetsContains(Pet pet);
+    ConfirmedEvent getById(Long id);
 
 }

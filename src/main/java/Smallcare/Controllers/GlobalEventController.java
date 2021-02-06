@@ -61,6 +61,11 @@ public class GlobalEventController {
         User user = getCurrentUser();
         if (eventService.findById(id).isPresent()) {
             Event event = eventService.findById(id).get();
+            event.setEventComments(event.getEventComments());
+            for (EventComment var: event.getEventComments()
+                 ) {
+                System.out.println(var.getId());
+            }
             model.addAttribute("event", event);
             if (user != null) {
                 model.addAttribute("user", getCurrentUser());
