@@ -30,6 +30,9 @@ public class ConfirmedEvent {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "feedback")
+    private String feedback;
+
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     Status status;
@@ -72,6 +75,14 @@ public class ConfirmedEvent {
 
     public User getCreator() {
         return creator;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 
     public void setCreator(User creator) {
