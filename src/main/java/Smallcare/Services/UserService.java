@@ -40,10 +40,11 @@ public class UserService implements UserDetailsService {
 
     public boolean update(User user){
         User curUser = userRepository.findById(user.getId()).get();
-        if (userRepository.findByEmail(user.getEmail()) != null){
+
+        if (userRepository.findByEmail(user.getEmail()) != null && !user.getEmail().equals(curUser.getEmail())){
             return false;
         }
-        if (user.getPassword() != null) {
+        if (user.getPassword().length() != 0) {
             curUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
         if (user.getDescription() != null) {
@@ -52,7 +53,7 @@ public class UserService implements UserDetailsService {
         if (user.getDistrict() != null) {
             curUser.setDistrict(user.getDistrict());
         }
-        if (user.getEmail() != null) {
+        if (user.getEmail().equals(curUser.getEmail())) {
             curUser.setEmail(user.getEmail());
         }
         if (user.getCity() != null) {
