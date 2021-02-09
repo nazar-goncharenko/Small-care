@@ -37,7 +37,6 @@ public class UserController {
     @GetMapping("/profile")
     public String myProfile(Model model){
         model.addAttribute("user" , getCurrentUser());
-        model.addAttribute("newUser" , new User());
         return "profile";
     }
 
@@ -45,14 +44,12 @@ public class UserController {
     public String updateProfile(Model model,
                                 @ModelAttribute User user,
                                 @RequestParam(value = "file", required = false) MultipartFile file){
-        System.out.println(file == null);
         if(file != null && !file.isEmpty()){
             user.setPhotoUrl(UUID.randomUUID().toString());
         }
         user.setId(getCurrentUser().getId());
         if(userService.update(user)){
             if (file != null) {
-                System.out.println(file.isEmpty() ? "fuck" : "Oh)");
                 try {
                     if(!file.isEmpty()){
                         file.transferTo(new File(upload_path + user.getPhotoUrl() + ".png"));
