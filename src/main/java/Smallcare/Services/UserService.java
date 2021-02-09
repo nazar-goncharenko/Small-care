@@ -120,11 +120,11 @@ public class UserService implements UserDetailsService {
         userRepository.save(cur_user);
     }
 
-    public void rate(Long id, Integer rating){
+    public void rate(Long id, Integer rating, String feedback){
         ConfirmedEvent confirmedEvent = eventService.getConfirmedEventById(id);
         User worker = userRepository.findById(confirmedEvent.getWorker().getId()).get();
         worker.rate(rating);
-        eventService.rateEvent(confirmedEvent);
+        eventService.rateEvent(confirmedEvent, feedback);
         userRepository.save(worker);
     }
 

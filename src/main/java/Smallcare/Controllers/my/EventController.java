@@ -124,15 +124,10 @@ public class EventController {
         return events(model);
     }
 
-    @GetMapping("/rate")
-    public String rate(Model model){
-        model.addAttribute("events", eventService.getConfirmedEventForRate(getCurrentUser()));
-        return "TMP_rating";
-    }
-
     @PostMapping("/rate/{id}")
-    public String rate_user(@PathVariable Long id, @RequestParam (name = "rating") Integer rating){
-        userService.rate(id, rating);
+    public String rate_user(@PathVariable Long id, @RequestParam (name = "rating") Integer rating,
+    @RequestParam (name = "feedback") String feedback){
+        userService.rate(id, rating, feedback);
         return "redirect:/";
     }
 }
