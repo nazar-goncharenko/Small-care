@@ -131,9 +131,8 @@ public class EventController {
     }
 
     @PostMapping("/rate/{id}")
-    public String rate_user(@PathVariable Long id,@RequestParam (name = "rating") Integer rating){
-        System.out.println(userService.findById(id).getFirstName());
-        userService.rate(userService.findById(id), rating);
+    public String rate_user(@PathVariable Long id, @RequestParam (name = "rating") Integer rating){
+        userService.rate(id, rating);
         return "redirect:/";
     }
 }

@@ -1,9 +1,6 @@
 package Smallcare.Services;
 
-import Smallcare.Models.Event;
-import Smallcare.Models.Pet;
-import Smallcare.Models.Role;
-import Smallcare.Models.User;
+import Smallcare.Models.*;
 import Smallcare.Repositories.EventRepository;
 import Smallcare.Repositories.RoleRepository;
 import Smallcare.Repositories.UserRepository;
@@ -16,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -27,7 +23,7 @@ public class UserService implements UserDetailsService {
     RoleRepository roleRepository;
 
     @Autowired
-    EventRepository eventRepository;
+    EventService eventService;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -124,11 +120,13 @@ public class UserService implements UserDetailsService {
         userRepository.save(cur_user);
     }
 
-    public void rate(User user, Integer rating){
-        System.out.println(user.getFirstName());
-        User curUser = userRepository.findById(user.getId()).get();
-        curUser.rate(rating);
-        userRepository.save(curUser);
+    public void rate(Long id, Integer rating){
+        ConfirmedEvent confirmedEvent = eventService.getConfirmedEventById(id);
+        System.out.println(confirmedEvent.getWorker().getId());
+        User worker = userRepository.findById(confirmedEvent.getWorker().getId()).get();
+        worker.rate(rating);
+        eventService.rateEvent(confirmedEvent);
+        userRepository.save(worker);
     }
 
 

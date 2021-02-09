@@ -26,6 +26,9 @@ public class EventService {
     @Autowired
     EventCommentRepository commentRepository;
 
+    @Autowired
+    EventCommentRepository eventCommentRepository;
+
 
     public List<Event> findAll(){
         return eventRepository.findAll();
@@ -47,7 +50,19 @@ public class EventService {
         userService.save(user);
         event.clearPets();
         event.clearSinged();
+        Set<EventComment> comments = new HashSet<>(event.getEventComments());
+        event.clearComments();
+        for (EventComment eventComment: comments) {
+            eventComment.setUser(null);
+            eventCommentRepository.delete(eventComment);
+        }
         eventRepository.delete(event);
+    }
+
+    public void deleteConfirmedEvent(User user, ConfirmedEvent confirmedEvent){
+        User curUser = userService.findById(user.getId());
+        confirmedEvent.clearPets();
+        confirmedEventRepository.delete(confirmedEvent);
     }
 
     public void confirmEvent(Event event, User user){
@@ -59,7 +74,8 @@ public class EventService {
         Set <ConfirmedEvent> confirmedEvents = confirmedEventRepository.getConfirmedEventByCreator(user);
         Set <ConfirmedEvent> output = new HashSet<>();
         for (ConfirmedEvent event : confirmedEvents) {
-            if (event.getEndTime().isAfter(now())){
+            if (event.getEndTime().isBefore(now())){
+                System.out.println("DONE");
                 event.setStatus(Status.DONE);
                 confirmedEventRepository.save(event);
                 output.add(event);
@@ -73,5 +89,15 @@ public class EventService {
         commentRepository.save(eventComment);
         event.addComment(eventComment);
         eventRepository.save(event);
+    }
+
+    public ConfirmedEvent getConfirmedEventById(Long id){
+        return confirmedEventRepository.getById(id);
+    }
+
+    public void rateEvent(ConfirmedEvent confirmedEvent){
+        confirmedEvent = confirmedEventRepository.getById(confirmedEvent.getId());
+        confirmedEvent.setStatus(Status.RATED);
+        confirmedEventRepository.save(confirmedEvent);
     }
 }
