@@ -74,7 +74,7 @@ public class EventService {
         Set <ConfirmedEvent> confirmedEvents = confirmedEventRepository.getConfirmedEventByCreator(user);
         Set <ConfirmedEvent> output = new HashSet<>();
         for (ConfirmedEvent event : confirmedEvents) {
-            if (event.getEndTime().isBefore(now())){
+            if (event.getEndTime().isBefore(now()) && event.getStatus() != Status.RATED){
                 System.out.println("DONE");
                 event.setStatus(Status.DONE);
                 confirmedEventRepository.save(event);
@@ -96,8 +96,8 @@ public class EventService {
     }
 
     public void rateEvent(ConfirmedEvent confirmedEvent){
-        confirmedEvent = confirmedEventRepository.getById(confirmedEvent.getId());
-        confirmedEvent.setStatus(Status.RATED);
-        confirmedEventRepository.save(confirmedEvent);
+        ConfirmedEvent confirmedEventFromBD = confirmedEventRepository.getById(confirmedEvent.getId());
+        confirmedEventFromBD.setStatus(Status.RATED);
+        confirmedEventRepository.save(confirmedEventFromBD);
     }
 }
