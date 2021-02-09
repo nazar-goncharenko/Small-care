@@ -2,5 +2,5 @@ package Smallcare.Models;
 
 
 public enum Status{
-    REQUEST, PENDING, DONE;
+    REQUEST, CONFIRMED, DONE, RATED;
 }

@@ -9,14 +9,30 @@
             <div>
                 <h1>Event</h1>
                 <p th:text="${event.getDescription()}"></p>
-                <p th:text="${event.getStartTime().toString()+' '+event.getEndTime().toString()}"></p>
+                <p th:text="${event.getStartTime().getHour()+':'+(event.getStartTime().getMinute() > 10 ? event.getStartTime().getMinute() : '0'+event.getStartTime().getMinute())+' '+event.getEndTime().getHour()+':'+(event.getEndTime().getMinute() > 10 ? event.getEndTime().getMinute() : '0'+event.getEndTime().getMinute())}"></p>
             </div>
             <div>
+                <div class="row">
+                    <div class="col-3" th:each="pet : ${event.getPets()}">
+                        <a th:href="'/pets/' + ${pet.getId().toString()}">
+                            <img class="card-img-top" th:src="${'/images/' + pet.getPhotoUrl().toString()+'.png'}"
+                                 th:alt="${'/images/' + pet.getPhotoUrl().toString()+'.png'}">
+                        </a>
+                    </div>
+                </div>
                 <div th:if="${owner}">
                     <div th:if="${!event.getSignedUsers().isEmpty()}">
                         <p>Signed users: </p>
                         <div th:each="user : ${event.getSignedUsers()}">
-                            <p th:text="${user.getFirstName()}"></p>
+                            <div>
+                                <a th:href="'/users/'+ ${user.getId().toString()}">
+                                    <span th:text="${user.getFirstName()}"></span>
+                                </a>
+                                    <form method="post" th:action="'/events/' + ${event.getId()} + '/confirm/' + ${user.getId()}" >
+                                        <button type="submit" value="Підтвердити">Підтвердити</button>
+                                    </form>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div th:if="${event.getSignedUsers().isEmpty()}">
@@ -37,6 +53,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="container">
+            <div th:each="comment : ${event.getEventComments()}">
+                <div class="container">
+                    <div th:text="${comment.getUser().getUsername()}"></div>
+                    <div th:text="${comment.getText()}"></div>
+                </div>
+            </div>
+            <form th:action="'/events/' + ${event.getId() +'/comment'}" method="post">
+                <input type="text" name="comment">
+                <button type="submit">Надіслати комент</button>
+            </form>
         </div>
     </div>
 </div>

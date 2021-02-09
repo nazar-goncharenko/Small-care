@@ -85,17 +85,6 @@ public class EventController {
         return "addEvent";
     }
 
-    @PostMapping("/{id}/comment")
-    public String addCommentToEvent(@PathVariable Long id, @RequestParam(name = "comment") String comment) {
-        Optional<Event> event = eventService.findById(id);
-        if (event.isPresent()) {
-            event.get().addComment(new EventComment(getCurrentUser(), comment));
-            eventService.save(event.get());
-            return "redirect:/events/" + id;
-        }
-        return "redirect:/events/" + id;
-    }
-
     @GetMapping("/signed")
     public String getSignedEvents(Model model) {
         Set<Event> events = Objects.requireNonNull(getCurrentUser()).getSignedEvents();
@@ -130,8 +119,20 @@ public class EventController {
     @PostMapping("{id}/delete")
     public String deleteById(@PathVariable Long id, Model model){
         if (eventService.findById(id).get() != null) {
-            userService.deleteEvent(getCurrentUser(), eventService.findById(id).get());
+            eventService.deleteEvent(getCurrentUser(), eventService.findById(id).get());
         }
         return events(model);
+    }
+
+    @GetMapping("/rate")
+    public String rate(Model model){
+        model.addAttribute("events", eventService.getConfirmedEventForRate(getCurrentUser()));
+        return "TMP_rating";
+    }
+
+    @PostMapping("/rate/{id}")
+    public String rate_user(@PathVariable Long id, @RequestParam (name = "rating") Integer rating){
+        userService.rate(id, rating);
+        return "redirect:/";
     }
 }

@@ -18,9 +18,9 @@
         <div>
             <p th:text="${pet.getDescription()}"></p>
         </div>
-        <div>
+        <div th:if="${owner}">
             <form th:action="'/my/pets/' + ${pet.getId()} + '/delete/'" method="post">
-                <button type="submit" value="Sing">Sing</button>
+                <button class="btn btn-outline-danger" type="submit" value="Delete">Delete</button>
             </form>
         </div>
     </div>

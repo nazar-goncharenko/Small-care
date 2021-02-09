@@ -6,10 +6,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Event {
@@ -19,12 +19,10 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //    @Column(name = "startTime", nullable = false)
     @Column(name = "startTime")
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
     private LocalDateTime startTime;
 
-    //    @Column(name = "endTime", nullable = false)
     @Column(name = "endTime")
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
     private LocalDateTime endTime;
@@ -38,8 +36,8 @@ public class Event {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    Set <EventComment> eventComments = new HashSet<EventComment>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    List <EventComment> eventComments = new ArrayList<>();
 
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
@@ -124,7 +122,7 @@ public class Event {
     }
     
     public void addComment(EventComment eventComment){
-        this.eventComments.add(eventComment);
+        this.eventComments.add(0, eventComment);
     }
 
     public void addPet(Pet pet){
@@ -155,4 +153,15 @@ public class Event {
         this.signedUsers = signedUsers;
     }
 
+    public List<EventComment> getEventComments() {
+        return this.eventComments;
+    }
+
+    public void setEventComments(List<EventComment> eventComments) {
+        this.eventComments = eventComments;
+    }
+
+    public void clearComments(){
+        this.eventComments.clear();
+    }
 }
