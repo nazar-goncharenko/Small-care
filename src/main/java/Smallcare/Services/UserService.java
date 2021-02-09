@@ -122,7 +122,6 @@ public class UserService implements UserDetailsService {
 
     public void rate(Long id, Integer rating){
         ConfirmedEvent confirmedEvent = eventService.getConfirmedEventById(id);
-        System.out.println(confirmedEvent.getWorker().getId());
         User worker = userRepository.findById(confirmedEvent.getWorker().getId()).get();
         worker.rate(rating);
         eventService.rateEvent(confirmedEvent);
