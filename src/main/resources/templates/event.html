@@ -28,9 +28,10 @@
                                 <a th:href="'/users/'+ ${user.getId().toString()}">
                                     <span th:text="${user.getFirstName()}"></span>
                                 </a>
-                                    <form method="post" th:action="'/events/' + ${event.getId()} + '/confirm/' + ${user.getId()}" >
-                                        <button type="submit" value="Підтвердити">Підтвердити</button>
-                                    </form>
+                                <form method="post"
+                                      th:action="'/events/' + ${event.getId()} + '/confirm/' + ${user.getId()}">
+                                    <button type="submit" value="Підтвердити">Підтвердити</button>
+                                </form>
                                 </a>
                             </div>
                         </div>
@@ -43,10 +44,10 @@
                     </form>
                 </div>
                 <div th:unless="${owner}">
-                    <div th:if="${event.getSignedUsers().contains(user)}">
+                    <div th:if="${signed}">
                         You have already signed
                     </div>
-                    <div th:unless="${event.getSignedUsers().contains(user)}">
+                    <div th:if="${!signed}">
                         <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
                             <button class="btn btn-sm btn-outline-primary" type="submit" value="Sing">Sign</button>
                         </form>
