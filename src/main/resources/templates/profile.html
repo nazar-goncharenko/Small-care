@@ -7,14 +7,14 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-sm-10">
-            <h1 th:text="${user.getFirstName()}">User name</h1>
+            <h1 th:text="${user.getFirstName()}">Ім'я</h1>
         </div>
     </div>
 
     <div th:if="${error}" class="container"><br/>
         <div class="alert alert-danger">
             <strong>Помилка!</strong><br/>
-            This mail is already taken.
+            Ця пошта вже використовується.
         </div>
     </div>
 
@@ -24,7 +24,7 @@
                 <div class="text-center">
                     <img th:src="${'/images/' + user.getPhotoUrl() + '.png'}" class="avatar img-circle img-thumbnail"
                          alt="avatar">
-                    <h6>Upload a different photo</h6>
+                    <h6>Оновити фото</h6>
                     <div class="col-3">
                         <input type="file" name="file" class="text-center center-block file-upload" accept="image/*">
                     </div>
@@ -38,61 +38,69 @@
                         <hr>
 
                         <div class="form">
-                            <div class="form-group">
 
+                            <div class="form-group">
                                 <div class="col-xs-6">
-                                    <label for="first_name"><h4>First name</h4></label>
+                                    <label for="first_name"><h4>Ім'я</h4></label>
                                     <input type="text" class="form-control" name="first_name" id="first_name"
                                            th:field="*{firstName}"
-                                           placeholder="first name" title="enter your first name if any.">
+                                           th:placeholder="${user.getFirstName()}" title="Ім'я">
                                 </div>
                             </div>
-                            <div class="form-group">
 
+                            <div class="form-group">
                                 <div class="col-xs-6">
-                                    <label for="last_name"><h4>Last name</h4></label>
+                                    <label for="last_name"><h4>Прізвище</h4></label>
                                     <input type="text" class="form-control" name="last_name" id="last_name"
                                            th:field="*{lastName}"
-                                           placeholder="last name" title="enter your last name if any.">
+                                           th:placeholder="${user.getLastName()}" title="Прізвище">
                                 </div>
                             </div>
 
                             <div class="form-group">
-
                                 <div class="col-xs-6">
-                                    <label for="phone"><h4>Mobile Phone</h4></label>
+                                    <label for="phone"><h4>Номер телефону</h4></label>
                                     <input type="tel" class="form-control" name="phone" id="phone"
                                            th:field="*{phoneNumber}"
-                                           placeholder="enter phone" title="enter your mobile phone number if any.">
+                                           th:placeholder="${user.getPhoneNumber()}" title="Номер телефону">
                                 </div>
                             </div>
 
                             <div class="form-group">
-
                                 <div class="col-xs-6">
-                                    <label for="email"><h4>Email</h4></label>
+                                    <label for="email"><h4>Ел. пошта</h4></label>
                                     <input type="email" class="form-control" name="email" id="email" th:field="*{email}"
-                                           placeholder="you@email.com" title="enter your email.">
+                                           th:placeholder="${user.getEmail()}" title="Ел. пошта">
                                 </div>
                             </div>
-                            <div class="form-group">
 
+                            <div class="form-group">
                                 <div class="col-xs-6">
-                                    <label for="location"><h4>Location</h4></label>
-                                    <input type="text" class="form-control" id="location" placeholder="somewhere"
-                                           th:field="*{city}"
-                                           title="enter a location">
+                                    <label for="location"><h4>Місто</h4></label>
+                                    <input type="text" class="form-control" id="location" th:field="*{city}"
+                                           th:placeholder="${user.getCity()}"
+                                           title="Місто">
                                 </div>
                             </div>
-                            <div class="form-group">
 
+                            <div class="form-group">
                                 <div class="col-xs-6">
-                                    <label for="password"><h4>Password</h4></label>
+                                    <label for="location"><h4>Район</h4></label>
+                                    <input type="text" class="form-control" id="location" th:field="*{city}"
+                                           th:placeholder="${user.getDistrict()}"
+                                           title="Район">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <label for="password"><h4>Пароль</h4></label>
                                     <input type="password" class="form-control" name="password" id="password"
                                            th:field="*{password}"
-                                           placeholder="password" title="enter your password.">
+                                           placeholder="Пароль" title="Пароль">
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <br>
@@ -101,15 +109,14 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                         <hr>
                     </div>
                 </div>
             </div>
         </div>
     </form>
-
 </div>
 </body>
 <script type="text/javascript" th:src="@{/js/profile.js}"></script>

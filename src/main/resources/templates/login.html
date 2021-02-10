@@ -1,7 +1,7 @@
 <!Doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head th:insert="fragments/head.html :: head">
-    <title id="pageTitle">Sign In</title>
+    <title id="pageTitle">Вхід</title>
 </head>
 <body class="text-center">
 <form class="form-signin" th:action="@{/login}" method="post">
@@ -9,29 +9,29 @@
         <div class="alert alert-danger">
             <a href="/login" class="close" data-dismiss="alert"
                aria-label="close">×</a>
-            <strong>Error!</strong><br/>
-            Invalid username or password.
+            <strong>Помилка!</strong><br/>
+            Неправильне ім'я або пароль.
         </div>
     </div>
     <div th:if="${param.logout}" class="container"><br/>
         <div class="alert alert-success">
             <a href="/login" class="close" data-dismiss="alert"
                aria-label="close">×</a>
-            <strong>Success!</strong><br/>
-            You have been logged out.
+            <strong>Успішно!</strong><br/>
+            Ти вийшов зі свого профілю
         </div>
     </div>
     <img class="mb-4" th:src="@{/images/Smallcare300.png}" alt="">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label type="text"  for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" name="username" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-    <label type="password"  for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <h1 class="h3 mb-3 font-weight-normal">Увійти</h1>
+    <label type="text"  for="inputEmail" class="sr-only">Ел. пошта</label>
+    <input type="email" name="username" id="inputEmail" class="form-control" placeholder="Ел. пошта" required autofocus>
+    <label type="password"  for="inputPassword" class="sr-only">Пароль</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
     <p><small class="no-account">
-            Don't Have an Account?
-            <a href="/signup">Sign Up</a>
+            Ще не зареєстрований?
+            <a href="/signup">Зареєструватися!</a>
     </small></p>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">Sign in</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">Увійти</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
 </form>
 <link th:href="@{/css/login/sign.css}" rel="stylesheet">

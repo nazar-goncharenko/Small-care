@@ -35,3 +35,4 @@ src/main/resources/images/
 ### Files with local path ###
 *.properties
 
+src/main/resources/application.properties
