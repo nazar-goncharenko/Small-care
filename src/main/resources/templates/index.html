@@ -64,38 +64,6 @@
             </div>
         </div>
     </div>
-
-    <div class="modal">
-        <div class="modal-body">
-            <div class="modal-content">
-                <div th:if="${rateEvents != null}">
-                    <div th:each="event : ${rateEvents}">
-                        <form th:action="'/my/events/rate/' + ${event.getId()}" method="post" th:object="${event}">
-                            <span th:text="${event.getWorker().getUsername()} + ${event.getWorker().getId()}"></span>
-                            <input type="range" id="rating" min="0" max="10" name="rating" list="ratingList">
-                            <datalist id="ratingList">
-                                <option value="0" label="0%">0</option>
-                                <option value="1"></option>
-                                <option value="2"></option>
-                                <option value="3"></option>
-                                <option value="4"></option>
-                                <option value="5" label="5%">5</option>
-                                <option value="6"></option>
-                                <option value="7"></option>
-                                <option value="8"></option>
-                                <option value="9"></option>
-                                <option value="10" label="10%">10</option>
-                            </datalist>
-                            <input type="text" name="feedback" placeholder="Додайте коментар">
-                            <button type="submit" value="Оцінити">Оцінити</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <div th:if="${user != null}" class="padding">
         <div class="row">
             <div class="col-xl-3 col-lg-12	">
