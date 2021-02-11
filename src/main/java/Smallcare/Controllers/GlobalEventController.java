@@ -61,13 +61,11 @@ public class GlobalEventController {
         User user = getCurrentUser();
         if (eventService.findById(id).isPresent()) {
             Event event = eventService.findById(id).get();
-            event.setEventComments(event.getEventComments());
-            for (EventComment var: event.getEventComments()
-                 ) {
-                System.out.println(var.getId());
-            }
             model.addAttribute("event", event);
             if (user != null) {
+                if (event.getSignedUsers().stream().anyMatch(user1 -> user.getId().equals(user1.getId()))) {
+                    model.addAttribute("signed", true);
+                }
                 model.addAttribute("user", getCurrentUser());
                 if (user.getId().equals(event.getCreatorUser().getId())) {
                     model.addAttribute("owner", true);
