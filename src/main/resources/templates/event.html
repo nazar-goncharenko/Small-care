@@ -22,7 +22,7 @@
                 </div>
                 <div th:if="${owner}">
                     <div th:if="${!event.getSignedUsers().isEmpty()}">
-                        <p>Signed users: </p>
+                        <p>Підписані користувачі: </p>
                         <div th:each="user : ${event.getSignedUsers()}">
                             <div>
                                 <a th:href="'/users/'+ ${user.getId().toString()}">
@@ -43,12 +43,16 @@
                     </form>
                 </div>
                 <div th:unless="${owner}">
-                    <div th:if="${event.getSignedUsers().contains(user)}">
+
+                   <div th:if="${event.getSignedUsers().contains(user)}">
                         Ти вже підписаний
-                    </div>
+                   </div>
+
                     <div th:unless="${event.getSignedUsers().contains(user)}">
                         <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
-                            <button class="btn btn-sm btn-outline-primary" type="submit" value="Підписатися">Підписатися</button>
+                            <button class="btn btn-sm btn-outline-primary" type="submit" value="Підписатися">
+                                Підписатися
+                            </button>
                         </form>
                     </div>
                 </div>

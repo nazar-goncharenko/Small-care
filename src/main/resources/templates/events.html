@@ -30,18 +30,9 @@
                                     <button type="button" class="btn btn-sm btn-outline-primary"
                                             onclick="document.location.href=this.getAttribute('href');"
                                             th:href="'/events/' + ${event.getId().toString()}">
-                                        Перегляд
+                                        Переглянути
                                     </button>
 
-                                    <div th:if="${!owner && user.getId() != event.getCreatorUser().getId()}">
-                                        <div th:unless="${event.getSignedUsers().contains(user)}">
-                                            <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
-                                                <button class="btn btn-sm btn-outline-warning" type="submit" value="Підписатися">
-                                                    Підписатися
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
 
                                     <div th:if="${owner}">
                                         <form th:action="'/my/events/' + ${event.getId()} + '/delete'" method="post">
