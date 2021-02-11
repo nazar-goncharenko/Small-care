@@ -9,11 +9,11 @@
     <div th:unless="${user != null}" class="jumbotron">
         <div class="container bg-dark round">
             <h1>Новенькі?</h1>
-            <p class="lead text-white">Логуйтеся і заходьте. Вас вже зачекалися котики і песики</p>
+            <p class="lead text-white">Логіньтеся і заходьте. Вас вже зачекалися котики і песики</p>
             <div class="container">
                 <div class="row justify-content-md-center">
                     <div class="col col-12 col-lg-2">
-                        <a href="/signup" class="btn btn-outline-light my-2">Реєструватися</a>
+                        <a href="/signup" class="btn btn-outline-light my-2">Зареєструватися</a>
                     </div>
                     <div class="col col-12 col-lg-2">
                         <a href="/login" class="btn btn-outline-primary my-2">Логіньтеся</a>
@@ -69,7 +69,7 @@
             <div class="col-xl-3 col-lg-12	">
                 <div class="container">
                     <div class="col round bg-dark">
-                        <h4 class="text-white">Мої улюбленці</h4>
+                        <h4 class="text-white">Мої тваринки</h4>
                         <div class="row">
                             <div th:each="pet : ${pets}">
                                 <a th:href="'/pets/' + ${pet.getId().toString()}" class="text-white">
@@ -86,10 +86,10 @@
                 <table class="table">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Description</th>
-                        <th scope="col">Start</th>
-                        <th scope="col">End</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Опис</th>
+                        <th scope="col">Початок</th>
+                        <th scope="col">Заврешення</th>
+                        <th scope="col">Вартість</th>
                     </tr>
                     </thead>
                     <tbody class="bg-white">
@@ -131,7 +131,7 @@
                     </div>
                     <br>
                     <div class="col round bg-success">
-                        Сьогодні Старт
+                        Почнуться сьогодні
                     </div>
                     <br>
                     <div class="col round bg-warning">

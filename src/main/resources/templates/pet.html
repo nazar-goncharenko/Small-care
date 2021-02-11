@@ -1,6 +1,6 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
 <head th:insert="fragments/head.html :: head">
-    <title id="pageTitle">Pets</title>
+    <title id="pageTitle">Мої тваринки</title>
 <body>
 <header th:insert="fragments/header.html :: header"></header>
 <div class="row">
@@ -12,15 +12,15 @@
     <div class="col-sm-9">
         <div>
             <blockquote>
-                <h5 th:text="${pet.getName()}"></h5>
+                <h5>Ім'я: </h5> <p th:text="${pet.getName()}"></p>
             </blockquote>
         </div>
         <div>
-            <p th:text="${pet.getDescription()}"></p>
+            <h5>Опис: </h5> <p th:text="${pet.getDescription()}"></p>
         </div>
         <div th:if="${owner}">
             <form th:action="'/my/pets/' + ${pet.getId()} + '/delete/'" method="post">
-                <button class="btn btn-outline-danger" type="submit" value="Delete">Delete</button>
+                <button class="btn btn-outline-danger" type="submit" value="Delete">Видалити</button>
             </form>
         </div>
     </div>

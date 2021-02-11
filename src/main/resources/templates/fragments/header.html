@@ -9,29 +9,29 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/pets'} ? active : ''">
-                    <a class="nav-link" href="/my/pets">Pets</a>
+                    <a class="nav-link" href="/my/pets">Тваринки</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/pets/add'} ? active : ''">
-                    <a class="nav-link" href="/my/pets/add">Add Pet</a>
+                    <a class="nav-link" href="/my/pets/add">Додати тваринку</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/events'} ? active : ''">
-                    <a class="nav-link" href="/events">Events</a>
+                    <a class="nav-link" href="/events">Події</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events'} ? active : ''">
-                    <a class="nav-link" href="/my/events">My Events</a>
+                    <a class="nav-link" href="/my/events">Мої події</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events/signed'} ? active : ''">
-                    <a class="nav-link" href="/my/events/signed">My Signed Events</a>
+                    <a class="nav-link" href="/my/events/signed">Мої підписки</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events/add'} ? active : ''">
-                    <a class="nav-link" href="/my/events/add">Add Event</a>
+                    <a class="nav-link" href="/my/events/add">Додати подію</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events/rate'} ? active : ''">
-                    <a class="nav-link" href="/my/events/rate">Rate page</a>
+                    <a class="nav-link" href="/my/events/rate">Оцінити сторінку</a>
                 </li>
             </ul>
             <div th:unless="${#httpServletRequest.remoteUser}" class="form-inline mt-2 mt-md-0">
-                <a class="btn btn-outline-primary" href="/login">Sign in</a>
+                <a class="btn btn-outline-primary" href="/login">Увійти</a>
             </div>
             <div th:if="${#httpServletRequest.remoteUser}">
                 <div class="dropdown">
@@ -39,8 +39,8 @@
                         <span th:text="${#httpServletRequest.remoteUser}"></span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item p-2 text-white bg-dark" th:href="@{/my/profile}">Profile</a>
-                        <a class="dropdown-item p-2 text-white bg-dark" th:href="@{/logout}">Logout</a>
+                        <a class="dropdown-item p-2 text-white bg-dark" th:href="@{/my/profile}">Профіль</a>
+                        <a class="dropdown-item p-2 text-white bg-dark" th:href="@{/logout}">Вийти</a>
                     </div>
                 </div>
             </div>

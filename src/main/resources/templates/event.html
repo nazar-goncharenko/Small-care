@@ -1,13 +1,13 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
 <head th:insert="fragments/head.html :: head">
-    <title id="pageTitle">Pets</title>
+    <title id="pageTitle">Подія</title>
 <body>
 <header th:insert="fragments/header.html :: header"></header>
 <div class="container">
     <div class="row" th:if="${event != null}">
         <div class="col-sm-9">
             <div>
-                <h1>Event</h1>
+                <h1>Подія</h1>
                 <p th:text="${event.getDescription()}"></p>
                 <p th:text="${event.getStartTime().getHour()+':'+(event.getStartTime().getMinute() > 10 ? event.getStartTime().getMinute() : '0'+event.getStartTime().getMinute())+' '+event.getEndTime().getHour()+':'+(event.getEndTime().getMinute() > 10 ? event.getEndTime().getMinute() : '0'+event.getEndTime().getMinute())}"></p>
             </div>
@@ -22,7 +22,7 @@
                 </div>
                 <div th:if="${owner}">
                     <div th:if="${!event.getSignedUsers().isEmpty()}">
-                        <p>Signed users: </p>
+                        <p>Підписані користувачі: </p>
                         <div th:each="user : ${event.getSignedUsers()}">
                             <div>
                                 <a th:href="'/users/'+ ${user.getId().toString()}">
@@ -37,19 +37,21 @@
                         </div>
                     </div>
                     <div th:if="${event.getSignedUsers().isEmpty()}">
-                        No signed users :(
+                        Немає підписок :(
                     </div>
                     <form th:action="'/my/events/' + ${event.getId()} + '/delete'" method="post">
-                        <button class="btn btn-sm btn-outline-danger" type="submit" value="Delete">Delete</button>
+                        <button class="btn btn-sm btn-outline-danger" type="submit" value="Delete">Видалити</button>
                     </form>
                 </div>
                 <div th:unless="${owner}">
                     <div th:if="${signed}">
-                        You have already signed
+                        Ти вже підписаний
                     </div>
                     <div th:if="${!signed}">
                         <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
-                            <button class="btn btn-sm btn-outline-primary" type="submit" value="Sing">Sign</button>
+                            <button class="btn btn-sm btn-outline-primary" type="submit" value="Підписатися">
+                                Підписатися
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -64,7 +66,7 @@
             </div>
             <form th:action="'/events/' + ${event.getId() +'/comment'}" method="post">
                 <input type="text" name="comment">
-                <button type="submit">Надіслати комент</button>
+                <button type="submit">Надіслати</button>
             </form>
         </div>
     </div>
@@ -72,7 +74,7 @@
 
 <div th:if="${event == null}">
     <h1>404</h1>
-    <h2>This event does not exist</h2>
+    <h2>Цієї події не існує :(</h2>
 </div>
 
 </body>
