@@ -9,7 +9,10 @@
             <div>
                 <h1>Подія</h1>
                 <p th:text="${event.getDescription()}"></p>
-                <p th:text="${event.getStartTime().getHour()+':'+(event.getStartTime().getMinute() > 10 ? event.getStartTime().getMinute() : '0'+event.getStartTime().getMinute())+' '+event.getEndTime().getHour()+':'+(event.getEndTime().getMinute() > 10 ? event.getEndTime().getMinute() : '0'+event.getEndTime().getMinute())}"></p>
+
+                <p th:text="'Дата: '+ ${ (event.getStartTime().getDayOfMonth() > 10 ? event.getStartTime().getDayOfMonth() : '0'+event.getStartTime().getDayOfMonth())+'.'+ (event.getStartTime().getMonthValue() > 10 ? event.getStartTime().getMonthValue() : '0'+event.getStartTime().getMonthValue()) + '.'+event.getStartTime().getYear()+' - '+ (event.getEndTime().getDayOfMonth() > 10 ? event.getEndTime().getDayOfMonth() : '0'+event.getEndTime().getDayOfMonth())+'.'+ (event.getEndTime().getMonthValue() > 10 ? event.getEndTime().getMonthValue() : '0'+event.getEndTime().getMonthValue()) + '.'+event.getEndTime().getYear()}"> </p>
+
+                <p th:text="'Час: ' + ${event.getStartTime().getHour()+':'+(event.getStartTime().getMinute() > 10 ? event.getStartTime().getMinute() : '0'+event.getStartTime().getMinute())+' - '+event.getEndTime().getHour()+':'+(event.getEndTime().getMinute() > 10 ? event.getEndTime().getMinute() : '0'+event.getEndTime().getMinute())}"></p>
             </div>
             <div>
                 <div class="row">
