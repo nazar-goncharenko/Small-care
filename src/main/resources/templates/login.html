@@ -1,75 +1,37 @@
 <!Doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head th:insert="fragments/head.html :: head">
-    <title id="pageTitle">Sign In</title>
+    <title id="pageTitle">Вхід</title>
 </head>
-
-<!--    Internationalization    start  -->
-
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="/">Smallcare</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="navbar-nav mr-auto">
-    </ul>
-    <div class>
-        <style>
-            .langConf { color: white; }
-        </style>
-        <span class="langConf" th:text="#{lang.change} "></span>:
-        <label for="locales"></label>
-        <select id="locales">
-            <option value="-"></option>
-            <option value="uk" th:text="#{lang.uk}"></option>
-            <option value="en" th:text="#{lang.eng}"></option>
-        </select>
-    </div>
-</nav>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#locales").change(function () {
-            var selectedOption = $('#locales').val();
-            if (selectedOption !== '-'){
-                window.location.replace('login?lang=' + selectedOption);
-            }
-        });
-    });
-</script>
-
-<!--    Internationalization    end  -->
-
 <body class="text-center">
 <form class="form-signin" th:action="@{/login}" method="post">
     <div th:if="${param.error}" class="container"><br/>
         <div class="alert alert-danger">
             <a href="/login" class="close" data-dismiss="alert"
                aria-label="close">×</a>
-            <strong th:text="#{Error}"></strong><br/>
+            <strong>Помилка!</strong><br/>
+            Неправильне ім'я або пароль.
         </div>
     </div>
     <div th:if="${param.logout}" class="container"><br/>
         <div class="alert alert-success">
             <a href="/login" class="close" data-dismiss="alert"
                aria-label="close">×</a>
-            <strong  th:text="#{Success}"></strong><br/>
+            <strong>Успішно!</strong><br/>
+            Ти вийшов зі свого профілю
         </div>
     </div>
     <img class="mb-4" th:src="@{/images/Smallcare300.png}" alt="">
-    <h1 class="h3 mb-3 font-weight-normal"  th:text="#{p_sign_in}"></h1>
-    <label type="text"  for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" name="username" id="inputEmail" class="form-control" th:placeholder="#{email}" required autofocus>
-    <label type="password"  for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" th:placeholder="#{password}" required>
-    <p><small class="no-account"  >
-        <h6 th:text="#{have_acc_no}"> </h6>
-        <a  href="/signup" th:text="#{sign_up}"> </a>
+    <h1 class="h3 mb-3 font-weight-normal">Увійти</h1>
+    <label type="text"  for="inputEmail" class="sr-only">Ел. пошта</label>
+    <input type="email" name="username" id="inputEmail" class="form-control" placeholder="Ел. пошта" required autofocus>
+    <label type="password"  for="inputPassword" class="sr-only">Пароль</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
+    <p><small class="no-account">
+            Ще не зареєстрований?
+            <a href="/signup">Зареєструватися!</a>
     </small></p>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In" th:text="#{sign_in}"></button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">Увійти</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
 </form>
 <link th:href="@{/css/login/sign.css}" rel="stylesheet">

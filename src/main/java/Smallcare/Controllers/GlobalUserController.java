@@ -42,7 +42,8 @@ public class GlobalUserController {
     @PostMapping("/{id}")
     public String updateUser(@ModelAttribute User user, @PathVariable Long id) {
         User curUser = getCurrentUser();
-        if (curUser.getId() != id) {
+        assert curUser != null;
+        if (!curUser.getId().equals(id)) {
             return "user";
         }
         if (userService.update(user)) {

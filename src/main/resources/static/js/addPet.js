@@ -12,7 +12,7 @@ function myValidationForm() {
     if(isFileImage()){
         return true;
     } else {
-        alert("File is not image!");
+        alert("Файл не фото!");
         return false;
     }
 }

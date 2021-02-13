@@ -1,17 +1,22 @@
 <!Doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
 <head th:insert="fragments/head.html :: head">
-    <title id="pageTitle">Album of Pets</title>
+    <title id="pageTitle">Події</title>
     <link th:href="@{/css/album/album.css}" rel="stylesheet">
 </head>
 <body>
 <div th:insert="fragments/header.html :: header"></div>
 
 <div th:if="${error} == true">
-    <H1>Some error</H1>
+    <H1>Помилка</H1>
 </div>
 
 <main role="main">
+    <div class="text-center">
+        <button type="button" class="btn btn-outline-success btn-lg btn-block"
+                onclick="document.location.href=this.getAttribute('href');" th:href="'/my/events/add'">+ Додати подію</button>
+    </div>
+
     <div class="album py-5">
         <div class="container">
             <div class="row">
@@ -22,26 +27,22 @@
 
                             <p th:if="${owner}" class="text-dark" th:text="${'Кількість підписаних людей: ' + event.getSignedUsers().size()}"></p>
                         </div>
+
                         <div class="card-body">
                             <div class="container d-flex justify-content-between align-items-center">
                                 <div class="row">
+
                                     <button type="button" class="btn btn-sm btn-outline-primary"
                                             onclick="document.location.href=this.getAttribute('href');"
-                                            th:href="'/events/' + ${event.getId().toString()}">View
+                                            th:href="'/events/' + ${event.getId().toString()}">
+                                        Переглянути
                                     </button>
-                                    <div th:if="${!owner && user.getId() != event.getCreatorUser().getId()}">
-                                        <div th:unless="${event.getSignedUsers().contains(user)}">
-                                            <form th:action="'/my/events/' + ${event.getId()} + '/sign'" method="post">
-                                                <button class="btn btn-sm btn-outline-warning" type="submit" value="Sign">
-                                                    Sign
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
+
+
                                     <div th:if="${owner}">
                                         <form th:action="'/my/events/' + ${event.getId()} + '/delete'" method="post">
-                                            <button class="btn btn-sm btn-outline-danger" type="submit" value="Delete">
-                                                Delete
+                                            <button class="btn btn-sm btn-outline-danger" type="submit" value="Видалити">
+                                                Видалити
                                             </button>
                                         </form>
                                     </div>

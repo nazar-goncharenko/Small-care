@@ -2,7 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
 <head th:insert="fragments/head.html :: head">
-    <title id="pageTitle">Album of Pets</title>
+    <title id="pageTitle">Події</title>
     <link th:href="@{/css/album/album.css}" rel="stylesheet">
 </head>
 <body>
@@ -10,19 +10,26 @@
 
 
 <main role="main">
+    <div class="text-center">
+    <button type="button" class="btn btn-outline-success btn-lg btn-block"
+            onclick="document.location.href=this.getAttribute('href');" th:href="'/my/pets/add'">+ Додати тваринку</button>
+    </div>
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-md-4" th:each="pet : ${pets}">
                     <div class="card mb-4 box-shadow">
-                            <img class="card-img-top" th:src="${'/images/' + pet.getPhotoUrl().toString()+'.png'}" th:alt="${pet.getPhotoUrl()}">
+                            <img class="card-img-top" th:src="${'/images/' + pet.getPhotoUrl().toString()+'.png'}"
+                                 th:alt="${pet.getPhotoUrl()}">
                         <div class="card-body">
+                            <h5 class="text-center" th:text="${pet.getName()}"></h5>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="document.location.href=this.getAttribute('href');" th:href="'/pets/' + ${pet.getId().toString()}"  th:text="#{View}"></button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary"  th:text="#{Edit}"></button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            onclick="document.location.href=this.getAttribute('href');" th:href="'/pets/'
+                                             + ${pet.getId().toString()}">Перегляд</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Редагувати</button>
                                 </div>
-                                <p class="text-dark" th:text="${pet.getName()}"></p>
                             </div>
                         </div>
                     </div>

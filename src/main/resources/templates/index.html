@@ -1,6 +1,6 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
 <head th:insert="fragments/head.html :: head">
-    <title id="pageTitle">Home</title>
+    <title id="pageTitle">Index</title>
 </head>
 <body>
 <div th:insert="fragments/header.html :: header"></div>
@@ -8,15 +8,57 @@
 <main class="text-center align-content-center">
     <div th:unless="${user != null}" class="jumbotron">
         <div class="container bg-dark round">
-            <h1  th:text="#{Are_new}"></h1>
-            <p class="lead text-white"  th:text="#{Welcome}"></p>
+            <h1>Новенькі?</h1>
+            <p class="lead text-white">Логіньтеся і заходьте. Вас вже зачекалися котики і песики</p>
             <div class="container">
                 <div class="row justify-content-md-center">
                     <div class="col col-12 col-lg-2">
-                        <a href="/signup" class="btn btn-outline-light my-2" th:text="#{sign_up}"></a>
+                        <a href="/signup" class="btn btn-outline-light my-2">Зареєструватися</a>
                     </div>
                     <div class="col col-12 col-lg-2">
-                        <a href="/login" class="btn btn-outline-primary my-2" th:text="#{sign_in}"></a>
+                        <a href="/login" class="btn btn-outline-primary my-2">Логіньтеся</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div th:if="${rateEvents != null}">
+                        <div th:each="event : ${rateEvents}">
+                            <form th:action="'/my/events/rate/' + ${event.getId()}" method="post"
+                                  th:object="${event}">
+                                <span th:text="${event.getWorker().getUsername()} + ${event.getWorker().getId()}"></span>
+                                <input type="range" min="0" max="10" name="rating" list="ratingList">
+                                <datalist id="ratingList">
+                                    <option value="0" label="0%">0</option>
+                                    <option value="1"></option>
+                                    <option value="2"></option>
+                                    <option value="3"></option>
+                                    <option value="4"></option>
+                                    <option value="5" label="5%">5</option>
+                                    <option value="6"></option>
+                                    <option value="7"></option>
+                                    <option value="8"></option>
+                                    <option value="9"></option>
+                                    <option value="10" label="10%">10</option>
+                                </datalist>
+                                <input type="text" name="feedback" placeholder="Додайте коментар">
+                                <button type="submit" value="Оцінити">Оцінити</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -27,7 +69,7 @@
             <div class="col-xl-3 col-lg-12	">
                 <div class="container">
                     <div class="col round bg-dark">
-                        <h4 class="text-white"  th:text="#{Pets}"></h4>
+                        <h4 class="text-white">Мої тваринки</h4>
                         <div class="row">
                             <div th:each="pet : ${pets}">
                                 <a th:href="'/pets/' + ${pet.getId().toString()}" class="text-white">
@@ -44,10 +86,10 @@
                 <table class="table">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col"  th:text="#{Description}"></th>
-                        <th scope="col" th:text="#{Start}"></th>
-                        <th scope="col" th:text="#{End}"></th>
-                        <th scope="col" th:text="#{Price}"></th>
+                        <th scope="col">Опис</th>
+                        <th scope="col">Початок</th>
+                        <th scope="col">Заврешення</th>
+                        <th scope="col">Вартість</th>
                     </tr>
                     </thead>
                     <tbody class="bg-white">
@@ -84,13 +126,16 @@
 
             <div class="col-xl-3 col-lg-12	">
                 <div class="container">
-                    <div class="col round bg-secondary"  th:text="#{started}">
+                    <div class="col round bg-secondary">
+                        Вже почалися
                     </div>
                     <br>
-                    <div class="col round bg-success"  th:text="#{start_today}">
+                    <div class="col round bg-success">
+                        Почнуться сьогодні
                     </div>
                     <br>
-                    <div class="col round bg-warning"  th:text="#{start_soon}">
+                    <div class="col round bg-warning">
+                        Почнуться згодом
                     </div>
                     <br>
                 </div>
@@ -100,11 +145,15 @@
     </div>
 </main>
 
-
 </body>
 <link th:href="@{/css/index/index.css}" rel="stylesheet"/>
 <script>
     jQuery(document).ready(function ($) {
+        var list = '[[${rateEvents}]]';
+        if (list.length > 2) {
+            $("#feedback").modal('show');
+        }
+
         $(".clickable-row").click(function () {
             window.location = $(this).data("href");
         });

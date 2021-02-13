@@ -11,26 +11,26 @@
     <main role="main" class="inner cover">
         <form method="post" th:action="@{/my/pets/add}" th:object="${pet}" enctype="multipart/form-data" th:onsubmit="return myValidationForm()"
               class="form-signin">
-            <h1 class="h3 mb-3 font-weight-normal">Create your animal</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Створення тваринки</h1>
             <label for="inputName" class="sr-only">Name</label>
-            <input type="text" id="inputName" th:field="*{name}" maxlength="20" required placeholder="Name" name="name"/>
+            <input type="text" id="inputName" th:field="*{name}" maxlength="20" required placeholder="Ім'я тваринки" name="name"/>
             <br>
             <div class="custom-file col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-5">
                     <label for="inputDescription" class="sr-only">Description</label>
-                    <textarea class="form-control" type="text" id="inputDescription" maxlength="500" th:field="*{description}" placeholder="Description" name="description" rows="3">
+                    <textarea class="form-control" type="text" id="inputDescription" maxlength="500" th:field="*{description}" placeholder="Опис" name="description" rows="3">
                     </textarea>
             </div>
             <br>
             <br>
             <div class="custom-file col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2 ">
-                <input type="file" id="customFile" class="custom-file-input" placeholder="File" name="file" accept="image/*"/>
-                <label class="custom-file-label" for="customFile">Choose file</label>
+                <input type="file" id="customFile" class="custom-file-input" placeholder="Файл" name="file" accept="image/*"/>
+                <label class="custom-file-label" for="customFile">Вибрати фото</label>
             </div>
             <br>
             <br>
             <div class="lead col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2 mx-auto">
-                <button class="btn btn-lg btn-primary btn-block" type="submit" value="Create animal" th:onclick="return myValidationButton()">
-                    Create
+                <button class="btn btn-lg btn-outline-success btn-block" type="submit" value="Додати тваринку" th:onclick="return myValidationButton()">
+                    Додати тваринку
                 </button>
             </div>
             <p class="mt-5 mb-3 text-muted">© 2020</p>

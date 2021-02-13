@@ -9,7 +9,7 @@
         <div th:if="${!pets.isEmpty()}">
             <form method="post" th:action="@{/my/events}" th:object="${event}"
                   class="form-signin" th:onsubmit="return myValidationForm()">
-                <h1 class="h3 mb-3 font-weight-normal">Create event</h1>
+                <h1 class="h3 mb-3 font-weight-normal">Додати подію</h1>
 
                 <input type="datetime-local" name="startTime1" placeholder="startTime" required>
                 <br>
@@ -17,10 +17,10 @@
                 <input type="datetime-local" name="endTime1" placeholder="endTime" required>
                 <br>
                 <br>
-                <input type="number" th:field="*{price}" placeholder="price" min="0" max="9223372036854775806" required>
+                <input type="number" th:field="*{price}" placeholder="Вартість" min="0" max="92233720368547758" required>
                 <br>
                 <br>
-                <input type="text" th:field="*{description}" placeholder="description" required>
+                <input type="text" th:field="*{description}" placeholder="Опис" required>
                 <br>
                 <br>
                 <div class="custom-checkbox required" th:each="pet : ${pets}">
@@ -30,8 +30,8 @@
                            th:text="${pet.getName()}"></label>
                 </div>
                 <div class="lead col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2 mx-auto">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="validButton()">
-                        Create
+                    <button class="btn btn-lg btn-outline-success btn-block" type="submit" onclick="validButton()">
+                        Створити
                     </button>
                 </div>
                 <p class="mt-5 mb-3 text-muted">© 2020</p>
@@ -41,14 +41,15 @@
             <section class="jumbotron text-center">
                 <div class="container">
                     <h1>Ви не можете створити подію</h1>
-                    <p class="lead text-muted">Ви не можете створити подію оскільки у вас немає тваринки</p>
+                    <p class="lead text-muted">Ви не можете створити подію, оскільки у вас немає тваринки</p>
                     <p>
                         <a href="/events" class="btn btn-secondary my-2">Подивитися інші події</a>
-                        <a href="/my/pets/add" class="btn btn-primary my-2">Створити Тваринку</a>
+                        <a href="/my/pets/add" class="btn btn-primary my-2">Створити тваринку</a>
                     </p>
                 </div>
             </section>
         </div>
+
     </main>
 </div>
 </body>
