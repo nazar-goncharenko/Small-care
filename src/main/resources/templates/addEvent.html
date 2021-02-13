@@ -9,12 +9,13 @@
         <div th:if="${!pets.isEmpty()}">
             <form method="post" th:action="@{/my/events}" th:object="${event}"
                   class="form-signin" th:onsubmit="return myValidationForm()">
+
                 <h1 class="h3 mb-3 font-weight-normal">Додати подію</h1>
 
-                <input type="datetime-local" name="startTime1" placeholder="startTime" required>
+                <input type="datetime-local" name="startTime1" min="2021-02-13T14:30" placeholder="startTime" required>
                 <br>
                 <br>
-                <input type="datetime-local" name="endTime1" placeholder="endTime" required>
+                <input type="datetime-local" name="endTime1" min="2021-02-13T14:30" placeholder="endTime" required>
                 <br>
                 <br>
                 <input type="number" th:field="*{price}" placeholder="Вартість" min="0" max="92233720368547758" required>

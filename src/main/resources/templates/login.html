@@ -23,14 +23,18 @@
     </div>
     <img class="mb-4" th:src="@{/images/Smallcare300.png}" alt="">
     <h1 class="h3 mb-3 font-weight-normal">Увійти</h1>
+
     <label type="text"  for="inputEmail" class="sr-only">Ел. пошта</label>
     <input type="email" name="username" id="inputEmail" class="form-control" placeholder="Ел. пошта" required autofocus>
+
     <label type="password"  for="inputPassword" class="sr-only">Пароль</label>
     <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
+
     <p><small class="no-account">
             Ще не зареєстрований?
             <a href="/signup">Зареєструватися!</a>
     </small></p>
+
     <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">Увійти</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
 </form>
