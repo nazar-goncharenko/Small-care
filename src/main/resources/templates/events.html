@@ -12,9 +12,14 @@
 </div>
 
 <main role="main">
-    <div class="text-center">
+    <div th:if="${owner}">
         <button type="button" class="btn btn-outline-success btn-lg btn-block"
                 onclick="document.location.href=this.getAttribute('href');" th:href="'/my/events/add'">+ Додати подію</button>
+    </div>
+
+    <div th:unless="${owner}">
+        <button type="button" class="btn btn-outline-success btn-lg btn-block"
+                onclick="document.location.href=this.getAttribute('href');" th:href="'/events/'">+ Знайти події</button>
     </div>
 
     <div class="album py-5">
@@ -23,9 +28,13 @@
                 <div class="col-md-4" th:each="event : ${events}">
                     <div class="card mb-4 box-shadow">
                         <div class="container">
-                            <p th:text="${event.getStartTime().getHour()+':'+(event.getStartTime().getMinute() > 10 ? event.getStartTime().getMinute() : '0'+event.getStartTime().getMinute())+' '+event.getEndTime().getHour()+':'+(event.getEndTime().getMinute() > 10 ? event.getEndTime().getMinute() : '0'+event.getEndTime().getMinute())}"></p>
+
+                            <p th:text="'Дата: '+ ${ (event.getStartTime().getDayOfMonth() > 10 ? event.getStartTime().getDayOfMonth() : '0'+event.getStartTime().getDayOfMonth())+'.'+ (event.getStartTime().getMonthValue() > 10 ? event.getStartTime().getMonthValue() : '0'+event.getStartTime().getMonthValue()) + '.'+event.getStartTime().getYear()+' - '+ (event.getEndTime().getDayOfMonth() > 10 ? event.getEndTime().getDayOfMonth() : '0'+event.getEndTime().getDayOfMonth())+'.'+ (event.getEndTime().getMonthValue() > 10 ? event.getEndTime().getMonthValue() : '0'+event.getEndTime().getMonthValue()) + '.'+event.getEndTime().getYear()}"> </p>
+
+                            <p th:text="'Час: ' + ${event.getStartTime().getHour()+':'+(event.getStartTime().getMinute() > 10 ? event.getStartTime().getMinute() : '0'+event.getStartTime().getMinute())+' - '+event.getEndTime().getHour()+':'+(event.getEndTime().getMinute() > 10 ? event.getEndTime().getMinute() : '0'+event.getEndTime().getMinute())}"></p>
 
                             <p th:if="${owner}" class="text-dark" th:text="${'Кількість підписаних людей: ' + event.getSignedUsers().size()}"></p>
+
                         </div>
 
                         <div class="card-body">
@@ -38,7 +47,6 @@
                                         Переглянути
                                     </button>
 
-
                                     <div th:if="${owner}">
                                         <form th:action="'/my/events/' + ${event.getId()} + '/delete'" method="post">
                                             <button class="btn btn-sm btn-outline-danger" type="submit" value="Видалити">
@@ -46,6 +54,7 @@
                                             </button>
                                         </form>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 <!Doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head th:insert="fragments/head.html :: head">
-    <title id="pageTitle">Sign Up</title>
+    <title id="pageTitle">Реєстрація</title>
 </head>
 <body class="text-center">
 
@@ -26,6 +26,11 @@
 
     <label type="password"  for="inputPassword" class="sr-only">Пароль</label>
     <input type="password" th:field="*{password}" id="inputPassword" maxlength="50" class="form-control" placeholder="Пароль" required>
+
+    <p><small class="no-account">
+        Вже зареєстрований?
+        <a href="/login">Увійти!</a>
+    </small></p>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign Up">Зареєструватися!</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
