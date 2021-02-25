@@ -8,6 +8,7 @@
         <div class="col-sm-9">
             <div>
                 <h1>Подія</h1>
+
                 <p th:text="${event.getDescription()}"></p>
 
                 <p th:text="'Дата: '+ ${ (event.getStartTime().getDayOfMonth() > 10 ? event.getStartTime().getDayOfMonth() : '0'+event.getStartTime().getDayOfMonth())+'.'+ (event.getStartTime().getMonthValue() > 10 ? event.getStartTime().getMonthValue() : '0'+event.getStartTime().getMonthValue()) + '.'+event.getStartTime().getYear()+' - '+ (event.getEndTime().getDayOfMonth() > 10 ? event.getEndTime().getDayOfMonth() : '0'+event.getEndTime().getDayOfMonth())+'.'+ (event.getEndTime().getMonthValue() > 10 ? event.getEndTime().getMonthValue() : '0'+event.getEndTime().getMonthValue()) + '.'+event.getEndTime().getYear()}"> </p>
@@ -46,6 +47,7 @@
                         <button class="btn btn-sm btn-outline-danger" type="submit" value="Delete">Видалити</button>
                     </form>
                 </div>
+
                 <div th:unless="${owner}">
                     <div th:if="${signed}">
                         Ти вже підписаний
@@ -79,6 +81,6 @@
     <h1>404</h1>
     <h2>Цієї події не існує :(</h2>
 </div>
-
+<link th:href="@{/css/sections/event.css}" rel="stylesheet">
 </body>
 </html>

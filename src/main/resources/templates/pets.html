@@ -11,14 +11,14 @@
 
 <main role="main">
     <div class="text-center">
-    <button type="button" class="btn btn-outline-success btn-lg btn-block"
+    <button id="but" type="button" class="btn btn-outline-success btn-lg btn-block"
             onclick="document.location.href=this.getAttribute('href');" th:href="'/my/pets/add'">+ Додати тваринку</button>
     </div>
-    <div class="album py-5 bg-light">
-        <div class="container">
+    <div class="album py-5 bg-transparent">
+        <div class="container bg-transparent">
             <div class="row">
                 <div class="col-md-4" th:each="pet : ${pets}">
-                    <div class="card mb-4 box-shadow">
+                    <div class="card mb-4 bg-transparent">
 
                         <img class="card-img-top" th:src="${'/images/' + pet.getPhotoUrl().toString()+'.png'}"
                                  th:alt="${pet.getPhotoUrl()}">
@@ -43,5 +43,6 @@
 <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/popper/popper.min.js}"></script>
 
+<link th:href="@{/css/sections/pets.css}" rel="stylesheet">
 </body>
 </html>

@@ -12,16 +12,6 @@
 </div>
 
 <main role="main">
-    <div th:if="${owner}">
-        <button id="but" type="button" class="btn btn-outline-success btn-lg btn-block"
-                onclick="document.location.href=this.getAttribute('href');" th:href="'/my/events/add'">+ Додати подію</button>
-    </div>
-
-<!--    <div th:unless="${owner}">-->
-<!--        <button type="button" class="btn btn-outline-success btn-lg btn-block"-->
-<!--                onclick="document.location.href=this.getAttribute('href');" th:href="'/events/'">+ Знайти події</button>-->
-<!--    </div>-->
-
     <div class="album py-5">
         <div class="container">
             <div class="row">
@@ -35,7 +25,7 @@
 
                             <p th:text="'Час : ' + ${event.getStartTime().getHour()+':'+(event.getStartTime().getMinute() > 10 ? event.getStartTime().getMinute() : '0'+event.getStartTime().getMinute())+' - '+event.getEndTime().getHour()+':'+(event.getEndTime().getMinute() > 10 ? event.getEndTime().getMinute() : '0'+event.getEndTime().getMinute())}"></p>
 
-<!--                            <h5 style="" th:text="'ЦІНА :' ${event.getPrice()}"></h5>-->
+                            <!--                            <h5 style="" th:text="'ЦІНА :' ${event.getPrice()}"></h5>-->
 
                             <p th:if="${owner}" class="text-dark" th:text="${'Кількість підписаних людей: ' + event.getSignedUsers().size()}"></p>
 
@@ -47,17 +37,9 @@
 
                                     <button type="button" class="btn btn-sm btn-outline-primary text-light bg-dark"
                                             onclick="document.location.href=this.getAttribute('href');"
-                                            th:href="'/events/' + ${event.getId().toString()}">
+                                            th:href="'confirmed/' + ${event.getId().toString()}">
                                         Переглянути
                                     </button>
-
-                                    <div th:if="${owner}">
-                                        <form th:action="'/my/events/' + ${event.getId()} + '/delete'" method="post">
-                                            <button class="btn btn-sm text-light bg-danger" type="submit" value="Видалити" >
-                                                Видалити
-                                            </button>
-                                        </form>
-                                    </div>
                                 </div>
                             </div>
                         </div>

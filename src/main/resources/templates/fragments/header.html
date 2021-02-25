@@ -1,24 +1,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/" lang="">
 <header th:fragment="header">
+    <style>
+        a{
+            font-size: 20px;
+        }
+    </style>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="/">Smallcare</a>
+        <a class="navbar-brand" href="/"><strong>SMALL-CARE</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/pets'} ? active : ''">
-                    <a class="nav-link" href="/my/pets">Мої тваринки</a>
+                    <a class="nav-link mr-3" href="/my/pets" >Мої тваринки</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/events'} ? active : ''">
-                    <a class="nav-link" href="/events">Події</a>
+                    <a class="nav-link mr-3" href="/events">Події</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events'} ? active : ''">
-                    <a class="nav-link" href="/my/events">Мої події</a>
+                    <a class="nav-link mr-3" href="/my/events">Мої події</a>
                 </li>
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events/signed'} ? active : ''">
-                    <a class="nav-link" href="/my/events/signed">Мої підписки</a>
+                    <a class="nav-link mr-3" href="/my/events/signed">Мої підписки</a>
+                </li>
+                <li class="nav-item" th:classappend="${#httpServletRequest.requestURI == '/my/events/confirmed'} ? active : ''">
+                    <a class="nav-link mr-3" href="/my/events/confirmed">Мої підтвердження</a>
                 </li>
             </ul>
             <div th:unless="${#httpServletRequest.remoteUser}" class="form-inline mt-2 mt-md-0">
