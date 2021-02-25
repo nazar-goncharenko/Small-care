@@ -19,7 +19,8 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="text-center">
-                <img th:src="${'/images/' + user.getPhotoUrl().toString()+'.png'}" class="avatar img-circle img-thumbnail" alt="avatar">
+                <img th:src="${'/images/' + user.getPhotoUrl().toString()+'.png'}"
+                     class="avatar img-circle img-thumbnail" alt="avatar">
                 <!--                <img th:src="'/images/' + ${user.getPhotoUrl()+'.png'}" class="avatar img-circle img-thumbnail" alt="avatar">-->
             </div>
         </div>
@@ -29,22 +30,26 @@
                     <hr>
                     <h4>Ім'я</h4>
                     <p th:text="${user.getFirstName() + ' ' + user.getLastName()}"></p>
-                    <h4>Description</h4>
-                    <p th:text="${user.getDescription()}"></p>
                     <h4>Email</h4>
-                    <p th:text="${user.getEmail()}"></p>
+                    <p th:if="${user.getEmail()} != null" th:text="${user.getEmail()}"></p>
                     <h4>Mobile Phone</h4>
-                    <p th:text="${user.getPhoneNumber()}"></p>
+                    <p th:if="${user.getPhoneNumber()} != null" th:text="${user.getPhoneNumber()}"></p>
                     <h4>Rating</h4>
                     <p th:text="${user.getRating()}"></p>
                     <h4>Location</h4>
-                    <p th:text="${user.getCity() + ' ' + user.getDistrict()}"></p>
+                    <p th:text="${user.getCity()}"></p>
                     <hr>
+                </div>
+                <div th:if="${edit}">
+                    <form action="/my/profile/edit" method="get">
+                        <button class="btn-dark" href="/my/profile/edit">Edit</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<link th:href="@{/css/sections/user.css}" rel="stylesheet">
 </body>
 <script type="text/javascript" th:src="@{/js/profile.js}"></script>
 </html>
